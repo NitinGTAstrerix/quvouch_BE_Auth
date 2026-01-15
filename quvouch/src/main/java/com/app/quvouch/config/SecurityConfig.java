@@ -31,9 +31,7 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authRequest -> authRequest
-                        .requestMatchers("/api/v1/auth/**")
-                        .permitAll()
-                        .requestMatchers("/api/v1/user")
+                        .requestMatchers(AppConstant.publicUrls)
                         .permitAll()
                         .anyRequest().authenticated())
 //                .httpBasic(Customizer.withDefaults());

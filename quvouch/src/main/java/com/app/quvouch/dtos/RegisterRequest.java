@@ -1,27 +1,24 @@
 package com.app.quvouch.dtos;
 
-import com.app.quvouch.Models.Business;
 import com.app.quvouch.Models.Provider;
 import com.app.quvouch.Models.Role;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.Instant;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 @Getter
 @Setter
-@Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class UserDto {
-    private UUID id;
+public class RegisterRequest {
     private String email;
     private String name;
     private String password;
     private String image;
-    private Instant createdAt = Instant.now();
-    private Instant updatedAt = Instant.now();
     private boolean enable = true;
-    private Provider provider = Provider.LOCAL;
     private Set<Role> roles= new HashSet<>();
 }

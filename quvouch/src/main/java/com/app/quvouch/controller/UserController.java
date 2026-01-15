@@ -1,6 +1,7 @@
 package com.app.quvouch.controller;
 
 
+import com.app.quvouch.dtos.RegisterRequest;
 import com.app.quvouch.dtos.UserDto;
 import com.app.quvouch.service.UserService;
 import lombok.AllArgsConstructor;
@@ -18,9 +19,9 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto)
+    public ResponseEntity<UserDto> createUser(@RequestBody RegisterRequest register)
     {
-        UserDto createdUser = userService.createUser(userDto);
+        UserDto createdUser = userService.createUser(register);
 
         return ResponseEntity.status(201).body(createdUser);
     }

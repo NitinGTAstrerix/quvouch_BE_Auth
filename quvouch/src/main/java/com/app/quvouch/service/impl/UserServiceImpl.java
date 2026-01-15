@@ -2,6 +2,7 @@ package com.app.quvouch.service.impl;
 
 
 import com.app.quvouch.Models.User;
+import com.app.quvouch.dtos.RegisterRequest;
 import com.app.quvouch.dtos.UserDto;
 import com.app.quvouch.exception.EmailAlreadyExit;
 import com.app.quvouch.exception.ResourceNotFoundException;
@@ -29,16 +30,16 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public UserDto createUser(UserDto userDtos) {
-        if(userDtos.getEmail()==null || userDtos.getEmail().isEmpty())
+    public UserDto createUser(RegisterRequest register) {
+        if(register.getEmail()==null || register.getEmail().isEmpty())
         {
             throw new IllegalArgumentException("Email is not found");
         }
-        if(userRepository.existsByEmail(userDtos.getEmail()))
+        if(userRepository.existsByEmail(register.getEmail()))
         {
             throw  new EmailAlreadyExit();
         }
-        User user = modelMapper.map(userDtos , User.class);
+        User user = modelMapper.map(register , User.class);
         User savedUser = userRepository.save(user);
         return modelMapper.map(savedUser, UserDto.class);
     }

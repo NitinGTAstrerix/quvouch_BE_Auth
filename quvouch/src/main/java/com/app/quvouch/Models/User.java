@@ -30,9 +30,16 @@ public class User implements UserDetails {
     private boolean enable = true;
     @Enumerated(EnumType.STRING)
     private Provider provider = Provider.LOCAL;
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_roles")
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST) // Or CascadeType.ALL
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
     private Set<Role> roles= new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL ,mappedBy = "user")
+    private List<Business> business = new ArrayList<>();
 
     @PrePersist
     protected void onCreate(){
@@ -48,7 +55,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Stream<SimpleGrantedAuthority> autherity = roles.stream().map(role -> new SimpleGrantedAuthority(role.getRoleName()));
+        Stream<SimpleGrantedAuthority> autherity = roles.stream().map(role -> new SimpleGrantedAuthority(role.getRoleName().name()));
         return autherity.toList();
     }
 
