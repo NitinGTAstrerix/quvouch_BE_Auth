@@ -65,4 +65,11 @@ public class GlobalExceptionHandler {
         ErrorMessage errorMessage = new ErrorMessage("Passed Id is not valid Pleases Check once again", HttpStatus.NOT_FOUND, LocalTime.now());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
     }
+
+    @ExceptionHandler(BusinessNotFoundException.class)
+    public ResponseEntity<ErrorMessage> BusinessNotFoundExceptionHandler(BusinessNotFoundException exception)
+    {
+        ErrorMessage errorMessage = new ErrorMessage(exception.getMessage(), HttpStatus.NOT_FOUND, LocalTime.now());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
+    }
 }

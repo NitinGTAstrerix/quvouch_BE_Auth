@@ -2,10 +2,7 @@ package com.app.quvouch.controller;
 
 import com.app.quvouch.Models.RefreshToken;
 import com.app.quvouch.Models.User;
-import com.app.quvouch.dtos.LoginRequest;
-import com.app.quvouch.dtos.RefreshTokenRequest;
-import com.app.quvouch.dtos.TokenResponse;
-import com.app.quvouch.dtos.UserDto;
+import com.app.quvouch.dtos.*;
 import com.app.quvouch.repository.RefreshTokenRepository;
 import com.app.quvouch.repository.UserRepository;
 import com.app.quvouch.security.CookieService;
@@ -231,9 +228,9 @@ public class AuthController {
         return Optional.empty();
     }
     @PostMapping("/register")
-    public ResponseEntity<UserDto> registerUser(@RequestBody UserDto userDto) {
-        userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        UserDto userDto1 = authService.registerUser(userDto);
+    public ResponseEntity<UserDto> registerUser(@RequestBody RegisterRequest register) {
+        register.setPassword(passwordEncoder.encode(register.getPassword()));
+        UserDto userDto1 = authService.registerUser(register);
         return ResponseEntity.status(HttpStatus.CREATED).body(userDto1);
     }
 }
