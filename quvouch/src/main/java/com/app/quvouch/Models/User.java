@@ -30,7 +30,8 @@ public class User implements UserDetails {
     private boolean enable = true;
     @Enumerated(EnumType.STRING)
     private Provider provider = Provider.LOCAL;
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST) // Or CascadeType.ALL
+
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -55,7 +56,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Stream<SimpleGrantedAuthority> autherity = roles.stream().map(role -> new SimpleGrantedAuthority(role.getRoleName().name()));
+        Stream<SimpleGrantedAuthority> autherity = roles.stream().map(role -> new SimpleGrantedAuthority(role.getRoleName()));
         return autherity.toList();
     }
 

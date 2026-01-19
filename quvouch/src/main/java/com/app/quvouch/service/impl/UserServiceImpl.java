@@ -1,12 +1,15 @@
 package com.app.quvouch.service.impl;
 
 
+import com.app.quvouch.Models.Role;
 import com.app.quvouch.Models.User;
+import com.app.quvouch.config.AppConstant;
 import com.app.quvouch.dtos.RegisterRequest;
 import com.app.quvouch.dtos.UserDto;
 import com.app.quvouch.exception.EmailAlreadyExit;
 import com.app.quvouch.exception.ResourceNotFoundException;
 import com.app.quvouch.exception.UserNotFoundWithNameException;
+import com.app.quvouch.repository.RoleRepository;
 import com.app.quvouch.repository.UserRepository;
 import com.app.quvouch.service.UserService;
 import lombok.AllArgsConstructor;
@@ -27,7 +30,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
-
+    private final RoleRepository roleRepository;
 
     @Override
     public UserDto createUser(RegisterRequest register) {
@@ -39,7 +42,10 @@ public class UserServiceImpl implements UserService {
         {
             throw  new EmailAlreadyExit();
         }
+
         User user = modelMapper.map(register , User.class);
+        Role role = roleRepository.findByRoleName("ROLE_"+AppConstant.USER_ROLE).orElse(null);
+        user.getRoles().add(role);
         User savedUser = userRepository.save(user);
         return modelMapper.map(savedUser, UserDto.class);
     }

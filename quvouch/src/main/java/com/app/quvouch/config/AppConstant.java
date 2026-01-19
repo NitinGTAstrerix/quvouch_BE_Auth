@@ -9,4 +9,9 @@ public class AppConstant {
             "/api/v1/user",
             "/api/v1/auth/**"
     };
+
+    public static final String ADMIN_ROLE = "ADMIN";
+    public static final String USER_ROLE = "USER";
+    public static final String CLIENT_ROLE = "CLIENT";
+    public static final String SALE_REPRESENTATIVE = "SALE_REPRESENTATIVE";
 }
