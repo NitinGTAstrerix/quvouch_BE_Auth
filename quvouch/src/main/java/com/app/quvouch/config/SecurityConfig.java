@@ -1,9 +1,11 @@
 package com.app.quvouch.config;
 
+import com.app.quvouch.Models.ErrorMessage;
 import com.app.quvouch.security.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -49,7 +51,23 @@ public class SecurityConfig {
                     Map<String, String> errorMessage = Map.of("message", msg, "status", String.valueOf(401));
                     var objectMapper = new ObjectMapper();
                     response.getWriter().write(objectMapper.writeValueAsString(errorMessage));
-                })).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                })
+                                .accessDeniedHandler(((request, response, accessDeniedException) ->
+                                {
+                                    response.setStatus(403);
+                                    response.setContentType("application/json");
+                                    String msg = accessDeniedException.getMessage();
+                                    Object error = request.getAttribute("error");
+                                    if (error != null)
+                                    {
+                                        msg = (String) error;
+                                    }
+                                    Map<String, String> errorMessage = Map.of("message", msg, "status", String.valueOf(403));
+                                    var objectMapper = new ObjectMapper();
+                                    response.getWriter().write(objectMapper.writeValueAsString(errorMessage));
+
+                                }))
+                ).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 

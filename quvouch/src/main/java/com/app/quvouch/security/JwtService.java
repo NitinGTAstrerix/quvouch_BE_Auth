@@ -45,7 +45,7 @@ public class JwtService {
     public String generateAccessToken(User user)
     {
         Instant now = Instant.now();
-        List<String> roles = user.getRoles() == null ? List.of() : user.getRoles().stream().map(Role->Role.getRoleName().name()).toList();
+        List<String> roles = user.getRoles() == null ? List.of() : user.getRoles().stream().map(Role::getRoleName).toList();
         return Jwts.builder()
                 .id(UUID.randomUUID().toString())
                 .subject(user.getId().toString())
