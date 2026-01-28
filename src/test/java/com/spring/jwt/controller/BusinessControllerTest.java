@@ -1,4 +1,4 @@
-package com.spring.jwt.conrtoller;
+package com.spring.jwt.controller;
 
 import com.spring.jwt.dto.BusinessResponseDto;
 import com.spring.jwt.mapper.BusinessMapper;
@@ -15,7 +15,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.List;
 
 import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 

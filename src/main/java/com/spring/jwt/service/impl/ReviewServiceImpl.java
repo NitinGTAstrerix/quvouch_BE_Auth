@@ -1,0 +1,50 @@
+package com.spring.jwt.service.impl;
+
+import com.spring.jwt.entity.Business;
+import com.spring.jwt.entity.Review;
+import com.spring.jwt.dto.ReviewRequestDto;
+import com.spring.jwt.repository.BusinessRepository;
+import com.spring.jwt.repository.ReviewRepository;
+import com.spring.jwt.service.ReviewService;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+@AllArgsConstructor
+public class ReviewServiceImpl implements ReviewService {
+
+    private final ReviewRepository reviewRepository;
+    private final BusinessRepository businessRepository;
+
+    @Override
+    @Transactional
+    public Review submitReview(ReviewRequestDto requestDto) {
+
+        Business business = businessRepository.findById(requestDto.getBusinessId())
+                .orElseThrow(() -> new RuntimeException("Business not found with ID: " + requestDto.getBusinessId()));
+
+        Review review = new Review();
+        review.setBusiness(business);
+        review.setQrCodeId(requestDto.getQrCodeId());
+        review.setRating(requestDto.getRating());
+        review.setCustomerName(requestDto.getCustomerName());
+        review.setCustomerEmail(requestDto.getCustomerEmail());
+        review.setCustomerPhone(requestDto.getCustomerPhone());
+        review.setFeedbackText(requestDto.getFeedbackText());
+        review.setFeedbackCategory(requestDto.getFeedbackCategory());
+
+        // TODO: In the future, fetch this URL dynamically from the business object: business.getGoogleMapUrl()
+        String clientGoogleUrl = "https://search.google.com/local/writereview?placeid=EXAMPLE";
+
+        if (requestDto.getRating() >= 4) {
+            review.setStatus(Review.ReviewStatus.PUBLIC);
+            review.setRedirectUrl(clientGoogleUrl);
+        } else {
+            review.setStatus(Review.ReviewStatus.INTERNAL);
+            review.setRedirectUrl(null);
+        }
+
+        return reviewRepository.save(review);
+    }
+}
