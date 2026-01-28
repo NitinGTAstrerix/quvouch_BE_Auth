@@ -1,10 +1,12 @@
 package com.app.quvouch.service;
 
+import com.app.quvouch.Models.Business;
 import com.app.quvouch.dtos.BusinessRequest;
 import com.app.quvouch.dtos.BusinessResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface BusinessService {

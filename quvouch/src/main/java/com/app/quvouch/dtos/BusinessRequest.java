@@ -1,5 +1,7 @@
 package com.app.quvouch.dtos;
 
+import com.app.quvouch.Models.Business;
+import com.app.quvouch.Models.User;
 import lombok.*;
 
 import java.util.UUID;

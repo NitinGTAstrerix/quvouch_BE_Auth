@@ -1,6 +1,6 @@
 package com.app.quvouch.repository;
 
-import com.app.quvouch.entity.User;
+import com.app.quvouch.Models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

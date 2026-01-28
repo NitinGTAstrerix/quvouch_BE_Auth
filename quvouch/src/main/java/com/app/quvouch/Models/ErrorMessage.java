@@ -1,4 +1,4 @@
-package com.app.quvouch.entity;
+package com.app.quvouch.Models;
 
 import org.springframework.http.HttpStatus;
 

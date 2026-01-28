@@ -1,7 +1,7 @@
 package com.app.quvouch.controller;
 
-import com.app.quvouch.entity.RefreshToken;
-import com.app.quvouch.entity.User;
+import com.app.quvouch.Models.RefreshToken;
+import com.app.quvouch.Models.User;
 import com.app.quvouch.dtos.*;
 import com.app.quvouch.repository.RefreshTokenRepository;
 import com.app.quvouch.repository.UserRepository;
