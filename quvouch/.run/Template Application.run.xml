@@ -1,9 +1,0 @@
-<component name="ProjectRunConfigurationManager">
-  <configuration default="true" type="Application" factoryName="Application">
-    <module name="quvouch" />
-    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/main/java/com/app/quvouch" />
-    <method v="2">
-      <option name="Make" enabled="true" />
-    </method>
-  </configuration>
-</component>
