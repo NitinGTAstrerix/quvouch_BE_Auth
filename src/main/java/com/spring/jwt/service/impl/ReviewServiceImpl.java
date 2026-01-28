@@ -1,8 +1,10 @@
 package com.spring.jwt.service.impl;
 
+import com.spring.jwt.dto.ReviewResponse;
 import com.spring.jwt.entity.Business;
 import com.spring.jwt.entity.Review;
 import com.spring.jwt.dto.ReviewRequestDto;
+import com.spring.jwt.mapper.ReviewMapper; // ✅ Added Import
 import com.spring.jwt.repository.BusinessRepository;
 import com.spring.jwt.repository.ReviewRepository;
 import com.spring.jwt.service.ReviewService;
@@ -10,12 +12,16 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @AllArgsConstructor
 public class ReviewServiceImpl implements ReviewService {
 
     private final ReviewRepository reviewRepository;
     private final BusinessRepository businessRepository;
+    private final ReviewMapper reviewMapper;
 
     @Override
     @Transactional
@@ -46,5 +52,21 @@ public class ReviewServiceImpl implements ReviewService {
         }
 
         return reviewRepository.save(review);
+    }
+
+    @Override
+    public List<ReviewResponse> getAllReviews() {
+        return reviewRepository.findAll()
+                .stream()
+                .map(reviewMapper::toResponse)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ReviewResponse> getReviewsByBusiness(Integer businessId) {
+        return reviewRepository.findByBusiness_BusinessId(businessId)
+                .stream()
+                .map(reviewMapper::toResponse)
+                .collect(Collectors.toList());
     }
 }
