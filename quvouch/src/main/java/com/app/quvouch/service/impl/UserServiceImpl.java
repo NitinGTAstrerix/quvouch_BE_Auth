@@ -1,8 +1,8 @@
 package com.app.quvouch.service.impl;
 
 
-import com.app.quvouch.Models.Role;
-import com.app.quvouch.Models.User;
+import com.app.quvouch.entity.Role;
+import com.app.quvouch.entity.User;
 import com.app.quvouch.config.AppConstant;
 import com.app.quvouch.dtos.RegisterRequest;
 import com.app.quvouch.dtos.UserDto;

@@ -1,6 +1,6 @@
 package com.app.quvouch.repository;
 
-import com.app.quvouch.Models.RefreshToken;
+import com.app.quvouch.entity.RefreshToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

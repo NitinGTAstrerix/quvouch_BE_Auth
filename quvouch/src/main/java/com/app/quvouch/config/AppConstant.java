@@ -7,7 +7,8 @@ public class AppConstant {
             "/v3/api-docs/**",
             "/swagger-ui.html",
             "/api/v1/user",
-            "/api/v1/auth/**"
+            "/api/v1/auth/**",
+            "/api/v1/qr/**"
     };
 
     public static final String ADMIN_ROLE = "ADMIN";

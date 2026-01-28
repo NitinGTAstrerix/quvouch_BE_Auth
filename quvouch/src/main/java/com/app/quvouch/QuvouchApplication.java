@@ -1,6 +1,6 @@
 package com.app.quvouch;
 
-import com.app.quvouch.Models.Role;
+import com.app.quvouch.entity.Role;
 import com.app.quvouch.config.AppConstant;
 import com.app.quvouch.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
 package com.app.quvouch.service;
 
-import com.app.quvouch.Models.User;
+import com.app.quvouch.entity.User;
 import com.app.quvouch.dtos.RegisterRequest;
 import com.app.quvouch.dtos.UserDto;
 

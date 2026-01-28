@@ -1,7 +1,7 @@
 package com.app.quvouch.security;
 
-import com.app.quvouch.Models.Role;
-import com.app.quvouch.Models.User;
+import com.app.quvouch.entity.Role;
+import com.app.quvouch.entity.User;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.Data;

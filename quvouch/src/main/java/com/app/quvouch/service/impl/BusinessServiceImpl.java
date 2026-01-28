@@ -1,7 +1,7 @@
 package com.app.quvouch.service.impl;
 
-import com.app.quvouch.Models.Business;
-import com.app.quvouch.Models.User;
+import com.app.quvouch.entity.Business;
+import com.app.quvouch.entity.User;
 import com.app.quvouch.config.BusinessMapper;
 import com.app.quvouch.dtos.BusinessRequest;
 import com.app.quvouch.dtos.BusinessResponse;
@@ -15,9 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

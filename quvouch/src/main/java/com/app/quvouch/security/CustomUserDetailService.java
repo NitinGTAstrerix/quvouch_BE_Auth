@@ -1,6 +1,6 @@
 package com.app.quvouch.security;
 
-import com.app.quvouch.Models.User;
+import com.app.quvouch.entity.User;
 import com.app.quvouch.exception.ResourceNotFoundException;
 import com.app.quvouch.repository.UserRepository;
 import lombok.AllArgsConstructor;

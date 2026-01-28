@@ -1,8 +1,7 @@
 package com.app.quvouch.dtos;
 
-import com.app.quvouch.Models.Business;
-import com.app.quvouch.Models.Provider;
-import com.app.quvouch.Models.Role;
+import com.app.quvouch.entity.Provider;
+import com.app.quvouch.entity.Role;
 import lombok.*;
 
 import java.time.Instant;
