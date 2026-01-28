@@ -109,17 +109,11 @@ public class JwtServiceImpl implements JwtService {
                 .claim("authorities", roles)
                 .claim("isEnable", userDetailsCustom.isEnabled());
 
-        if (userDetailsCustom.getStudentId() != null) {
-            jwtBuilder.claim("studentId", userDetailsCustom.getStudentId());
+        if (userDetailsCustom.getUserProfileId() != null) {
+            jwtBuilder.claim("userProfileId", userDetailsCustom.getUserProfileId());
         }
         
-        if (userDetailsCustom.getTeacherId() != null) {
-            jwtBuilder.claim("teacherId", userDetailsCustom.getTeacherId());
-        }
-        
-        if (userDetailsCustom.getParentId() != null) {
-            jwtBuilder.claim("parentId", userDetailsCustom.getParentId());
-        }
+
         
         jwtBuilder.claim(CLAIM_KEY_TOKEN_TYPE, TOKEN_TYPE_ACCESS)
                 .setIssuedAt(Date.from(now))
@@ -154,17 +148,11 @@ public class JwtServiceImpl implements JwtService {
                 .claim("userId", userDetailsCustom.getUserId())
                 .claim("authorities", roles);
 
-        if (userDetailsCustom.getStudentId() != null) {
-            jwtBuilder.claim("studentId", userDetailsCustom.getStudentId());
+        if (userDetailsCustom.getUserProfileId() != null) {
+            jwtBuilder.claim("userProfileId", userDetailsCustom.getUserProfileId());
         }
         
-        if (userDetailsCustom.getTeacherId() != null) {
-            jwtBuilder.claim("teacherId", userDetailsCustom.getTeacherId());
-        }
-        
-        if (userDetailsCustom.getParentId() != null) {
-            jwtBuilder.claim("parentId", userDetailsCustom.getParentId());
-        }
+
         
         jwtBuilder.claim(CLAIM_KEY_TOKEN_TYPE, TOKEN_TYPE_REFRESH)
                 .setIssuedAt(Date.from(now))

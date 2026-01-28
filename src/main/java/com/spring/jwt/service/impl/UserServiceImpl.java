@@ -1,20 +1,14 @@
 package com.spring.jwt.service.impl;
 
-import com.spring.jwt.dto.ResetPassword;
-import com.spring.jwt.dto.UserDTO;
-import com.spring.jwt.dto.UserUpdateRequest;
+import com.spring.jwt.dto.*;
 import com.spring.jwt.entity.Role;
-import com.spring.jwt.entity.Student;
 import com.spring.jwt.entity.User;
-import com.spring.jwt.entity.Teacher;
-import com.spring.jwt.entity.Parents;
+import com.spring.jwt.entity.UserProfile;
 import com.spring.jwt.exception.BaseException;
 import com.spring.jwt.exception.UserNotFoundExceptions;
 import com.spring.jwt.repository.RoleRepository;
-import com.spring.jwt.repository.StudentRepository;
+import com.spring.jwt.repository.UserProfileRepository;
 import com.spring.jwt.repository.UserRepository;
-import com.spring.jwt.repository.TeacherRepository;
-import com.spring.jwt.repository.ParentsRepository;
 import com.spring.jwt.service.UserService;
 import com.spring.jwt.utils.BaseResponseDTO;
 import com.spring.jwt.utils.EmailService;
@@ -43,10 +37,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import com.spring.jwt.mapper.UserMapper;
-import com.spring.jwt.dto.UserProfileDTO;
-import com.spring.jwt.dto.StudentDTO;
-import com.spring.jwt.dto.TeacherDTO;
-import com.spring.jwt.dto.ParentsDTO;
 
 @Service
 @RequiredArgsConstructor
@@ -57,11 +47,7 @@ public class UserServiceImpl implements UserService {
 
     private final JavaMailSender mailSender;
 
-    private final StudentRepository studentRepository;
-
-    private final TeacherRepository teacherRepository;
-
-    private final ParentsRepository parentsRepository;
+    private final UserProfileRepository userProfileRepository;
 
     private final EmailVerificationRepo emailVerificationRepo;
 
@@ -134,15 +120,10 @@ public class UserServiceImpl implements UserService {
 
         if (role != null) {
             switch (role.getName()) {
-                case "STUDENT":
-                    createStudentProfile(user, userDTO);
+                case "USER":
+                    createUserProfile(user, userDTO);
                     break;
-                case "TEACHER":
-                    createTeacherProfile(user, userDTO);
-                    break;
-                case "PARENT":
-                    createParentProfile(user, userDTO);
-                    break;
+
                 default:
                     break;
             }
@@ -151,8 +132,8 @@ public class UserServiceImpl implements UserService {
         return user;
     }
     
-    private void createStudentProfile(User user, UserDTO userDTO) {
-        Student student = new Student();
+    private void createUserProfile(User user, UserDTO userDTO) {
+        UserProfile student = new UserProfile();
         student.setName(userDTO.getFirstName());
         student.setLastName(userDTO.getLastName());
         student.setDateOfBirth(userDTO.getDateOfBirth());
@@ -162,42 +143,13 @@ public class UserServiceImpl implements UserService {
         student.setStudentClass(userDTO.getStudentClass());
         student.setUserId(user.getId().intValue());
         
-        studentRepository.save(student);
+        userProfileRepository.save(student);
         log.info("Created student profile for user ID: {}", user.getId());
     }
     
-    private void createTeacherProfile(User user, UserDTO userDTO) {
-        Teacher teacher = new Teacher();
-        teacher.setName(userDTO.getFirstName() + " " + userDTO.getLastName());
-        teacher.setSub(userDTO.getStudentcol());
-        teacher.setDeg(userDTO.getStudentcol1());
-        teacher.setStatus("Active");
-        teacher.setUserId(user.getId().intValue());
-        
-        teacherRepository.save(teacher);
-        log.info("Created teacher profile for user ID: {}", user.getId());
-    }
+
     
-    private void createParentProfile(User user, UserDTO userDTO) {
-        Integer studentId = null;
-        try {
-            if (userDTO.getStudentcol() != null && !userDTO.getStudentcol().isEmpty()) {
-                studentId = Integer.parseInt(userDTO.getStudentcol());
-            }
-        } catch (NumberFormatException e) {
-            log.warn("Invalid student ID format for parent registration: {}", userDTO.getStudentcol());
-        }
-        
-        Parents parent = new Parents();
-        parent.setParentsId(user.getId().intValue());
-        parent.setName(userDTO.getFirstName() + " " + userDTO.getLastName());
-        parent.setBatch(userDTO.getStudentClass());
-        parent.setStudentName(userDTO.getStudentcol1());
-        parent.setStudentId(studentId);
-        
-        parentsRepository.save(parent);
-        log.info("Created parent profile for user ID: {}", user.getId());
-    }
+
 
     private void validateAccount(UserDTO userDTO) {
         if (ObjectUtils.isEmpty(userDTO)) {
@@ -393,31 +345,14 @@ public class UserServiceImpl implements UserService {
 
         Integer userId = user.getId().intValue();
         
-        if (roles.contains("STUDENT")) {
-            Student student = studentRepository.findByUserId(userId);
-            if (student != null) {
-                userDTO.setRole("STUDENT");
-                userDTO.setDateOfBirth(student.getDateOfBirth());
-                userDTO.setStudentcol(student.getStudentcol());
-                userDTO.setStudentcol1(student.getStudentcol1());
-                userDTO.setStudentClass(student.getStudentClass());
-            }
-        } else if (roles.contains("TEACHER")) {
-            Teacher teacher = teacherRepository.findByUserId(userId);
-            if (teacher != null) {
-                userDTO.setRole("TEACHER");
-                userDTO.setName(teacher.getName());
-                userDTO.setStudentcol(teacher.getSub());
-                userDTO.setStudentcol1(teacher.getDeg());
-            }
-        } else if (roles.contains("PARENT")) {
-            Parents parent = parentsRepository.findById(userId).orElse(null);
-            if (parent != null) {
-                userDTO.setRole("PARENT");
-                userDTO.setName(parent.getName());
-                userDTO.setStudentcol(parent.getStudentId() != null ? parent.getStudentId().toString() : null); // Student ID
-                userDTO.setStudentcol1(parent.getStudentName());
-                userDTO.setStudentClass(parent.getBatch());
+        if (roles.contains("USER")) {
+            UserProfile userProfile = userProfileRepository.findByUserId(userId);
+            if (userProfile != null) {
+                userDTO.setRole("USER");
+                userDTO.setDateOfBirth(userProfile.getDateOfBirth());
+                userDTO.setStudentcol(userProfile.getStudentcol());
+                userDTO.setStudentcol1(userProfile.getStudentcol1());
+                userDTO.setStudentClass(userProfile.getStudentClass());
             }
         }
         
@@ -482,26 +417,14 @@ public class UserServiceImpl implements UserService {
 
         Integer userId = user.getId().intValue();
         
-        if (roles.contains("STUDENT")) {
-            Student student = studentRepository.findByUserId(userId);
+        if (roles.contains("USER")) {
+            UserProfile student = userProfileRepository.findByUserId(userId);
             if (student != null) {
-                profileDTO.setStudentInfo(StudentDTO.fromEntity(student));
+                profileDTO.setUserProfileDTO1(UserProfileDTO1.fromEntity(student));
             }
         }
         
-        if (roles.contains("TEACHER")) {
-            Teacher teacher = teacherRepository.findByUserId(userId);
-            if (teacher != null) {
-                profileDTO.setTeacherInfo(TeacherDTO.fromEntity(teacher));
-            }
-        }
-        
-        if (roles.contains("PARENT")) {
-            Parents parent = parentsRepository.findById(userId).orElse(null);
-            if (parent != null) {
-                profileDTO.setParentInfo(ParentsDTO.fromEntity(parent));
-            }
-        }
+
         
         return profileDTO;
     }

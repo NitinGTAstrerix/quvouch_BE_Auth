@@ -44,19 +44,19 @@ public class OpenApiConfig {
      */
     private Info apiInfo() {
         return new Info()
-                .title("KArtolApp API")
-                .description("API documentation for KArtolApp - Education Management System")
+                .title("car API")
+                .description("API documentation ")
                 .version("1.0.0")
                 .contact(
                         new Contact()
-                                .name("KArtol Development Team")
-                                .url("https://kartol.example.com")
-                                .email("support@kartol.example.com")
+                                .name(" Development Team")
+                                .url("https://.example.com")
+                                .email("support@.example.com")
                 )
                 .license(
                         new License()
-                                .name("KArtol License")
-                                .url("https://kartol.example.com/license")
+                                .name(" License")
+                                .url("https://example.com/license")
                 );
     }
 } 

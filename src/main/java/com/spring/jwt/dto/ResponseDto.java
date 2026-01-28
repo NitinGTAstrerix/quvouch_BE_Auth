@@ -12,6 +12,7 @@ public class ResponseDto<T> {
     private String message;
     private T data;
     private String exception;
+
     public static <T> ResponseDto<T> success(String message, T data) {
         return new ResponseDto<>(message, data, null);
     }

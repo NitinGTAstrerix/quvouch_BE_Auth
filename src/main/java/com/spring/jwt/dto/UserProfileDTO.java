@@ -14,9 +14,8 @@ public class UserProfileDTO {
     private UserDTO user;
     
     // Role-specific information
-    private StudentDTO studentInfo;
-    private TeacherDTO teacherInfo;
-    private ParentsDTO parentInfo;
+    private UserProfileDTO1 userProfileDTO1;
+
     
     // User roles
     private Set<String> roles;

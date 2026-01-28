@@ -112,17 +112,7 @@ public class AppConfig {
             .ignoringRequestMatchers(
                 "/api/**",
                 "/user/**",
-                "/api/v1/questions/**",
-                "/assessments/**",
-                "/fees/**",
-                "/api/v1/exam/**",
-                "api/v1/attendance/**",
-                "api/v1/paper-patterns/**",
-                "api/v1/notes/**",
-                "/api/v1/calendar-events/**",
-                "api/v1/exam-results/**",
-                "api/v1/exam/session",
-                "api/v1/Classes",
+
                 jwtConfig.getUrl(),
                 jwtConfig.getRefreshUrl()
             )
@@ -169,24 +159,7 @@ public class AppConfig {
 
                 .requestMatchers("/api/public/**").permitAll()
                 .requestMatchers("/user/**").permitAll()
-                .requestMatchers("/fees//**").permitAll()
 
-                .requestMatchers("/api/v1/questions/**").permitAll()
-                .requestMatchers("/questions/search").permitAll()
-
-                .requestMatchers("/questions/**").permitAll()
-
-                .requestMatchers("/assessments/**").permitAll()
-                .requestMatchers("/api/v1/exam/**").permitAll()
-                .requestMatchers("/api/v1/papers/solutions/pdf").permitAll()
-                .requestMatchers("/api/v1/papers/**").permitAll()
-                .requestMatchers("/api/v1/attendance/**").permitAll()
-                .requestMatchers("/api/v1/paper-patterns/**").permitAll()
-                .requestMatchers("api/v1/notes/**").permitAll()
-                .requestMatchers("/api/v1/calendar-events/**").permitAll()
-                .requestMatchers("/api/v1/exam-results/**").permitAll()
-                .requestMatchers("/api/v1/exam/session/**").permitAll()
-                .requestMatchers("/api/v1/Classes/**").permitAll()
 
                 .anyRequest().authenticated());
 
@@ -206,20 +179,6 @@ public class AppConfig {
                 new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/webjars/**"),
                 new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/swagger-ui.html"),
                 new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/user/**"),
-                new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/fees/**"),
-                new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/assessments/**"),
-                new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/v1/questions/**"),
-                    new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/v1/attendance/**"),
-                new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/questions/search"),
-                    new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/v1/papers/**"),
-                    new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/v1/exam/**"),
-                    new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/v1/papers/solutions/pdf"),
-                    new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/v1/paper-patterns/**"),
-                    new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/v1/notes/**"),
-                    new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/v1/calendar-events/**"),
-                    new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/v1/exam-results/**"),
-                    new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/v1/exam/session/**"),
-                    new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/v1/Classes/**"),
                 new org.springframework.security.web.util.matcher.AntPathRequestMatcher(jwtConfig.getUrl()),
                 new org.springframework.security.web.util.matcher.AntPathRequestMatcher(jwtConfig.getRefreshUrl())
             );

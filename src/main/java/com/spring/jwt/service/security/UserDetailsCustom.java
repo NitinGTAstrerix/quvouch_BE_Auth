@@ -16,9 +16,8 @@ public class UserDetailsCustom implements UserDetails {
     private String password;
     private String firstName;
     private Integer userId;
-    private Integer studentId;
-    private Integer teacherId;
-    private Integer parentId;
+    private Integer userProfileId;
+
     private List<GrantedAuthority> authorities;
 
     public UserDetailsCustom(
@@ -26,17 +25,13 @@ public class UserDetailsCustom implements UserDetails {
             String password, 
             String firstName, 
             Integer userId, 
-            Integer studentId,
-            Integer teacherId,
-            Integer parentId,
+            Integer userProfileId,
             List<GrantedAuthority> authorities) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.userId = userId;
-        this.studentId = studentId;
-        this.teacherId = teacherId;
-        this.parentId = parentId;
+        this.userProfileId = userProfileId;
         this.authorities = authorities;
     }
 
@@ -46,7 +41,7 @@ public class UserDetailsCustom implements UserDetails {
             String firstName, 
             Integer userId, 
             List<GrantedAuthority> authorities) {
-        this(username, password, firstName, userId, null, null, null, authorities);
+        this(username, password, firstName, userId, null, authorities);
     }
 
     @Override

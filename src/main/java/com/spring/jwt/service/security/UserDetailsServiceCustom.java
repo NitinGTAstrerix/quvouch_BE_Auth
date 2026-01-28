@@ -1,13 +1,10 @@
 package com.spring.jwt.service.security;
 
-import com.spring.jwt.entity.Parents;
-import com.spring.jwt.entity.Student;
-import com.spring.jwt.entity.Teacher;
+
 import com.spring.jwt.entity.User;
+import com.spring.jwt.entity.UserProfile;
 import com.spring.jwt.exception.BaseException;
-import com.spring.jwt.repository.ParentsRepository;
-import com.spring.jwt.repository.StudentRepository;
-import com.spring.jwt.repository.TeacherRepository;
+import com.spring.jwt.repository.UserProfileRepository;
 import com.spring.jwt.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,13 +25,11 @@ public class UserDetailsServiceCustom implements UserDetailsService {
     private final UserRepository userRepository;
     
     @Autowired
-    private StudentRepository studentRepository;
+    private UserProfileRepository userProfileRepository;
     
-    @Autowired
-    private TeacherRepository teacherRepository;
+
     
-    @Autowired
-    private ParentsRepository parentsRepository;
+
     
     public UserDetailsServiceCustom(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -63,43 +58,26 @@ public class UserDetailsServiceCustom implements UserDetailsService {
 
         String firstName = null;
         Integer userId = null;
-        Integer studentId = null;
-        Integer teacherId = null;
-        Integer parentId = null;
+        Integer userProfileId = null;
+
 
         firstName = user.getFirstName();
         userId = user.getId();
 
-        if (authorities.contains(new SimpleGrantedAuthority("STUDENT"))) {
-            Student student = studentRepository.findByUserId(userId);
+        if (authorities.contains(new SimpleGrantedAuthority("USER"))) {
+            UserProfile student = userProfileRepository.findByUserId(userId);
             if (student != null) {
-                studentId = student.getStudentId();
+                userProfileId = student.getUserProfileId();
             }
         }
-        
-        if (authorities.contains(new SimpleGrantedAuthority("TEACHER"))) {
-            Teacher teacher = teacherRepository.findByUserId(userId);
-            if (teacher != null) {
-                teacherId = teacher.getTeacherId();
-            }
-        }
-        
-        if (authorities.contains(new SimpleGrantedAuthority("PARENT"))) {
 
-            Parents parent = parentsRepository.findById(userId).orElse(null);
-            if (parent != null) {
-                parentId = parent.getParentsId();
-            }
-        }
 
         return new UserDetailsCustom(
                 user.getEmail(),
                 user.getPassword(),
                 firstName,
                 userId,
-                studentId,
-                teacherId,
-                parentId,
+                userProfileId,
                 authorities
         );
     }
