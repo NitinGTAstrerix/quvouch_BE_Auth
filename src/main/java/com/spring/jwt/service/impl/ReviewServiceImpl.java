@@ -1,10 +1,11 @@
 package com.spring.jwt.service.impl;
 
 import com.spring.jwt.dto.ReviewResponse;
+import com.spring.jwt.dto.ReviewStatsDTO;
 import com.spring.jwt.entity.Business;
 import com.spring.jwt.entity.Review;
 import com.spring.jwt.dto.ReviewRequestDto;
-import com.spring.jwt.mapper.ReviewMapper; // ✅ Added Import
+import com.spring.jwt.mapper.ReviewMapper;
 import com.spring.jwt.repository.BusinessRepository;
 import com.spring.jwt.repository.ReviewRepository;
 import com.spring.jwt.service.ReviewService;
@@ -40,7 +41,6 @@ public class ReviewServiceImpl implements ReviewService {
         review.setFeedbackText(requestDto.getFeedbackText());
         review.setFeedbackCategory(requestDto.getFeedbackCategory());
 
-        // TODO: In the future, fetch this URL dynamically from the business object: business.getGoogleMapUrl()
         String clientGoogleUrl = "https://search.google.com/local/writereview?placeid=EXAMPLE";
 
         if (requestDto.getRating() >= 4) {
@@ -68,5 +68,10 @@ public class ReviewServiceImpl implements ReviewService {
                 .stream()
                 .map(reviewMapper::toResponse)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public ReviewStatsDTO getReviewStatistics(Integer businessId) {
+        return reviewRepository.getReviewStatistics(businessId);
     }
 }

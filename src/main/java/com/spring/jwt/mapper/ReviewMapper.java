@@ -15,10 +15,9 @@ public class ReviewMapper {
     }
 
     public ReviewResponse toResponse(Review review) {
-        // 1. Automatic mapping for matching fields (id, rating, etc.)
+
         ReviewResponse response = modelMapper.map(review, ReviewResponse.class);
 
-        // 2. Manual mapping for nested Business fields (Safety check)
         if (review.getBusiness() != null) {
             response.setBusinessId(review.getBusiness().getBusinessId());
             response.setBusinessName(review.getBusiness().getBusinessName());

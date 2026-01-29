@@ -1,12 +1,14 @@
 package com.spring.jwt.services;
 
+import com.spring.jwt.dto.ReviewRequestDto;
+import com.spring.jwt.dto.ReviewStatsDTO;
 import com.spring.jwt.entity.Business;
 import com.spring.jwt.entity.Review;
 import com.spring.jwt.entity.Review.ReviewStatus;
-import com.spring.jwt.dto.ReviewRequestDto;
-import com.spring.jwt.service.impl.ReviewServiceImpl;
+import com.spring.jwt.mapper.ReviewMapper;
 import com.spring.jwt.repository.BusinessRepository;
 import com.spring.jwt.repository.ReviewRepository;
+import com.spring.jwt.service.impl.ReviewServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,8 +22,7 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ReviewServiceImplTest {
@@ -31,6 +32,9 @@ class ReviewServiceImplTest {
 
     @Mock
     private BusinessRepository businessRepository;
+
+    @Mock
+    private ReviewMapper reviewMapper;
 
     @InjectMocks
     private ReviewServiceImpl reviewService;
@@ -88,5 +92,21 @@ class ReviewServiceImplTest {
         });
 
         assertTrue(exception.getMessage().contains("not found"));
+    }
+
+    @Test
+    @DisplayName("Stats: Should retrieve statistics correctly")
+    void testGetReviewStatistics() {
+
+        ReviewStatsDTO mockStats = new ReviewStatsDTO(50, 40L, 10L, 4.2);
+        when(reviewRepository.getReviewStatistics(businessId)).thenReturn(mockStats);
+
+        ReviewStatsDTO result = reviewService.getReviewStatistics(businessId);
+
+        assertNotNull(result);
+        assertEquals(50, result.getTotalReviews());
+        assertEquals(4.2, result.getAverageRating());
+
+        verify(reviewRepository, times(1)).getReviewStatistics(businessId);
     }
 }

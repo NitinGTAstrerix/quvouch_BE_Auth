@@ -3,6 +3,7 @@ package com.spring.jwt.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.jwt.dto.ReviewRequestDto;
 import com.spring.jwt.dto.ReviewResponse;
+import com.spring.jwt.dto.ReviewStatsDTO;
 import com.spring.jwt.entity.Business;
 import com.spring.jwt.entity.Review;
 import com.spring.jwt.entity.Review.ReviewStatus;
@@ -26,7 +27,9 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -99,7 +102,6 @@ class ReviewControllerTest {
     @DisplayName("POST /rate - Should Return 201 Created")
     void testSubmitReview_Success() throws Exception {
         when(reviewService.submitReview(any(ReviewRequestDto.class))).thenReturn(mockReview);
-
         when(reviewMapper.toResponse(any(Review.class))).thenReturn(mockResponse);
 
         mockMvc.perform(post("/api/v1/qr/{qrCodeId}/rate", qrCodeId)
@@ -119,5 +121,22 @@ class ReviewControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(requestDto)))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @DisplayName("GET /reviews/business/{id}/stats - Should Return Statistics")
+    void testGetReviewStats() throws Exception {
+
+        ReviewStatsDTO mockStats = new ReviewStatsDTO(100L, 80L, 20L, 4.5);
+
+        when(reviewService.getReviewStatistics(eq(businessId))).thenReturn(mockStats);
+
+        mockMvc.perform(get("/api/v1/qr/reviews/business/{businessId}/stats", businessId)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.totalReviews").value(100))
+                .andExpect(jsonPath("$.publicReviews").value(80))
+                .andExpect(jsonPath("$.internalReviews").value(20))
+                .andExpect(jsonPath("$.averageRating").value(4.5));
     }
 }
