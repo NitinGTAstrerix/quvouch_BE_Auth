@@ -57,6 +57,13 @@ public class BusinessServiceImpl implements BusinessService {
     }
 
     @Override
+    public BusinessResponseDto getBusinessByOwn() {
+        Integer id = getCurrentUserProfile().getId();
+        Business business = businessRepository.findByUser_Id(id).orElseThrow(() -> new BusinessNotFound("Business not found"));
+        return mapper.toBusiness(business);
+    }
+
+    @Override
     public List<BusinessResponseDto> getAllBusiness() {
         List<Business> allBusiness = businessRepository.findAll();
 

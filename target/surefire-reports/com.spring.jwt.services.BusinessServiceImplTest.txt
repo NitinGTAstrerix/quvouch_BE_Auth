@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.spring.jwt.services.BusinessServiceImplTest
+-------------------------------------------------------------------------------
+Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.504 s -- in com.spring.jwt.services.BusinessServiceImplTest

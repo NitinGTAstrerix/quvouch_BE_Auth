@@ -16,6 +16,8 @@ public interface BusinessService {
 
     BusinessResponseDto getBusinessById(Integer businessId);
 
+    BusinessResponseDto getBusinessByOwn();
+
     List<BusinessResponseDto> getAllBusiness();
 
     Page<BusinessResponseDto> getAllBusinessByPageNumber(int pageNo, int pageSize);
