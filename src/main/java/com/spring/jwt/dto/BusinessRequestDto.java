@@ -20,9 +20,6 @@ public class BusinessRequestDto {
     @NotNull(message = "Business Type is required")
     private String businessType;
 
-    @NotNull(message = "Address is required")
-    private String address;
-
     @NotNull(message = "Phone number is required")
     @Pattern(
             regexp = "^[6-9]\\d{9}$",
@@ -30,4 +27,10 @@ public class BusinessRequestDto {
     )
     private Long phoneNumber;
 
+    @NotNull(message = "Email is required")
+    @jakarta.validation.constraints.Email
+    private String email;
+
+    @NotNull(message = "Address is required")
+    private String address;
 }

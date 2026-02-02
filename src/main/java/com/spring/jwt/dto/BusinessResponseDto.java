@@ -1,6 +1,7 @@
 package com.spring.jwt.dto;
 
 import com.spring.jwt.entity.Business;
+import com.spring.jwt.entity.BusinessStatus;
 import com.spring.jwt.entity.User;
 import lombok.*;
 
@@ -14,13 +15,13 @@ import java.time.Instant;
 public class BusinessResponseDto {
 
     private Integer businessId;
-
     private String businessName;
     private String businessType;
     private String address;
     private Long phoneNumber;
+    private String email;
+    private BusinessStatus status;
     private Instant createdAt;
     private Instant updatedAt;
-
     private Integer userId;
 }

@@ -23,6 +23,8 @@ public class Business {
     private String businessType;
     private String address;
     private Long phoneNumber;
+    @Enumerated(EnumType.STRING)
+    private BusinessStatus status = BusinessStatus.ACTIVE;
     private Instant createdAt= Instant.now();
     private Instant updatedAt = Instant.now();
 

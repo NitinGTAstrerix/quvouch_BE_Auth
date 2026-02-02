@@ -161,6 +161,14 @@ public class AppConfig {
                 .requestMatchers("/api/public/**").permitAll()
                 .requestMatchers("/user/**").permitAll()
 
+                // Sales APIs
+                .requestMatchers("/api/v1/sales/**")
+                .hasAuthority("SALE_REPRESENTATIVE")
+
+                // QR Business APIs
+                .requestMatchers("/api/v1/qr/reviews/business/**")
+                .hasAnyAuthority("ADMIN", "SALE_REPRESENTATIVE", "CLIENT")
+
                 .requestMatchers("/api/v1/qr/reviews/business/**").hasAnyAuthority("ADMIN", "SALE_REPRESENTATIVE", "CLIENT")
 
                 .anyRequest().authenticated());
