@@ -4,6 +4,7 @@ package com.spring.jwt.exception;
 import com.spring.jwt.utils.BaseResponseDTO;
 import com.spring.jwt.utils.ErrorResponseDto;
 import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.UnexpectedTypeException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpHeaders;
@@ -24,6 +25,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
@@ -296,5 +298,15 @@ public class GlobalException extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(body,HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(UnexpectedTypeException.class)
+    public ResponseEntity<Map<String, Object>> handleMethodArgumentNotValid(UnexpectedTypeException e)
+    {
+        Map<String, Object> body = new HashMap<>();
+        body.put("timestamp",new Date());
+        body.put("status", "Argument is invalid");
+        body.put("error", "Check Argument");
+        body.put("message", e.getMessage());
+        return new ResponseEntity<>(body,HttpStatus.NOT_FOUND);
+    }
 
 }
