@@ -2,7 +2,7 @@ package com.spring.jwt.utils;
 
 import com.spring.jwt.entity.Role;
 import com.spring.jwt.repository.RoleRepository;
-import jakarta.annotation.PostConstruct;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,7 +10,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
-public class LRIUtils {
+public class LRIUtils implements CommandLineRunner {
 
     private final RoleRepository roleRepository;
 
@@ -18,10 +18,14 @@ public class LRIUtils {
         this.roleRepository = roleRepository;
     }
 
-    @PostConstruct
+    @Override
     @Transactional
+    public void run(String... args) throws Exception {
+        initRoles();
+    }
+
     public void initRoles() {
-        Set<String> rolesToAdd = Set.of("USER", "ADMIN","SALE_REPRESENTATIVE","CLIENT");
+        Set<String> rolesToAdd = Set.of("USER", "ADMIN", "SALE_REPRESENTATIVE", "CLIENT");
 
         Set<String> existingRoles = roleRepository.findAll()
                 .stream()

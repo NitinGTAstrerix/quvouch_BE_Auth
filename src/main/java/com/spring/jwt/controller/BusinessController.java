@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +21,7 @@ public class BusinessController {
     private final BusinessService businessService;
     private final BusinessMapper businessMapper;
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','SALE_REPRESENTATIVE')")
     @PostMapping
     public ResponseEntity<BusinessResponseDto> creteBusiness(@RequestBody BusinessRequestDto businessRequestDto)
     {
@@ -27,6 +29,7 @@ public class BusinessController {
         return ResponseEntity.status(HttpStatus.CREATED).body(business);
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','SALE_REPRESENTATIVE')")
     @GetMapping("{businessId}")
     public ResponseEntity<BusinessResponseDto> getBusinessById(@PathVariable Integer businessId)
     {
@@ -34,6 +37,14 @@ public class BusinessController {
         return ResponseEntity.ok(business);
     }
 
+    @GetMapping("/own")
+    public ResponseEntity<BusinessResponseDto> getBusinessOwn()
+    {
+        BusinessResponseDto businessByOwn = businessService.getBusinessByOwn();
+        return ResponseEntity.ok(businessByOwn);
+    }
+
+    @PreAuthorize("hasAnyAuthority('ADMIN','SALE_REPRESENTATIVE')")
     @GetMapping
     public ResponseEntity<List<BusinessResponseDto>> getBusinesses()
     {
@@ -41,6 +52,7 @@ public class BusinessController {
         return ResponseEntity.ok(allBusiness);
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','SALE_REPRESENTATIVE')")
     @GetMapping("/page")
     public ResponseEntity<Page<BusinessResponseDto>> getBusinessByPageNumber(@RequestParam int pageNo, @RequestParam int pageSize)
     {
