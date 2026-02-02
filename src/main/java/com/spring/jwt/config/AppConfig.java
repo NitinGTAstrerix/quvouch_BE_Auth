@@ -159,9 +159,11 @@ public class AppConfig {
                         "/swagger-ui.html"
                 ).permitAll()
 
+                .requestMatchers("/api/v1/qr/reviews").hasAuthority("ADMIN")
                 .requestMatchers("/api/public/**").permitAll()
                 .requestMatchers("/user/**").permitAll()
 
+                .requestMatchers("/api/v1/qr/reviews/business/**").hasAnyAuthority("ADMIN", "SALE_REPRESENTATIVE", "CLIENT")
 
                 .anyRequest().authenticated());
 
