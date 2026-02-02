@@ -1,1 +1,6 @@
+com\spring\jwt\repository\ReviewRepositoryTest.class
 com\spring\jwt\JwtWithSpringSecurityApplicationTests.class
+com\spring\jwt\controller\BusinessControllerTest.class
+com\spring\jwt\services\ReviewServiceImplTest.class
+com\spring\jwt\controller\ReviewControllerTest.class
+com\spring\jwt\services\BusinessServiceImplTest.class
