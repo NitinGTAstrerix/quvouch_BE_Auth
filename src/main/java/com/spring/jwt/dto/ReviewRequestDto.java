@@ -1,8 +1,6 @@
 package com.spring.jwt.dto;
 
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 import java.util.UUID;
 
@@ -21,8 +19,15 @@ public class ReviewRequestDto {
     private Integer rating;
 
     private String customerName;
+
+    @NotBlank(message = "Customer email is required")
+    @Email(message = "Invalid email format")
     private String customerEmail;
+
+
+    @Pattern(regexp = "^\\d{10}$", message = "Customer phone must be exactly 10 digits")
     private String customerPhone;
+
     private String feedbackText;
     private String feedbackCategory;
 }

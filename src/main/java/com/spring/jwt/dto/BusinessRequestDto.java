@@ -1,9 +1,7 @@
 package com.spring.jwt.dto;
 
 import com.spring.jwt.entity.User;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
 @Getter
@@ -30,4 +28,7 @@ public class BusinessRequestDto {
     )
     private Long phoneNumber;
 
+    @NotBlank(message = "Customer email is required")
+    @Email(message = "Invalid email format")
+    private String businessEmail;
 }

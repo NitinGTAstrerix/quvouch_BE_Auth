@@ -1,8 +1,9 @@
 package com.spring.jwt.mapper;
 
+import org.springframework.stereotype.Component;
+
 import com.spring.jwt.dto.QrCodeResponse;
 import com.spring.jwt.entity.QrCode;
-import org.springframework.stereotype.Component;
 
 @Component
 public class QrCodeMapper {

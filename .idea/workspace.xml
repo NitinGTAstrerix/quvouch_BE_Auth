@@ -5,285 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="97e0c643-177d-43a6-bf1c-18cb403958f3" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/controller/QrCodeController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/controller/QrScanController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/dto/QrCodeResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/entity/QrCode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/mapper/QrCodeMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/repository/QrCodeRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/service/QrCodeService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/service/impl/QrCodeServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/utils/QrCodeGenerator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/spring/jwt/controller/QrCodeControllerTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/spring/jwt/services/QrCodeScanServiceImplTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/S temp.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/spring/jwt/config/AppConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/config/AppConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/spring/jwt/controller/BusinessController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/controller/BusinessController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/spring/jwt/JwtWithSpringSecurityApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/JwtWithSpringSecurityApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/spring/jwt/config/filter/CustomAuthenticationProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/config/filter/CustomAuthenticationProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/spring/jwt/dto/BusinessRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/dto/BusinessRequestDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/spring/jwt/dto/BusinessResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/dto/BusinessResponseDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/spring/jwt/dto/ReviewRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/dto/ReviewRequestDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/spring/jwt/entity/Business.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/entity/Business.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/spring/jwt/exception/GlobalException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/exception/GlobalException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/spring/jwt/entity/QrCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/entity/QrCode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/spring/jwt/mapper/QrCodeMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/mapper/QrCodeMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/spring/jwt/repository/BusinessRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/repository/BusinessRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/spring/jwt/service/BusinessService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/service/BusinessService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/spring/jwt/service/impl/BusinessServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/service/impl/BusinessServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application-dev.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-dev.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application-dev.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application-dev.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/spring/jwt/config/AppConfig$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/spring/jwt/config/AppConfig$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/spring/jwt/config/AppConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/spring/jwt/config/AppConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/spring/jwt/controller/BusinessController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/spring/jwt/controller/BusinessController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/spring/jwt/entity/Business$BusinessBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/spring/jwt/entity/Business$BusinessBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/spring/jwt/entity/Business.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/spring/jwt/entity/Business.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/spring/jwt/exception/GlobalException.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/spring/jwt/exception/GlobalException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/spring/jwt/repository/BusinessRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/spring/jwt/repository/BusinessRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/spring/jwt/service/BusinessService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/spring/jwt/service/BusinessService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/spring/jwt/service/impl/BusinessServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/spring/jwt/service/impl/BusinessServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/jacoco.exec" beforeDir="false" afterPath="$PROJECT_DIR$/target/jacoco.exec" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.config.filter/CustomAuthenticationProvider.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.config.filter/CustomAuthenticationProvider.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.config.filter/JwtRefreshTokenFilter$RefreshTokenAuthentication.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.config.filter/JwtRefreshTokenFilter.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.config.filter/JwtRefreshTokenFilter.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.config.filter/JwtTokenAuthenticationFilter.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.config.filter/JwtTokenAuthenticationFilter.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.config.filter/JwtUsernamePasswordAuthenticationFilter.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.config.filter/JwtUsernamePasswordAuthenticationFilter.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.config.filter/RateLimitingFilter$RequestCounter.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.config.filter/RateLimitingFilter.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.config.filter/RateLimitingFilter.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.config.filter/SecurityHeadersFilter.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.config.filter/SecurityHeadersFilter.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.config.filter/SqlInjectionFilter$SqlInjectionRequestWrapper$1.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.config.filter/SqlInjectionFilter$SqlInjectionRequestWrapper.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.config.filter/SqlInjectionFilter.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.config.filter/SqlInjectionFilter.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.config.filter/XssFilter$XssRequestWrapper$1.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.config.filter/XssFilter$XssRequestWrapper.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.config.filter/XssFilter.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.config.filter/XssFilter.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.config.filter/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.config.filter/index.source.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.config/AppConfig$1.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.config/AppConfig.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.config/AppConfig.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.config/OpenApiConfig.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.config/OpenApiConfig.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.config/RateLimitingAspect.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.config/RateLimitingAspect.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.config/RateLimitingConfig.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.config/RateLimitingConfig.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.config/SchedulingConfig.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.config/SchedulingConfig.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.config/SecurityHeadersConfig$1.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.config/SecurityHeadersConfig.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.config/SecurityHeadersConfig.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.config/SslConfig.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.config/SslConfig.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.config/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.config/index.source.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.controller/AuthController.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.controller/AuthController.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.controller/UserController.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.controller/UserController.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.controller/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.controller/index.source.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.dto/EmailVerificationMapper.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.dto/EmailVerificationMapper.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.dto/LoginRequest.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.dto/LoginRequest.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.dto/PageResponseDto.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.dto/PageResponseDto.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.dto/RefreshTokenRequest.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.dto/RefreshTokenRequest.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.dto/ResetPassword.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.dto/ResetPassword.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.dto/ResponseAllUsersDto.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.dto/ResponseAllUsersDto.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.dto/ResponseDto.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.dto/ResponseDto.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.dto/TokenResponse.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.dto/TokenResponse.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.dto/UserDTO.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.dto/UserDTO.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.dto/UserProfileDTO.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.dto/UserProfileDTO.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.dto/UserProfileDTO1.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.dto/UserProfileDTO1.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.dto/UserUpdateRequest.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.dto/UserUpdateRequest.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.dto/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.dto/index.source.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.entity/Role.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.entity/Role.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.entity/User.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.entity/User.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.entity/UserForm.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.entity/UserForm.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.entity/UserProfile.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.entity/UserProfile.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.entity/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.entity/index.source.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.exception/BaseException.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.exception/BaseException.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.exception/CustomAccessDeniedHandler.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.exception/CustomAccessDeniedHandler.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.exception/EmailNotVerifiedException.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.exception/EmailNotVerifiedException.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.exception/EmptyFieldException.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.exception/EmptyFieldException.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.exception/ExamOnHolidayException.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.exception/ExamOnHolidayException.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.exception/ExamTimeWindowException.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.exception/ExamTimeWindowException.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.exception/GlobalException.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.exception/GlobalException.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.exception/InvalidOtpException.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.exception/InvalidOtpException.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.exception/InvalidPaginationParameterException.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.exception/InvalidPaginationParameterException.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.exception/NotesNotCreatedException.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.exception/NotesNotCreatedException.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.exception/OtpExpiredException.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.exception/OtpExpiredException.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.exception/PageNotFoundException.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.exception/PageNotFoundException.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.exception/PaperFetchException.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.exception/PaperFetchException.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.exception/ResourceNotFoundException.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.exception/ResourceNotFoundException.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.exception/UserAlreadyExistException.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.exception/UserAlreadyExistException.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.exception/UserNotFoundExceptions.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.exception/UserNotFoundExceptions.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.exception/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.exception/index.source.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.jwt.impl/JwtServiceImpl.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.jwt.impl/JwtServiceImpl.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.jwt.impl/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.jwt.impl/index.source.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.jwt/ActiveSessionService$SessionInfo.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.jwt/ActiveSessionService.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.jwt/ActiveSessionService.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.jwt/JwtConfig.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.jwt/JwtConfig.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.jwt/TokenBlacklistService$BlacklistStats.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.jwt/TokenBlacklistService$TokenInfo.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.jwt/TokenBlacklistService.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.jwt/TokenBlacklistService.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.jwt/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.jwt/index.source.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.mapper/UserMapper.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.mapper/UserMapper.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.mapper/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.mapper/index.source.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.repository/LocalDateTimeToOffsetDateTimeConverter.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.repository/LocalDateTimeToOffsetDateTimeConverter.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.repository/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.repository/index.source.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.service.impl/UserServiceImpl.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.service.impl/UserServiceImpl.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.service.impl/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.service.impl/index.source.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.service.security/UserDetailsCustom.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.service.security/UserDetailsCustom.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.service.security/UserDetailsServiceCustom.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.service.security/UserDetailsServiceCustom.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.service.security/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.service.security/index.source.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils.EmailVerificationService.EmailUtils/EmailVerificationDto.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils.EmailVerificationService.EmailUtils/EmailVerificationDto.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils.EmailVerificationService.EmailUtils/EmailVerificationRequest.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils.EmailVerificationService.EmailUtils/EmailVerificationRequest.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils.EmailVerificationService.EmailUtils/ResponseMessage.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils.EmailVerificationService.EmailUtils/ResponseMessage.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils.EmailVerificationService.EmailUtils/VerifyOtpDTO.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils.EmailVerificationService.EmailUtils/VerifyOtpDTO.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils.EmailVerificationService.EmailUtils/VerifyOtpRequest.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils.EmailVerificationService.EmailUtils/VerifyOtpRequest.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils.EmailVerificationService.EmailUtils/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils.EmailVerificationService.EmailUtils/index.source.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils.EmailVerificationService/EmailVerification.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils.EmailVerificationService/EmailVerification.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils.EmailVerificationService/EmailVerificationController.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils.EmailVerificationService/EmailVerificationController.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils.EmailVerificationService/EmailVerificationServiceImpl$1.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils.EmailVerificationService/EmailVerificationServiceImpl.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils.EmailVerificationService/EmailVerificationServiceImpl.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils.EmailVerificationService/OtpUtil.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils.EmailVerificationService/OtpUtil.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils.EmailVerificationService/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils.EmailVerificationService/index.source.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils/ApiResponse$ApiResponseBuilder.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils/ApiResponse.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils/ApiResponse.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils/BaseResponseDTO$BaseResponseDTOBuilder.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils/BaseResponseDTO.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils/BaseResponseDTO.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils/CookieService.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils/CookieService.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils/DataMaskingUtils.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils/DataMaskingUtils.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils/DecryptionResponseProcessor.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils/DecryptionResponseProcessor.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils/EmailService$1.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils/EmailService.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils/EmailService.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils/EncryptionMigrationUtil.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils/EncryptionMigrationUtil.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils/EncryptionUtil.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils/EncryptionUtil.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils/ErrorResponseDto.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils/ErrorResponseDto.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils/GenericResponseDto.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils/GenericResponseDto.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils/HelperUtils.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils/HelperUtils.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils/KeystoreInitializer.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils/KeystoreInitializer.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils/LRIUtils.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils/LRIUtils.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils/ResponseDto.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils/ResponseDto.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils/SecurityAuditLogger.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils/SecurityAuditLogger.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils/StringEncryptConverter.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils/StringEncryptConverter.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt.utils/index.source.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt/JwtWithSpringSecurityApplication.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt/JwtWithSpringSecurityApplication.java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/com.spring.jwt/index.source.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/jacoco-resources/branchfc.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/jacoco-resources/branchnc.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/jacoco-resources/branchpc.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/jacoco-resources/bundle.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/jacoco-resources/class.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/jacoco-resources/down.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/jacoco-resources/greenbar.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/jacoco-resources/group.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/jacoco-resources/method.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/jacoco-resources/package.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/jacoco-resources/prettify.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/jacoco-resources/prettify.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/jacoco-resources/redbar.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/jacoco-resources/report.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/jacoco-resources/report.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/jacoco-resources/session.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/jacoco-resources/sort.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/jacoco-resources/sort.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/jacoco-resources/source.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/jacoco-resources/up.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/jacoco-sessions.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/jacoco.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/jacoco.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/spring/jwt/repository/QrCodeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/repository/QrCodeRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/spring/jwt/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/repository/UserRepository.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -300,6 +33,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="feature/review-module" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -311,7 +49,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/NitinGTAstrerix/quvouch_BE_Auth.git&quot;,
-    &quot;accountId&quot;: &quot;0b05d78c-7c58-416a-9ce5-7ade4e280ca0&quot;
+    &quot;accountId&quot;: &quot;7242ff3e-9667-41ad-b36e-96282b318a89&quot;
   }
 }</component>
   <component name="MarkdownSettingsMigration">
@@ -323,6 +61,10 @@
         <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
       </MavenGeneralSettings>
     </option>
+  </component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
   </component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="ProjectErrors" />
@@ -358,21 +100,33 @@
     &quot;JUnit.ReviewRepositoryTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.ReviewRepositoryTest.testFindReviewsByBusinessId.executor&quot;: &quot;Run&quot;,
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
     &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;D:/GT/S temp/s temp&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.grazie&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.grazie&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected="JUnit.QrCodeControllerTest">
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\HP\Documents\workspace\quvouch_BE_Auth\src\main\java\com\spring\jwt\dto" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.JwtWithSpringSecurityApplication">
     <configuration name="JwtWithSpringSecurityApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="ALTERNATIVE_JRE_PATH" value="17 (2)" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
@@ -474,23 +228,40 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="JwtWithSpringSecurityApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="JWT-with-Spring-Security" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.spring.jwt.JwtWithSpringSecurityApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="Application.JwtWithSpringSecurityApplication" />
+      <item itemvalue="JUnit.ReviewRepositoryTest.testFindReviewsByBusinessId" />
       <item itemvalue="JUnit.QrCodeControllerTest" />
       <item itemvalue="JUnit.QrCodeControllerTest.shouldFailGetAllQrWithoutAdminRole" />
       <item itemvalue="JUnit.QrCodeControllerTest.shouldGetAllQrCodesForAdmin" />
       <item itemvalue="JUnit.QrCodeServiceImplTest" />
-      <item itemvalue="JUnit.ReviewRepositoryTest.testFindReviewsByBusinessId" />
+      <item itemvalue="Spring Boot.JwtWithSpringSecurityApplication" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.QrCodeControllerTest" />
-        <item itemvalue="JUnit.QrCodeControllerTest.shouldGetAllQrCodesForAdmin" />
-        <item itemvalue="JUnit.QrCodeControllerTest.shouldFailGetAllQrWithoutAdminRole" />
         <item itemvalue="Application.JwtWithSpringSecurityApplication" />
         <item itemvalue="JUnit.QrCodeServiceImplTest" />
+        <item itemvalue="JUnit.QrCodeControllerTest.shouldGetAllQrCodesForAdmin" />
+        <item itemvalue="JUnit.QrCodeControllerTest.shouldFailGetAllQrWithoutAdminRole" />
+        <item itemvalue="JUnit.QrCodeControllerTest" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-26cb7f24e5b0-intellij.indexing.shared.core-IU-253.29346.138" />
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.29346.138" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -500,8 +271,16 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1756381069388</updated>
+      <workItem from="1770095905319" duration="1185000" />
+      <workItem from="1770099409025" duration="7304000" />
+      <workItem from="1770115857094" duration="1452000" />
+      <workItem from="1770117343015" duration="413000" />
+      <workItem from="1770117775737" duration="1652000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
