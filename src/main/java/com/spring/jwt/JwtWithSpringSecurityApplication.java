@@ -25,8 +25,8 @@ import java.util.Optional;
 )
 @OpenAPIDefinition(
 		info = @Info(
-				title = " REST API Documentation",
-				description = " REST API Documentation" ,
+				title = " Quvouch",
+				description = " QR-Driven Review Management System" ,
 				version = "v1",
 				contact = @Contact(
 						name = "A",

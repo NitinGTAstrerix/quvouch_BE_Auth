@@ -27,6 +27,9 @@ public class QrCode {
     @JoinColumn(name = "business_id", nullable = false)
     private Business business;
 
+    @Enumerated(EnumType.STRING)
+    private QrStatus status = QrStatus.ACTIVE;
+
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
@@ -39,5 +42,10 @@ public class QrCode {
     @PreUpdate
     public void onUpdate() {
         this.updatedAt = LocalDateTime.now();
+    }
+
+    public enum QrStatus {
+        ACTIVE,
+        INACTIVE
     }
 }

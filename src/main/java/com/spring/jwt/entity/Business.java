@@ -1,6 +1,8 @@
 package com.spring.jwt.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,6 +26,14 @@ public class Business {
     private String businessType;
     private String address;
     private Long phoneNumber;
+
+    @NotBlank(message = "Customer email is required")
+    @Email(message = "Invalid email format")
+    private String businessEmail;
+
+    @Enumerated(EnumType.STRING)
+    private BusinessStatus status = BusinessStatus.ACTIVE;
+
     private Instant createdAt= Instant.now();
     private Instant updatedAt = Instant.now();
 
@@ -52,4 +62,10 @@ public class Business {
             updatedAt = Instant.now();
         }
     }
+    public enum BusinessStatus {
+        ACTIVE,
+        INACTIVE,
+        PENDING
+    }
+
 }
