@@ -5,6 +5,7 @@ import com.spring.jwt.dto.ReviewStatsDTO;
 import com.spring.jwt.entity.Business;
 import com.spring.jwt.entity.Review;
 import com.spring.jwt.dto.ReviewRequestDto;
+import com.spring.jwt.exception.ResourceNotFoundException;
 import com.spring.jwt.mapper.ReviewMapper;
 import com.spring.jwt.repository.BusinessRepository;
 import com.spring.jwt.repository.ReviewRepository;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -74,4 +76,16 @@ public class ReviewServiceImpl implements ReviewService {
     public ReviewStatsDTO getReviewStatistics(Integer businessId) {
         return reviewRepository.getReviewStatistics(businessId);
     }
+
+    @Override
+    public List<ReviewResponse> getReviewsByQrCode(UUID qrCodeId) {
+
+        List<Review> reviews = reviewRepository.findByQrCodeId(qrCodeId);
+
+        return reviews.stream()
+                .map(reviewMapper::toResponse)
+                .toList();
+    }
+
+
 }

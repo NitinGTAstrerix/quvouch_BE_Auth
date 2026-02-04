@@ -1,6 +1,7 @@
 package com.spring.jwt.repository;
 
 import com.spring.jwt.dto.ReviewStatsDTO;
+import com.spring.jwt.entity.QrCode;
 import com.spring.jwt.entity.Review;
 import com.spring.jwt.entity.Review.ReviewStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -27,4 +29,6 @@ public interface ReviewRepository extends JpaRepository<Review, UUID> {
             "FROM Review r " +
             "WHERE r.business.businessId = :businessId")
     ReviewStatsDTO getReviewStatistics(@Param("businessId") Integer businessId);
+
+    List<Review> findByQrCodeId(UUID qrCodeId);
 }
