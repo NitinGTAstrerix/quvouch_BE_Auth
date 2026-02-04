@@ -56,4 +56,13 @@ public class ReviewController {
         ReviewStatsDTO stats = reviewService.getReviewStatistics(businessId);
         return ResponseEntity.ok(stats);
     }
+
+    @GetMapping("/qr/{qrCodeId}")
+    public ResponseEntity<List<ReviewResponse>> getByQrCode(
+            @PathVariable UUID qrCodeId) {
+
+        return ResponseEntity.ok(
+                reviewService.getReviewsByQrCode(qrCodeId)
+        );
+    }
 }

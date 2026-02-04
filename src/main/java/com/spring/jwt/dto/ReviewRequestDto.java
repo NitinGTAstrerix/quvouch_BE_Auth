@@ -18,12 +18,12 @@ public class ReviewRequestDto {
     @Max(value = 5, message = "Rating must be at most 5")
     private Integer rating;
 
+    @NotNull(message = "Customer Name is required")
     private String customerName;
 
     @NotBlank(message = "Customer email is required")
     @Email(message = "Invalid email format")
     private String customerEmail;
-
 
     @Pattern(regexp = "^\\d{10}$", message = "Customer phone must be exactly 10 digits")
     private String customerPhone;
