@@ -16,6 +16,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/sales/clients")
@@ -65,10 +66,19 @@ public class SalesClientController {
 
     @Operation(summary = "Toggle client status: PENDING → ACTIVE → INACTIVE")
     @PreAuthorize("hasAnyAuthority('SALE_REPRESENTATIVE', 'ADMIN')")
-    @PatchMapping("/{id}/status")
-    public ResponseEntity<String> changeStatus(@PathVariable Integer id) {
-        salesClientService.changeStatus(id);
-        return ResponseEntity.ok("Status Updated Successfully");
+    @PatchMapping("/clients/{id}/status/toggle")
+    public ResponseEntity<?> toggleClientStatus(@PathVariable Integer id) {
+
+        Business.BusinessStatus status =
+                salesClientService.changeStatus(id);
+
+        return ResponseEntity.ok(
+                Map.of(
+                        "message", "Status updated successfully",
+                        "clientId", id,
+                        "status", status
+                )
+        );
     }
 
     @Operation(summary = "Delete a client by ID")

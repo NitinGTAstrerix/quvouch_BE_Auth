@@ -20,7 +20,7 @@ public interface SalesClientService {
 
     BusinessResponseDto updateClient(Integer id, BusinessRequestDto dto);
 
-    void changeStatus(Integer id);
+    Business.BusinessStatus changeStatus(Integer id);
 
     SalesDashboardDto getDashboardData();
 

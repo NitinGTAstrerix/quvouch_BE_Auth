@@ -25,7 +25,7 @@ public class ReviewRequestDto {
     @Email(message = "Invalid email format")
     private String customerEmail;
 
-    @Pattern(regexp = "^\\d{10}$", message = "Customer phone must be exactly 10 digits")
+    @Pattern(regexp = "^[6-9]\\d{9}$", message = "Phone number must be a valid 10-digit Indian mobile number")
     private String customerPhone;
 
     private String feedbackText;

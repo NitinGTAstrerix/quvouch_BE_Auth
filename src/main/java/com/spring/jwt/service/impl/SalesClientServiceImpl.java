@@ -118,7 +118,7 @@ public class SalesClientServiceImpl implements SalesClientService {
     }
 
     @Override
-    public void changeStatus(Integer id) {
+    public Business.BusinessStatus changeStatus(Integer id) {
 
         User user = getCurrentUser();
 
@@ -127,20 +127,15 @@ public class SalesClientServiceImpl implements SalesClientService {
                 .orElseThrow(() ->
                         new RuntimeException("Client not found"));
 
-        Business.BusinessStatus status = business.getStatus();
+        Business.BusinessStatus newStatus =
+                business.getStatus().next();
 
-        if (status == Business.BusinessStatus.PENDING) {
-            business.setStatus(Business.BusinessStatus.ACTIVE);
-
-        } else if (status == Business.BusinessStatus.ACTIVE) {
-            business.setStatus(Business.BusinessStatus.INACTIVE);
-
-        } else {
-            business.setStatus(Business.BusinessStatus.ACTIVE);
-        }
+        business.setStatus(newStatus);
 
         businessRepository.save(business);
+        return newStatus;
     }
+
 
     @Override
     public SalesDashboardDto getDashboardData() {

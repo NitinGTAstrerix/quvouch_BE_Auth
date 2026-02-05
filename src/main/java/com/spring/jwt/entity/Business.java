@@ -61,9 +61,28 @@ public class Business {
         }
     }
     public enum BusinessStatus {
+
         ACTIVE,
         INACTIVE,
-        PENDING
+        PENDING;
+
+        public BusinessStatus next() {
+
+            switch (this) {
+                case PENDING:
+                    return ACTIVE;
+
+                case ACTIVE:
+                    return INACTIVE;
+
+                case INACTIVE:
+                    return ACTIVE;
+
+                default:
+                    throw new IllegalStateException("Invalid status");
+            }
+        }
     }
+
 
 }
