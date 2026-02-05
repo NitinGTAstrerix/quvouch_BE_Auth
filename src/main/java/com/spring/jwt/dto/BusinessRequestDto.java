@@ -26,7 +26,7 @@ public class BusinessRequestDto {
             regexp = "^[6-9]\\d{9}$",
             message = "Phone number must be a valid 10-digit Indian mobile number"
     )
-    private Long phoneNumber;
+    private String phoneNumber;
 
     @NotBlank(message = "Customer email is required")
     @Email(message = "Invalid email format")

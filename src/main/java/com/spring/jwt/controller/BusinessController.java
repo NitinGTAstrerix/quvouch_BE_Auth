@@ -4,6 +4,7 @@ import com.spring.jwt.dto.BusinessRequestDto;
 import com.spring.jwt.dto.BusinessResponseDto;
 import com.spring.jwt.mapper.BusinessMapper;
 import com.spring.jwt.service.BusinessService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,7 @@ public class BusinessController {
 
     @PreAuthorize("hasAnyAuthority('ADMIN','SALE_REPRESENTATIVE')")
     @PostMapping
-    public ResponseEntity<BusinessResponseDto> creteBusiness(@RequestBody BusinessRequestDto businessRequestDto)
+    public ResponseEntity<BusinessResponseDto> creteBusiness(@Valid @RequestBody BusinessRequestDto businessRequestDto)
     {
         BusinessResponseDto business = businessService.createBusiness(businessRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(business);

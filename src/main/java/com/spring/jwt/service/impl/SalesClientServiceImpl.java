@@ -7,12 +7,17 @@ import com.spring.jwt.dto.SalesDashboardDto;
 import com.spring.jwt.entity.Business;
 import com.spring.jwt.entity.QrCode;
 import com.spring.jwt.entity.User;
+import com.spring.jwt.exception.BaseException;
 import com.spring.jwt.repository.BusinessRepository;
 import com.spring.jwt.repository.QrCodeRepository;
+import com.spring.jwt.repository.UserRepository;
 import com.spring.jwt.service.SalesClientService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,13 +29,22 @@ public class SalesClientServiceImpl implements SalesClientService {
     private final BusinessRepository businessRepository;
     private final QrCodeRepository qrCodeRepository;
     private final ModelMapper modelMapper;
+    private final UserRepository userRepository;
 
     private User getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated())
+        {
+            throw new BaseException(String.valueOf(HttpStatus.UNAUTHORIZED.value()),"User is not Authenticated");
+        }
+        String email = authentication.getName();
+        User user = userRepository.findByEmail(email);
+        if (user == null)
+        {
+            throw new UsernameNotFoundException("User is not found");
+        }
 
-        return (User) SecurityContextHolder
-                .getContext()
-                .getAuthentication()
-                .getPrincipal();
+        return user;
     }
 
     @Override
