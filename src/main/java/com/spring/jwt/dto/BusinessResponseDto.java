@@ -15,7 +15,7 @@ public class BusinessResponseDto {
     private String businessName;
     private String businessType;
     private String address;
-    private Long phoneNumber;
+    private String phoneNumber;
     private Business.BusinessStatus status;
     private Instant createdAt;
     private Instant updatedAt;

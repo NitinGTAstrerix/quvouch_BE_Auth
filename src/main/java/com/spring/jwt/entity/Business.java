@@ -25,7 +25,7 @@ public class Business {
     private String businessName;
     private String businessType;
     private String address;
-    private Long phoneNumber;
+    private String phoneNumber;
 
     private String businessEmail;
 

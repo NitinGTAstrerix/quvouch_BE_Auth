@@ -26,7 +26,7 @@ public class SalesClientController {
     private final SalesClientService salesClientService;
 
     @Operation(summary = "Create a new client")
-    @PreAuthorize("hasAnyRole('SALE_REPRESENTATIVE', 'ADMIN')")
+    @PreAuthorize("hasAnyAuthority('SALE_REPRESENTATIVE', 'ADMIN')")
     @PostMapping
     public ResponseEntity<BusinessResponseDto> createClient(@RequestBody @Valid BusinessRequestDto dto) {
         BusinessResponseDto response = salesClientService.createClient(dto);
@@ -34,7 +34,7 @@ public class SalesClientController {
     }
 
     @Operation(summary = "Get all clients of the logged-in sales representative")
-    @PreAuthorize("hasAnyRole('SALE_REPRESENTATIVE', 'ADMIN')")
+    @PreAuthorize("hasAnyAuthority('SALE_REPRESENTATIVE', 'ADMIN')")
     @GetMapping
     public ResponseEntity<List<BusinessResponseDto>> getMyClients() {
         List<BusinessResponseDto> clients = salesClientService.getMyClients();
@@ -42,21 +42,21 @@ public class SalesClientController {
     }
 
     @Operation(summary = "Get details of a single client by ID")
-    @PreAuthorize("hasAnyRole('SALE_REPRESENTATIVE', 'ADMIN')")
+    @PreAuthorize("hasAnyAuthority('SALE_REPRESENTATIVE', 'ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<BusinessResponseDto> getClient(@PathVariable Integer id) {
         return ResponseEntity.ok(salesClientService.getClientById(id));
     }
 
     @Operation(summary = "Search clients by business name keyword")
-    @PreAuthorize("hasAnyRole('SALE_REPRESENTATIVE', 'ADMIN')")
+    @PreAuthorize("hasAnyAuthority('SALE_REPRESENTATIVE', 'ADMIN')")
     @GetMapping("/search")
     public ResponseEntity<List<BusinessResponseDto>> search(@RequestParam String keyword) {
         return ResponseEntity.ok(salesClientService.searchClients(keyword));
     }
 
     @Operation(summary = "Update an existing client")
-    @PreAuthorize("hasAnyRole('SALE_REPRESENTATIVE', 'ADMIN')")
+    @PreAuthorize("hasAnyAuthority('SALE_REPRESENTATIVE', 'ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<BusinessResponseDto> updateClient(@PathVariable Integer id,
                                                             @RequestBody @Valid BusinessRequestDto dto) {
@@ -64,7 +64,7 @@ public class SalesClientController {
     }
 
     @Operation(summary = "Toggle client status: PENDING → ACTIVE → INACTIVE")
-    @PreAuthorize("hasAnyRole('SALE_REPRESENTATIVE', 'ADMIN')")
+    @PreAuthorize("hasAnyAuthority('SALE_REPRESENTATIVE', 'ADMIN')")
     @PatchMapping("/{id}/status")
     public ResponseEntity<String> changeStatus(@PathVariable Integer id) {
         salesClientService.changeStatus(id);
@@ -72,7 +72,7 @@ public class SalesClientController {
     }
 
     @Operation(summary = "Delete a client by ID")
-    @PreAuthorize("hasAnyRole('SALE_REPRESENTATIVE', 'ADMIN')")
+    @PreAuthorize("hasAnyAuthority('SALE_REPRESENTATIVE', 'ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteClient(@PathVariable Integer id) {
         salesClientService.deleteClient(id);
@@ -80,21 +80,21 @@ public class SalesClientController {
     }
 
     @Operation(summary = "Get dashboard summary for the logged-in sales representative")
-    @PreAuthorize("hasAnyRole('SALE_REPRESENTATIVE', 'ADMIN')")
+    @PreAuthorize("hasAnyAuthority('SALE_REPRESENTATIVE', 'ADMIN')")
     @GetMapping("/dashboard")
     public ResponseEntity<SalesDashboardDto> getDashboard() {
         return ResponseEntity.ok(salesClientService.getDashboardData());
     }
 
     @Operation(summary = "Get clients filtered by status")
-    @PreAuthorize("hasAnyRole('SALE_REPRESENTATIVE', 'ADMIN')")
+    @PreAuthorize("hasAnyAuthority('SALE_REPRESENTATIVE', 'ADMIN')")
     @GetMapping("/status")
     public ResponseEntity<List<BusinessResponseDto>> getByStatus(@RequestParam Business.BusinessStatus value) {
         return ResponseEntity.ok(salesClientService.getClientsByStatus(value));
     }
 
     @Operation(summary = "Get all active QR codes of the logged-in user's clients")
-    @PreAuthorize("hasAnyRole('SALE_REPRESENTATIVE', 'ADMIN')")
+    @PreAuthorize("hasAnyAuthority('SALE_REPRESENTATIVE', 'ADMIN')")
     @GetMapping("/qr/active")
     public ResponseEntity<List<QrCodeResponse>> getActiveQrs() {
         return ResponseEntity.ok(salesClientService.getActiveQrCodes());
