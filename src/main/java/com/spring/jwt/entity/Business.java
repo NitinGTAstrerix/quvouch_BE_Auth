@@ -27,8 +27,6 @@ public class Business {
     private String address;
     private Long phoneNumber;
 
-    @NotBlank(message = "Customer email is required")
-    @Email(message = "Invalid email format")
     private String businessEmail;
 
     @Enumerated(EnumType.STRING)

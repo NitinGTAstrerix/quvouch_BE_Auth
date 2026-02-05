@@ -12,4 +12,6 @@ public interface QrCodeService {
     String EnableQrCode( String qrId);
 
     String DisableQrCode( String qrId);
+
+
 }
