@@ -19,6 +19,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -125,7 +126,15 @@ public class SalesClientServiceImpl implements SalesClientService {
         Business business = businessRepository
                 .findByBusinessIdAndUser(id, user)
                 .orElseThrow(() ->
-                        new RuntimeException("Client not found"));
+                        new ResponseStatusException(
+                                HttpStatus.NOT_FOUND,
+                                "Client not found"
+                        )
+                );
+
+        if (business.getStatus() == null) {
+            business.setStatus(Business.BusinessStatus.PENDING);
+        }
 
         Business.BusinessStatus newStatus =
                 business.getStatus().next();
