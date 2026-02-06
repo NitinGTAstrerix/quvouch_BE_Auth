@@ -66,7 +66,7 @@ public class SalesClientController {
 
     @Operation(summary = "Toggle client status: PENDING → ACTIVE → INACTIVE")
     @PreAuthorize("hasAnyAuthority('SALE_REPRESENTATIVE', 'ADMIN')")
-    @PatchMapping("/clients/{id}/status/toggle")
+    @PatchMapping("/{id}/status/toggle")
     public ResponseEntity<?> toggleClientStatus(@PathVariable Integer id) {
 
         Business.BusinessStatus status =
