@@ -6,7 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="97e0c643-177d-43a6-bf1c-18cb403958f3" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/spring/jwt/service/impl/SalesClientServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/service/impl/SalesClientServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/spring/jwt/controller/QrCodeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/controller/QrCodeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application-dev.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-dev.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,12 +37,12 @@
     &quot;assignee&quot;: &quot;NitinAlphaseam&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/NitinGTAstrerix/quvouch_BE_Auth.git",
-    "accountId": "7242ff3e-9667-41ad-b36e-96282b318a89"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/NitinGTAstrerix/quvouch_BE_Auth.git&quot;,
+    &quot;accountId&quot;: &quot;7242ff3e-9667-41ad-b36e-96282b318a89&quot;
   }
-}]]></component>
+}</component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -235,7 +236,6 @@
       <item itemvalue="JUnit.QrCodeControllerTest.shouldFailGetAllQrWithoutAdminRole" />
       <item itemvalue="JUnit.QrCodeControllerTest.shouldGetAllQrCodesForAdmin" />
       <item itemvalue="JUnit.QrCodeServiceImplTest" />
-      <item itemvalue="Spring Boot.JwtWithSpringSecurityApplication" />
     </list>
     <recent_temporary>
       <list>
