@@ -14,6 +14,7 @@ public class BusinessMapper {
                 .businessType(business.getBusinessType())
                 .address(business.getAddress())
                 .phoneNumber(business.getPhoneNumber())
+                .businessEmail(business.getBusinessEmail())
                 .createdAt(business.getCreatedAt())
                 .updatedAt(business.getUpdatedAt())
                 .userId(business.getUser().getId())
