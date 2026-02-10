@@ -55,7 +55,7 @@ class BusinessServiceImplTest {
                 .businessName("abcd services")
                 .businessType("IT")
                 .address("abc pune")
-                .phoneNumber(434343434343L)
+                .phoneNumber("434343434343L")
                 .build();
         log.info("Starting to create business");
         Business business = new Business();
