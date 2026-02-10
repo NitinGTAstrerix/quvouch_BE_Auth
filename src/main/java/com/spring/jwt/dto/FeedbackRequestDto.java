@@ -1,17 +1,15 @@
 package com.spring.jwt.dto;
 
 import jakarta.validation.constraints.*;
-import lombok.*;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 public class FeedbackRequestDto {
 
     @NotBlank(message = "Name required")
     private String name;
 
-    @Email
-    @NotBlank(message = "Email required")
+    @Email(message = "Invalid email")
     private String email;
 
     @NotBlank(message = "Message required")
@@ -20,4 +18,6 @@ public class FeedbackRequestDto {
     @Min(1)
     @Max(5)
     private Integer rating;
+
+    private Long businessId;
 }

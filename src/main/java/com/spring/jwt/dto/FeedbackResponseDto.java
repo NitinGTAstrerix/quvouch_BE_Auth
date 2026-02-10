@@ -1,18 +1,15 @@
 package com.spring.jwt.dto;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
+@Data
 @Builder
 public class FeedbackResponseDto {
 
     private Long id;
-    private String name;
-    private String email;
     private String message;
-    private Integer rating;
     private LocalDateTime createdAt;
 }

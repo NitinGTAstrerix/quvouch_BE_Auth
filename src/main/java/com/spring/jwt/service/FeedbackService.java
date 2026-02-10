@@ -11,7 +11,7 @@ public interface FeedbackService {
 
     List<FeedbackResponseDto> getAllFeedback();
 
-    FeedbackResponseDto getFeedback(Long id);
+    FeedbackResponseDto getFeedbackById(Long id);
 
     void deleteFeedback(Long id);
 }
