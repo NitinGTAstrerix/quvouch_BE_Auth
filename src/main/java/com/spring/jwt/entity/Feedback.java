@@ -6,23 +6,25 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "feedback")
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Table(name = "feedback")
 public class Feedback {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
     private String email;
 
-    @Column(length = 1000)
+    @Column(nullable = false, length = 1000)
     private String message;
 
     private Integer rating;

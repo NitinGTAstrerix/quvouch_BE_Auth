@@ -5,22 +5,19 @@ import lombok.*;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class FeedbackRequestDto {
 
-    @NotBlank(message = "Name is required")
+    @NotBlank(message = "Name required")
     private String name;
 
-    @Email(message = "Invalid email")
+    @Email
     @NotBlank(message = "Email required")
     private String email;
 
     @NotBlank(message = "Message required")
     private String message;
 
-    @Min(value = 1, message = "Rating min 1")
-    @Max(value = 5, message = "Rating max 5")
+    @Min(1)
+    @Max(5)
     private Integer rating;
 }
