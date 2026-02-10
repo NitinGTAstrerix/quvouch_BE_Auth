@@ -1,31 +1,20 @@
-package com.spring.jwt.entity;
+package com.spring.jwt.dto;
 
-import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "feedback")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Feedback {
+public class FeedbackResponseDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String name;
-
     private String email;
-
-    @Column(length = 1000)
     private String message;
-
     private Integer rating;
-
     private LocalDateTime createdAt;
 }

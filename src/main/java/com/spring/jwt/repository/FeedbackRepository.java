@@ -1,8 +1,7 @@
-package com.app.quvouch.repository;
+package com.spring.jwt.repository;
 
-import com.app.quvouch.Models.Feedback;
+import com.spring.jwt.entity.Feedback;
 import org.springframework.data.jpa.repository.JpaRepository;
-import java.util.UUID;
 
-public interface FeedbackRepository extends JpaRepository<Feedback, UUID> {
+public interface FeedbackRepository extends JpaRepository<Feedback, Long> {
 }

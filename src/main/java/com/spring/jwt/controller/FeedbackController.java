@@ -1,38 +1,24 @@
-package com.app.quvouch.controller;
+package com.spring.jwt.controller;
 
-import com.app.quvouch.Models.Feedback;
-import com.app.quvouch.service.FeedbackService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.spring.jwt.dto.FeedbackRequestDto;
+import com.spring.jwt.dto.FeedbackResponseDto;
+import com.spring.jwt.service.FeedbackService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.UUID;
-
 @RestController
-@RequestMapping("/api/feedback")
+@RequestMapping("/api/v1/feedback")
+@RequiredArgsConstructor
 public class FeedbackController {
 
-    @Autowired
-    private FeedbackService service;
+    private final FeedbackService feedbackService;
 
     @PostMapping
-    public Feedback createFeedback(@RequestBody Feedback feedback) {
-        return service.saveFeedback(feedback);
-    }
+    public ResponseEntity<FeedbackResponseDto> saveFeedback(
+            @Valid @RequestBody FeedbackRequestDto request) {
 
-    @GetMapping
-    public List<Feedback> getAllFeedback() {
-        return service.getAllFeedback();
-    }
-
-    @GetMapping("/{id}")
-    public Feedback getFeedback(@PathVariable UUID id) {
-        return service.getById(id);
-    }
-
-    @DeleteMapping("/{id}")
-    public String deleteFeedback(@PathVariable UUID id) {
-        service.deleteFeedback(id);
-        return "Deleted Successfully";
+        return ResponseEntity.ok(feedbackService.saveFeedback(request));
     }
 }
