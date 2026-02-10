@@ -5,9 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="97e0c643-177d-43a6-bf1c-18cb403958f3" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/controller/FeedbackController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/dto/FeedbackRequestDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/dto/FeedbackResponseDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/entity/Feedback.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/repository/FeedbackRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/service/FeedbackService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/service/impl/FeedbackServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/spring/jwt/controller/BusinessControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/spring/jwt/controller/BusinessControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/spring/jwt/services/BusinessServiceImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/spring/jwt/services/BusinessServiceImplTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,7 +31,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="feature/review-module" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -119,7 +124,7 @@
       <recent name="C:\Users\HP\Documents\workspace\quvouch_BE_Auth\src\main\java\com\spring\jwt\dto" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.BusinessServiceImplTest">
+  <component name="RunManager" selected="Application.JwtWithSpringSecurityApplication">
     <configuration name="JwtWithSpringSecurityApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="ALTERNATIVE_JRE_PATH" value="17 (2)" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
@@ -239,8 +244,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.BusinessServiceImplTest" />
         <item itemvalue="Application.JwtWithSpringSecurityApplication" />
+        <item itemvalue="JUnit.BusinessServiceImplTest" />
         <item itemvalue="JUnit.QrCodeServiceImplTest" />
         <item itemvalue="JUnit.QrCodeControllerTest.shouldGetAllQrCodesForAdmin" />
         <item itemvalue="JUnit.QrCodeControllerTest.shouldFailGetAllQrWithoutAdminRole" />
