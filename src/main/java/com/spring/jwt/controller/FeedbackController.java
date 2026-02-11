@@ -1,11 +1,12 @@
 package com.spring.jwt.controller;
 
 import com.spring.jwt.dto.FeedbackRequestDto;
+import com.spring.jwt.dto.FeedbackResponseDto;
 import com.spring.jwt.service.FeedbackService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/feedback")
@@ -15,28 +16,23 @@ public class FeedbackController {
     private final FeedbackService feedbackService;
 
     @PostMapping
-    public ResponseEntity<?> createFeedback(
-            @Valid @RequestBody FeedbackRequestDto request) {
-
-        return ResponseEntity.ok(
-                feedbackService.saveFeedback(request));
+    public FeedbackResponseDto saveFeedback(@RequestBody FeedbackRequestDto dto) {
+        return feedbackService.saveFeedback(dto);
     }
 
     @GetMapping
-    public ResponseEntity<?> getAllFeedback() {
-        return ResponseEntity.ok(
-                feedbackService.getAllFeedback());
+    public List<FeedbackResponseDto> getAllFeedback() {
+        return feedbackService.getAllFeedback();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getFeedback(@PathVariable Long id) {
-        return ResponseEntity.ok(
-                feedbackService.getFeedbackById(id));
+    public FeedbackResponseDto getFeedback(@PathVariable Long id) {
+        return feedbackService.getFeedbackById(id);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteFeedback(@PathVariable Long id) {
+    public String deleteFeedback(@PathVariable Long id) {
         feedbackService.deleteFeedback(id);
-        return ResponseEntity.ok("Deleted successfully");
+        return "Feedback deleted successfully";
     }
 }

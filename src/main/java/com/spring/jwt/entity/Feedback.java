@@ -6,11 +6,12 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "feedback")
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "feedback")
 public class Feedback {
 
     @Id
@@ -18,14 +19,13 @@ public class Feedback {
     private Long id;
 
     private String name;
-
     private String email;
-
     private String message;
-
     private Integer rating;
 
-    private Long businessId;
-
     private LocalDateTime createdAt;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "business_id")
+    private Business business;
 }
