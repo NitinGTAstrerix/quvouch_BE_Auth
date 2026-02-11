@@ -5,14 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="97e0c643-177d-43a6-bf1c-18cb403958f3" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/controller/FeedbackController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/dto/FeedbackRequestDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/dto/FeedbackResponseDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/entity/Feedback.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/repository/FeedbackRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/service/FeedbackService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/service/impl/FeedbackServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/spring/jwt/config/AppConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/config/AppConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/spring/jwt/controller/ReviewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/controller/ReviewController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,52 +68,52 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.JwtWithSpringSecurityApplication.executor": "Run",
-    "JUnit.BusinessControllerTest.createBusiness_success.executor": "Run",
-    "JUnit.BusinessServiceImplTest (1).executor": "Run",
-    "JUnit.BusinessServiceImplTest.BusinessIsCreatedOrNot.executor": "Run",
-    "JUnit.BusinessServiceImplTest.createBusiness_success.executor": "Run",
-    "JUnit.BusinessServiceImplTest.createBusiness_whenBusinessNameEmpty_throwException.executor": "Run",
-    "JUnit.BusinessServiceImplTest.executor": "Run",
-    "JUnit.BusinessServiceImplTest.getAllBusiness_success.executor": "Run",
-    "JUnit.BusinessServiceImplTest.getBusinessById_notFound.executor": "Run",
-    "JUnit.BusinessServiceImplTest.getBusinessById_success.executor": "Run",
-    "JUnit.BusinessServiceImplTest.updateBusiness_notFound (1).executor": "Debug",
-    "JUnit.BusinessServiceImplTest.updateBusiness_notFound.executor": "Run",
-    "JUnit.BusinessServiceImplTest.updateBusiness_success.executor": "Run",
-    "JUnit.QrCodeControllerTest.executor": "Run",
-    "JUnit.QrCodeControllerTest.shouldFailGetAllQrWithoutAdminRole.executor": "Run",
-    "JUnit.QrCodeControllerTest.shouldGetAllQrCodesForAdmin.executor": "Run",
-    "JUnit.QrCodeServiceImplTest.executor": "Run",
-    "JUnit.QrCodeServiceImplTest.shouldReturnAllQrCodes.executor": "Run",
-    "JUnit.ReviewRepositoryTest.executor": "Run",
-    "JUnit.ReviewRepositoryTest.testFindReviewsByBusinessId.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.MCP Project settings loaded": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/GT/S temp/s temp",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "reference.settingsdialog.project.grazie",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.JwtWithSpringSecurityApplication.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BusinessControllerTest.createBusiness_success.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BusinessServiceImplTest (1).executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BusinessServiceImplTest.BusinessIsCreatedOrNot.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BusinessServiceImplTest.createBusiness_success.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BusinessServiceImplTest.createBusiness_whenBusinessNameEmpty_throwException.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BusinessServiceImplTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BusinessServiceImplTest.getAllBusiness_success.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BusinessServiceImplTest.getBusinessById_notFound.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BusinessServiceImplTest.getBusinessById_success.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BusinessServiceImplTest.updateBusiness_notFound (1).executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.BusinessServiceImplTest.updateBusiness_notFound.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BusinessServiceImplTest.updateBusiness_success.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.QrCodeControllerTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.QrCodeControllerTest.shouldFailGetAllQrWithoutAdminRole.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.QrCodeControllerTest.shouldGetAllQrCodesForAdmin.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.QrCodeServiceImplTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.QrCodeServiceImplTest.shouldReturnAllQrCodes.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ReviewRepositoryTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ReviewRepositoryTest.testFindReviewsByBusinessId.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/GT/S temp/s temp&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.grazie&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\HP\Documents\workspace\quvouch_BE_Auth\src\main\java\com\spring\jwt\dto" />
@@ -241,6 +236,7 @@
       <item itemvalue="JUnit.QrCodeControllerTest.shouldFailGetAllQrWithoutAdminRole" />
       <item itemvalue="JUnit.QrCodeControllerTest.shouldGetAllQrCodesForAdmin" />
       <item itemvalue="JUnit.QrCodeServiceImplTest" />
+      <item itemvalue="Spring Boot.JwtWithSpringSecurityApplication" />
     </list>
     <recent_temporary>
       <list>
