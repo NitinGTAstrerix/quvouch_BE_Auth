@@ -57,7 +57,7 @@ public class ReviewController {
         return ResponseEntity.ok(stats);
     }
 
-    @GetMapping("/qr/{qrCodeId}")
+    @GetMapping("/{qrCodeId}")
     public ResponseEntity<List<ReviewResponse>> getByQrCode(
             @PathVariable UUID qrCodeId) {
 
