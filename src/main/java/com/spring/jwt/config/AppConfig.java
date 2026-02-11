@@ -159,7 +159,7 @@ public class AppConfig {
                         "/swagger-ui.html"
                 ).permitAll()
 
-                .requestMatchers("/api/v1/qr/reviews").permitAll()
+                .requestMatchers("/api/v1/qr/reviews/**").permitAll()
                 .requestMatchers("/api/public/**").permitAll()
                 .requestMatchers("/user/**").permitAll()
 
@@ -173,7 +173,8 @@ public class AppConfig {
                 new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/auth/**"),
                 new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/public/**"),
                 new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/v1/users/register"),
-                new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/v1/users/password/**"),
+                    new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/v1/users/password/**"),
+                    new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/v1/qr/reviews/**"),
                 new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/scan/qr/**"),
                 new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/v2/api-docs/**"),
                 new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/v3/api-docs/**"),
