@@ -79,4 +79,8 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Business> businesses;
 
+    @ManyToOne
+    @JoinColumn(name = "sale_rep_id")
+    private User saleRepresentative;
+
 }

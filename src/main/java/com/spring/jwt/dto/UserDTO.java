@@ -62,6 +62,12 @@ public class UserDTO {
     private String studentClass;
     private String role; // Single role field for backward compatibility
 
+    @Schema(
+            description = "Sale Representative ID assigned to client",
+            example = "10002"
+    )
+    private Long saleRepId;
+
     public UserDTO(User user) {
         this.email = user.getEmail();
         this.address = user.getAddress();
@@ -96,6 +102,7 @@ public class UserDTO {
                 .map(Role::getName)
                 .collect(Collectors.toSet()));
         }
+
         
         return dto;
     }
