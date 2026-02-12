@@ -24,12 +24,11 @@ public class FeedbackServiceImpl implements FeedbackService {
     @Override
     public FeedbackResponseDto saveFeedback(FeedbackRequestDto request) {
 
-        // Convert Integer → Integer (Business API safe)
-        Integer businessId = request.getBusinessId();
-
-        Business business = businessRepository.findById(businessId)
+        //  BUSINESS FETCHING (Mapping feedback → business)
+        Business business = businessRepository.findById(request.getBusinessId())
                 .orElseThrow(() -> new RuntimeException("Business not found"));
 
+        // DUPLICATE FEEDBACK CHECK
         if (feedbackRepository.existsByEmailAndBusiness(request.getEmail(), business)) {
             throw new RuntimeException("Feedback already submitted");
         }
@@ -39,7 +38,10 @@ public class FeedbackServiceImpl implements FeedbackService {
                 .email(request.getEmail())
                 .message(request.getMessage())
                 .rating(request.getRating())
+
+                // TIMESTAMP ADDED HERE
                 .createdAt(LocalDateTime.now())
+
                 .business(business)
                 .build();
 
@@ -57,17 +59,11 @@ public class FeedbackServiceImpl implements FeedbackService {
     }
 
     @Override
-    public FeedbackResponseDto getFeedbackById(Long id) {
-        Feedback feedback = feedbackRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Feedback not found"));
-        return mapToDto(feedback);
-    }
-
-    @Override
     public void deleteFeedback(Long id) {
         feedbackRepository.deleteById(id);
     }
 
+    // DTO Mapping Method
     private FeedbackResponseDto mapToDto(Feedback f) {
         return FeedbackResponseDto.builder()
                 .id(f.getId())
@@ -76,7 +72,11 @@ public class FeedbackServiceImpl implements FeedbackService {
                 .message(f.getMessage())
                 .rating(f.getRating())
                 .createdAt(f.getCreatedAt())
-                .businessId(f.getBusiness() != null ? f.getBusiness().getBusinessId() : null)
+                .businessId(
+                        f.getBusiness() != null
+                                ? f.getBusiness().getBusinessId() // use your Business PK field name
+                                : null
+                )
                 .build();
     }
 }

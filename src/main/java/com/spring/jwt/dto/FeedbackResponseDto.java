@@ -2,6 +2,7 @@ package com.spring.jwt.dto;
 
 import lombok.Builder;
 import lombok.Data;
+
 import java.time.LocalDateTime;
 
 @Data
@@ -13,6 +14,9 @@ public class FeedbackResponseDto {
     private String email;
     private String message;
     private Integer rating;
+
+    // Timestamp returned in response
     private LocalDateTime createdAt;
+
     private Integer businessId;
 }

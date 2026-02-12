@@ -9,9 +9,8 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "feedback")
+@NoArgsConstructor
 public class Feedback {
 
     @Id
@@ -19,13 +18,18 @@ public class Feedback {
     private Long id;
 
     private String name;
+
     private String email;
+
     private String message;
+
     private Integer rating;
 
+    //  TIMESTAMP ADDED HERE
     private LocalDateTime createdAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    // FEEDBACK MAPPED TO BUSINESS
+    @ManyToOne
     @JoinColumn(name = "business_id")
     private Business business;
 }

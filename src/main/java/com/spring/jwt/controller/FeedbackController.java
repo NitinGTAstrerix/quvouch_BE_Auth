@@ -3,6 +3,7 @@ package com.spring.jwt.controller;
 import com.spring.jwt.dto.FeedbackRequestDto;
 import com.spring.jwt.dto.FeedbackResponseDto;
 import com.spring.jwt.service.FeedbackService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,8 +17,9 @@ public class FeedbackController {
     private final FeedbackService feedbackService;
 
     @PostMapping
-    public FeedbackResponseDto saveFeedback(@RequestBody FeedbackRequestDto dto) {
-        return feedbackService.saveFeedback(dto);
+    public FeedbackResponseDto saveFeedback(
+            @Valid @RequestBody FeedbackRequestDto request) { //  VALIDATION TRIGGER
+        return feedbackService.saveFeedback(request);
     }
 
     @GetMapping
@@ -25,14 +27,8 @@ public class FeedbackController {
         return feedbackService.getAllFeedback();
     }
 
-    @GetMapping("/{id}")
-    public FeedbackResponseDto getFeedback(@PathVariable Long id) {
-        return feedbackService.getFeedbackById(id);
-    }
-
     @DeleteMapping("/{id}")
-    public String deleteFeedback(@PathVariable Long id) {
+    public void deleteFeedback(@PathVariable Long id) {
         feedbackService.deleteFeedback(id);
-        return "Feedback deleted successfully";
     }
 }

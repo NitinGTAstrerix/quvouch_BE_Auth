@@ -7,11 +7,12 @@ import java.util.List;
 
 public interface FeedbackService {
 
+    // SAVE FEEDBACK
     FeedbackResponseDto saveFeedback(FeedbackRequestDto request);
 
+    // GET ALL FEEDBACK
     List<FeedbackResponseDto> getAllFeedback();
 
-    FeedbackResponseDto getFeedbackById(Long id);
-
+    //  DELETE FEEDBACK
     void deleteFeedback(Long id);
 }
