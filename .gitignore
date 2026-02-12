@@ -7,6 +7,6 @@ target/
 # IntelliJ
 .idea/
 *.iml
-
+.idea/**
 # Logs
 *.log
