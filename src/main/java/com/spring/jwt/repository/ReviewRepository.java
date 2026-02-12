@@ -10,7 +10,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -31,4 +30,20 @@ public interface ReviewRepository extends JpaRepository<Review, UUID> {
     ReviewStatsDTO getReviewStatistics(@Param("businessId") Integer businessId);
 
     List<Review> findByQrCodeId(UUID qrCodeId);
+    @Query("""
+        SELECT r.rating, COUNT(r)
+        FROM Review r
+        WHERE r.business.businessId = :businessId
+        GROUP BY r.rating
+       """)
+    List<Object[]> getRatingDistribution(@Param("businessId") Integer businessId);
+
+    @Query("""
+       SELECT MONTH(r.createdAt), COUNT(r)
+       FROM Review r
+       WHERE r.business.businessId = :businessId
+       GROUP BY MONTH(r.createdAt)
+       ORDER BY MONTH(r.createdAt)
+       """)
+    List<Object[]> getMonthlyAnalytics(@Param("businessId") Integer businessId);
 }

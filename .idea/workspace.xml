@@ -6,7 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="97e0c643-177d-43a6-bf1c-18cb403958f3" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/spring/jwt/config/AppConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/config/AppConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/spring/jwt/controller/BusinessController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/controller/BusinessController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/spring/jwt/dto/ReviewStatsDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/dto/ReviewStatsDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/spring/jwt/repository/BusinessRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/repository/BusinessRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/spring/jwt/repository/QrCodeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/repository/QrCodeRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/spring/jwt/repository/ReviewRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/repository/ReviewRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/spring/jwt/service/BusinessService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/service/BusinessService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/spring/jwt/service/impl/BusinessServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/service/impl/BusinessServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -272,7 +278,7 @@
       <workItem from="1770353647602" duration="1770000" />
       <workItem from="1770357056223" duration="1575000" />
       <workItem from="1770808594631" duration="2293000" />
-      <workItem from="1770867738663" duration="6353000" />
+      <workItem from="1770867738663" duration="22776000" />
     </task>
     <servers />
   </component>

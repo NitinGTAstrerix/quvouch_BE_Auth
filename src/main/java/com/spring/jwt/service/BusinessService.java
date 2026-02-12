@@ -1,5 +1,6 @@
 package com.spring.jwt.service;
 
+import com.spring.jwt.dto.BusinessDashboardDto;
 import com.spring.jwt.dto.BusinessRequestDto;
 import com.spring.jwt.dto.BusinessResponseDto;
 import com.spring.jwt.dto.UserProfileDTO;
@@ -25,4 +26,12 @@ public interface BusinessService {
     User getCurrentUserProfile();
 
     BusinessResponseDto updateBusiness(Integer businessId, BusinessRequestDto businessRequestDto);
+
+    BusinessDashboardDto getDashboardData(Integer businessId);
+
+    byte[] exportReviewsAsCsv(Integer businessId);
+
+    String generateShareLink(Integer businessId);
+
+    List<Object[]> getMonthlyAnalytics(Integer businessId);
 }

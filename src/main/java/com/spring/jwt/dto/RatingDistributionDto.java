@@ -7,10 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ReviewStatsDTO {
+public class RatingDistributionDto {
 
-    private Long totalReviews;
-    private Long publicReviews;
-    private Long internalReviews;
-    private Double averageRating;
+    private Integer stars;
+    private Long count;
 }

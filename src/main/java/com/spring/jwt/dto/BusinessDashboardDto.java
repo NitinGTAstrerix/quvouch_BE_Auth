@@ -4,13 +4,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ReviewStatsDTO {
+public class BusinessDashboardDto {
 
     private Long totalReviews;
-    private Long publicReviews;
-    private Long internalReviews;
     private Double averageRating;
+    private Long totalScans;
+    private Long activeQrCodes;
+
+    private List<RatingDistributionDto> ratingDistribution;
 }

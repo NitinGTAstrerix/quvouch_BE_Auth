@@ -1,5 +1,6 @@
 package com.spring.jwt.controller;
 
+import com.spring.jwt.dto.BusinessDashboardDto;
 import com.spring.jwt.dto.BusinessRequestDto;
 import com.spring.jwt.dto.BusinessResponseDto;
 import com.spring.jwt.mapper.BusinessMapper;
@@ -82,4 +83,47 @@ public class BusinessController {
         BusinessResponseDto updateBusiness = businessService.updateBusiness(businessId, businessRequestDto);
         return ResponseEntity.ok(updateBusiness);
     }
+
+    @Operation(summary = "Business Dashboard API",description = "Returns dashboard data for a specific business")
+    @GetMapping("/dashboard/{businessId}")
+    public ResponseEntity<BusinessDashboardDto> getDashboard(
+            @PathVariable Integer businessId) {
+
+        BusinessDashboardDto dashboard =
+                businessService.getDashboardData(businessId);
+
+        return ResponseEntity.ok(dashboard);
+    }
+    @Operation(summary = "Export Reviews",description = "Download all reviews of a business in CSV format")
+    @GetMapping("/export/{businessId}")
+    public ResponseEntity<byte[]> exportReviews(
+            @PathVariable Integer businessId) {
+
+        byte[] file = businessService.exportReviewsAsCsv(businessId);
+
+        return ResponseEntity.ok()
+                .header("Content-Disposition",
+                        "attachment; filename=reviews.csv")
+                .header("Content-Type", "text/csv")
+                .body(file);
+    }
+    @Operation(summary = "Share Reviews",description = "Generate a public shareable link for reviews")
+    @GetMapping("/share/{businessId}")
+    public ResponseEntity<String> shareReviews(
+            @PathVariable Integer businessId) {
+
+        String link = businessService.generateShareLink(businessId);
+        return ResponseEntity.ok(link);
+    }
+
+    @Operation(summary = "Review Analytics",description = "Get monthly review analytics")
+    @GetMapping("/analytics/{businessId}")
+    public ResponseEntity<List<Object[]>> getAnalytics(
+            @PathVariable Integer businessId) {
+
+        return ResponseEntity.ok(
+                businessService.getMonthlyAnalytics(businessId)
+        );
+    }
+
 }
