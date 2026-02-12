@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.http.HttpMethod;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
@@ -159,7 +160,7 @@ public class AppConfig {
                         "/swagger-ui.html"
                 ).permitAll()
 
-                .requestMatchers("/api/v1/qr/reviews/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/v1/qr/*/rate").permitAll()
                 .requestMatchers("/api/public/**").permitAll()
                 .requestMatchers("/user/**").permitAll()
 
@@ -175,6 +176,7 @@ public class AppConfig {
                 new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/v1/users/register"),
                     new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/v1/users/password/**"),
                     new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/v1/qr/reviews/**"),
+                    new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/v1/qr/*/rate"),
                 new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/scan/qr/**"),
                 new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/v2/api-docs/**"),
                 new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/v3/api-docs/**"),
