@@ -5,15 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="97e0c643-177d-43a6-bf1c-18cb403958f3" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/controller/AdminController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/dto/SaleRepresentativeInfo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/service/AdminService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/service/impl/AdminServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/spring/jwt/dto/UserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/dto/UserDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/spring/jwt/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/entity/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/spring/jwt/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/repository/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/spring/jwt/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/service/impl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/spring/jwt/config/AppConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/config/AppConfig.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,7 +39,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/NitinGTAstrerix/quvouch_BE_Auth.git&quot;,
-    &quot;accountId&quot;: &quot;0b05d78c-7c58-416a-9ce5-7ade4e280ca0&quot;
+    &quot;accountId&quot;: &quot;7242ff3e-9667-41ad-b36e-96282b318a89&quot;
   }
 }</component>
   <component name="MarkdownSettingsMigration">
@@ -242,6 +235,7 @@
       <item itemvalue="JUnit.QrCodeControllerTest.shouldFailGetAllQrWithoutAdminRole" />
       <item itemvalue="JUnit.QrCodeControllerTest.shouldGetAllQrCodesForAdmin" />
       <item itemvalue="JUnit.QrCodeServiceImplTest" />
+      <item itemvalue="Spring Boot.JwtWithSpringSecurityApplication" />
     </list>
     <recent_temporary>
       <list>
@@ -252,6 +246,14 @@
         <item itemvalue="JUnit.QrCodeControllerTest.shouldFailGetAllQrWithoutAdminRole" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-26cb7f24e5b0-intellij.indexing.shared.core-IU-253.29346.138" />
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.29346.138" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -269,6 +271,8 @@
       <workItem from="1770293644284" duration="3267000" />
       <workItem from="1770353647602" duration="1770000" />
       <workItem from="1770357056223" duration="1575000" />
+      <workItem from="1770808594631" duration="2293000" />
+      <workItem from="1770867738663" duration="6353000" />
     </task>
     <servers />
   </component>
