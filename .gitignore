@@ -1,0 +1,16 @@
+# Maven
+target/
+
+# Compiled files
+*.class
+
+# IntelliJ
+.idea/
+*.iml
+<<<<<<< HEAD
+
+=======
+.idea/**
+>>>>>>> fec191664a493331f12a1e1fed807664e99cd9c4
+# Logs
+*.log
