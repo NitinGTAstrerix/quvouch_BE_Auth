@@ -38,7 +38,7 @@ public class BusinessControllerTest {
                         .businessName("Test")
                         .businessType("IT")
                         .address("pune")
-                        .phoneNumber(9876543210L)
+                        .phoneNumber("9876543210")
                         .build());
 
         mockMvc.perform(post("/api/v1/business")
