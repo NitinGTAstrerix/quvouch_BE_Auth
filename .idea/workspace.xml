@@ -5,10 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="97e0c643-177d-43a6-bf1c-18cb403958f3" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/spring/jwt/controller/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/controller/AdminController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/spring/jwt/service/AdminService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/service/AdminService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/spring/jwt/service/impl/AdminServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/service/impl/AdminServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/spring/jwt/JwtWithSpringSecurityApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/JwtWithSpringSecurityApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/spring/jwt/controller/ReviewController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/spring/jwt/dto/ReviewStatsDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/spring/jwt/mapper/ReviewMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/spring/jwt/repository/ReviewRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/spring/jwt/service/ReviewService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/spring/jwt/service/impl/ReviewServiceImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/spring/jwt/controller/ReviewControllerTest.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,6 +49,10 @@
     &quot;url&quot;: &quot;https://github.com/NitinGTAstrerix/quvouch_BE_Auth.git&quot;,
     &quot;accountId&quot;: &quot;0b05d78c-7c58-416a-9ce5-7ade4e280ca0&quot;
   }
+}</component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
 }</component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -108,9 +118,9 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.grazie&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -125,7 +135,7 @@
       <option name="ALTERNATIVE_JRE_PATH" value="17 (2)" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="com.spring.jwt.JwtWithSpringSecurityApplication" />
-      <module name="JWT-with-Spring-Security" />
+      <module name="quvouch_BE_Auth-main" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.spring.jwt.*" />
@@ -249,6 +259,14 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.30387.90" />
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.30387.90" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -265,6 +283,9 @@
       <workItem from="1770293644284" duration="3267000" />
       <workItem from="1770353647602" duration="1770000" />
       <workItem from="1770357056223" duration="1575000" />
+      <workItem from="1770981372348" duration="158000" />
+      <workItem from="1770982050555" duration="34000" />
+      <workItem from="1770983293006" duration="201000" />
     </task>
     <servers />
   </component>

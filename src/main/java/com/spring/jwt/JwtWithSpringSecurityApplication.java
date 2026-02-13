@@ -11,18 +11,17 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 
 import java.security.Security;
-<<<<<<< HEAD
-=======
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
->>>>>>> fec191664a493331f12a1e1fed807664e99cd9c4
+
 
 @SpringBootApplication
 @EnableScheduling
 @EnableMethodSecurity(
-<<<<<<< HEAD
+
 		securedEnabled = true,
 		jsr250Enabled = true,
 		prePostEnabled = true
@@ -40,7 +39,7 @@ import java.util.Optional;
 		info = @Info(
 				title = " Quvouch",
 				description = " QR-Driven Review Management System" ,
->>>>>>> fec191664a493331f12a1e1fed807664e99cd9c4
+
 				version = "v1",
 				contact = @Contact(
 						name = "A",
