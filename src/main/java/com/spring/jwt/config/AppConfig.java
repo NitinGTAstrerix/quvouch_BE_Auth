@@ -12,6 +12,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
+<<<<<<< HEAD
+=======
+import org.springframework.http.HttpMethod;
+>>>>>>> fec191664a493331f12a1e1fed807664e99cd9c4
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
@@ -138,7 +142,10 @@ public class AppConfig {
         log.debug("Configuring URL-based security rules");
         http.authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/api/auth/**").permitAll()
+<<<<<<< HEAD
                 .requestMatchers("/api/feedback/**").permitAll()
+=======
+>>>>>>> fec191664a493331f12a1e1fed807664e99cd9c4
                 .requestMatchers("/api/v1/users/register").permitAll()
                 .requestMatchers("/api/v1/users/password/**").permitAll()
                 .requestMatchers("/api/v1/exam/**").permitAll()
@@ -160,7 +167,11 @@ public class AppConfig {
                         "/swagger-ui.html"
                 ).permitAll()
 
+<<<<<<< HEAD
                 .requestMatchers("/api/v1/qr/reviews").hasAuthority("ADMIN")
+=======
+                .requestMatchers(HttpMethod.POST, "/api/v1/qr/*/rate").permitAll()
+>>>>>>> fec191664a493331f12a1e1fed807664e99cd9c4
                 .requestMatchers("/api/public/**").permitAll()
                 .requestMatchers("/user/**").permitAll()
 
@@ -174,7 +185,13 @@ public class AppConfig {
                 new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/auth/**"),
                 new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/public/**"),
                 new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/v1/users/register"),
+<<<<<<< HEAD
                 new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/v1/users/password/**"),
+=======
+                    new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/v1/users/password/**"),
+                    new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/v1/qr/reviews/**"),
+                    new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/v1/qr/*/rate"),
+>>>>>>> fec191664a493331f12a1e1fed807664e99cd9c4
                 new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/scan/qr/**"),
                 new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/v2/api-docs/**"),
                 new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/v3/api-docs/**"),

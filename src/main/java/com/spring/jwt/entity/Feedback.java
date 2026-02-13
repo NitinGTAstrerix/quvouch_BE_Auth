@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package com.app.quvouch.Models;
 
 import jakarta.persistence.*;
@@ -56,4 +57,36 @@ public class Feedback {
     public void setRating(int rating) {
         this.rating = rating;
     }
+=======
+package com.spring.jwt.entity;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "feedback")
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class Feedback {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String name;
+
+    private String email;
+
+    private String message;
+
+    private Integer rating;
+
+    private Long businessId;
+
+    private LocalDateTime createdAt;
+>>>>>>> fec191664a493331f12a1e1fed807664e99cd9c4
 }

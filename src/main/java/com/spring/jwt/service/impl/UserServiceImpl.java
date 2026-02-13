@@ -115,6 +115,39 @@ public class UserServiceImpl implements UserService {
         }
 
         user.setRoles(roles);
+<<<<<<< HEAD
+=======
+        
+        if ("CLIENT".equalsIgnoreCase(userDTO.getRole())) {
+
+            if (userDTO.getSaleRepId() == null) {
+                throw new BaseException(
+                        String.valueOf(HttpStatus.BAD_REQUEST.value()),
+                        "Sale Representative ID is required for CLIENT"
+                );
+            }
+
+            User saleRep = userRepository.findById(userDTO.getSaleRepId())
+                    .orElseThrow(() ->
+                            new BaseException(
+                                    String.valueOf(HttpStatus.NOT_FOUND.value()),
+                                    "Sale Representative not found"
+                            )
+                    );
+
+            boolean isSaleRep = saleRep.getRoles().stream()
+                    .anyMatch(r -> r.getName().equals("SALE_REPRESENTATIVE"));
+
+            if (!isSaleRep) {
+                throw new BaseException(
+                        String.valueOf(HttpStatus.BAD_REQUEST.value()),
+                        "Assigned user is not a Sale Representative"
+                );
+            }
+
+            user.setSaleRepresentative(saleRep);
+        }
+>>>>>>> fec191664a493331f12a1e1fed807664e99cd9c4
 
         user = userRepository.save(user);
 

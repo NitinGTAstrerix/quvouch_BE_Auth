@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package com.app.quvouch.service;
 
 import com.app.quvouch.Models.Feedback;
@@ -29,4 +30,22 @@ public class FeedbackService {
     public void deleteFeedback(UUID id) {
         repository.deleteById(id);
     }
+=======
+package com.spring.jwt.service;
+
+import com.spring.jwt.dto.FeedbackRequestDto;
+import com.spring.jwt.dto.FeedbackResponseDto;
+
+import java.util.List;
+
+public interface FeedbackService {
+
+    FeedbackResponseDto saveFeedback(FeedbackRequestDto request);
+
+    List<FeedbackResponseDto> getAllFeedback();
+
+    FeedbackResponseDto getFeedbackById(Long id);
+
+    void deleteFeedback(Long id);
+>>>>>>> fec191664a493331f12a1e1fed807664e99cd9c4
 }
