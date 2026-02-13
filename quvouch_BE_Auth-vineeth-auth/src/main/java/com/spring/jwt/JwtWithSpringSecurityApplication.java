@@ -1,0 +1,48 @@
+package com.spring.jwt;
+
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Contact;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.info.License;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+
+import java.security.Security;
+
+@SpringBootApplication
+@EnableScheduling
+@EnableMethodSecurity(
+		securedEnabled = true,
+		jsr250Enabled = true,
+		prePostEnabled = true
+)
+@OpenAPIDefinition(
+		info = @Info(
+				title = "Quvouch",
+				description = "QR-Driven Review Management System",
+				version = "v1",
+				contact = @Contact(
+						name = "A",
+						email = "example@gmail.com"
+				),
+				license = @License(name = "Apache 2.0")
+		)
+)
+public class JwtWithSpringSecurityApplication {
+
+	public static void main(String[] args) {
+
+		// Security provider for JWT encryption
+		Security.addProvider(new BouncyCastleProvider());
+
+		SpringApplication.run(JwtWithSpringSecurityApplication.class, args);
+
+		System.out.println("======================================");
+		System.out.println(" Application Started Successfully ");
+		System.out.println(" Swagger: http://localhost:8080/swagger-ui/index.html");
+		System.out.println("======================================");
+	}
+}
