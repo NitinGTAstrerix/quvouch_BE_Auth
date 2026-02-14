@@ -48,6 +48,30 @@ public class AdminServiceImpl implements AdminService {
                 .toList();
     }
 
+    @Override
+    public UserDTO getSaleRepresentativeById(Long id) {
+
+        User user = userRepository.findById(id)
+                .orElseThrow(() ->
+                        new BaseException(
+                                String.valueOf(HttpStatus.NOT_FOUND.value()),
+                                "User not found"
+                        )
+                );
+
+        boolean isSaleRep = user.getRoles().stream()
+                .anyMatch(role -> role.getName().equals("SALE_REPRESENTATIVE"));
+
+        if (!isSaleRep) {
+            throw new BaseException(
+                    String.valueOf(HttpStatus.BAD_REQUEST.value()),
+                    "User is not a Sale Representative"
+            );
+        }
+
+        return userMapper.toDTO(user);
+    }
+
 
     @PreAuthorize("hasAuthority('SALE_REPRESENTATIVE')")
     public List<UserDTO> getMyClients() {

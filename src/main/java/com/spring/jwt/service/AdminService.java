@@ -10,4 +10,6 @@ public interface AdminService {
     public List<UserDTO> getMyClients();
     public User getCurrentUserProfile();
     public List<SaleRepresentativeInfo> getAllSaleRepsWithClientCount();
+    public UserDTO getSaleRepresentativeById(Long id);
+
 }

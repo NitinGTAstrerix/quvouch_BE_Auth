@@ -139,6 +139,7 @@ public class AppConfig {
         log.debug("Configuring URL-based security rules");
         http.authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/api/feedback/**").permitAll()
                 .requestMatchers("/api/v1/users/register").permitAll()
                 .requestMatchers("/api/v1/users/password/**").permitAll()
                 .requestMatchers("/api/v1/exam/**").permitAll()
@@ -159,7 +160,7 @@ public class AppConfig {
                         "/webjars/**",
                         "/swagger-ui.html"
                 ).permitAll()
-
+                .requestMatchers("/api/v1/qr/reviews").hasAuthority("ADMIN")
                 .requestMatchers(HttpMethod.POST, "/api/v1/qr/*/rate").permitAll()
                 .requestMatchers("/api/public/**").permitAll()
                 .requestMatchers("/user/**").permitAll()
@@ -173,10 +174,7 @@ public class AppConfig {
             new org.springframework.security.web.util.matcher.OrRequestMatcher(
                 new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/auth/**"),
                 new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/public/**"),
-                new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/v1/users/register"),
-                    new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/v1/users/password/**"),
-                    new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/v1/qr/reviews/**"),
-                    new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/v1/qr/*/rate"),
+                new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/v1/users/register"), new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/v1/users/password/**"), new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/v1/qr/reviews/**"), new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/v1/qr/*/rate"),
                 new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/scan/qr/**"),
                 new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/v2/api-docs/**"),
                 new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/v3/api-docs/**"),

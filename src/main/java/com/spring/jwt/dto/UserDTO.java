@@ -102,7 +102,6 @@ public class UserDTO {
                 .map(Role::getName)
                 .collect(Collectors.toSet()));
         }
-
         
         return dto;
     }
