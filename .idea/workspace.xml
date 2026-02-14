@@ -247,11 +247,11 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.JwtWithSpringSecurityApplication" />
         <item itemvalue="JUnit.QrCodeServiceImplTest" />
         <item itemvalue="JUnit.QrCodeControllerTest.shouldGetAllQrCodesForAdmin" />
         <item itemvalue="JUnit.QrCodeControllerTest.shouldFailGetAllQrWithoutAdminRole" />
         <item itemvalue="JUnit.QrCodeControllerTest" />
+        <item itemvalue="Application.JwtWithSpringSecurityApplication" />
       </list>
     </recent_temporary>
   </component>
