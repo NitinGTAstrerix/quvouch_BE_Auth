@@ -62,15 +62,12 @@ public class UserDTO {
     private String studentClass;
     private String role; // Single role field for backward compatibility
 
-<<<<<<< HEAD
-=======
     @Schema(
             description = "Sale Representative ID assigned to client",
             example = "10002"
     )
     private Long saleRepId;
 
->>>>>>> fec191664a493331f12a1e1fed807664e99cd9c4
     public UserDTO(User user) {
         this.email = user.getEmail();
         this.address = user.getAddress();
@@ -105,10 +102,6 @@ public class UserDTO {
                 .map(Role::getName)
                 .collect(Collectors.toSet()));
         }
-<<<<<<< HEAD
-=======
-
->>>>>>> fec191664a493331f12a1e1fed807664e99cd9c4
         
         return dto;
     }

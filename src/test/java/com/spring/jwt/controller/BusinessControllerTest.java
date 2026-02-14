@@ -38,12 +38,8 @@ public class BusinessControllerTest {
                         .businessName("Test")
                         .businessType("IT")
                         .address("pune")
-<<<<<<< HEAD
-                        .phoneNumber(9876543210L)
-=======
                         .phoneNumber("9876543210L")
                         .businessEmail("business@gmail.com")
->>>>>>> fec191664a493331f12a1e1fed807664e99cd9c4
                         .build());
 
         mockMvc.perform(post("/api/v1/business")

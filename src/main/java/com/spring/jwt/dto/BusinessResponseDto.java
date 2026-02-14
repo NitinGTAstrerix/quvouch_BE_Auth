@@ -17,10 +17,7 @@ public class BusinessResponseDto {
     private String address;
     private String phoneNumber;
     private Business.BusinessStatus status;
-<<<<<<< HEAD
-=======
     private String businessEmail;
->>>>>>> fec191664a493331f12a1e1fed807664e99cd9c4
     private Instant createdAt;
     private Instant updatedAt;
 

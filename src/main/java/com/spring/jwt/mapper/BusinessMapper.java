@@ -14,10 +14,7 @@ public class BusinessMapper {
                 .businessType(business.getBusinessType())
                 .address(business.getAddress())
                 .phoneNumber(business.getPhoneNumber())
-<<<<<<< HEAD
-=======
                 .businessEmail(business.getBusinessEmail())
->>>>>>> fec191664a493331f12a1e1fed807664e99cd9c4
                 .createdAt(business.getCreatedAt())
                 .updatedAt(business.getUpdatedAt())
                 .userId(business.getUser().getId())

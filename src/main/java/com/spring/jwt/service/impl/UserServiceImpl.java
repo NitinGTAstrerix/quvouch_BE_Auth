@@ -115,8 +115,6 @@ public class UserServiceImpl implements UserService {
         }
 
         user.setRoles(roles);
-<<<<<<< HEAD
-=======
         
         if ("CLIENT".equalsIgnoreCase(userDTO.getRole())) {
 
@@ -147,7 +145,6 @@ public class UserServiceImpl implements UserService {
 
             user.setSaleRepresentative(saleRep);
         }
->>>>>>> fec191664a493331f12a1e1fed807664e99cd9c4
 
         user = userRepository.save(user);
 
