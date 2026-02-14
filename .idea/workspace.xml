@@ -7,12 +7,14 @@
     <list default="true" id="97e0c643-177d-43a6-bf1c-18cb403958f3" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/spring/jwt/controller/BusinessController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/controller/BusinessController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/spring/jwt/dto/ReviewStatsDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/dto/ReviewStatsDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/spring/jwt/repository/BusinessRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/repository/BusinessRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/spring/jwt/controller/QrCodeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/controller/QrCodeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/spring/jwt/entity/QrCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/entity/QrCode.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/spring/jwt/repository/QrCodeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/repository/QrCodeRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/spring/jwt/repository/ReviewRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/repository/ReviewRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/spring/jwt/service/BusinessService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/service/BusinessService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/spring/jwt/service/QrCodeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/service/QrCodeService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/spring/jwt/service/impl/BusinessServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/service/impl/BusinessServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/spring/jwt/service/impl/QrCodeServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/spring/jwt/service/impl/QrCodeServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/spring/jwt/controller/ReviewController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/spring/jwt/controller/ReviewController.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,7 +33,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="business" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -148,16 +150,16 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="BusinessServiceImplTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="QrCodeControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="JWT-with-Spring-Security" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.spring.jwt.services.*" />
+          <option name="PATTERN" value="com.spring.jwt.controller.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.spring.jwt.services" />
-      <option name="MAIN_CLASS_NAME" value="com.spring.jwt.services.BusinessServiceImplTest" />
+      <option name="PACKAGE_NAME" value="com.spring.jwt.controller" />
+      <option name="MAIN_CLASS_NAME" value="com.spring.jwt.controller.QrCodeControllerTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -237,7 +239,7 @@
     <list>
       <item itemvalue="Application.JwtWithSpringSecurityApplication" />
       <item itemvalue="JUnit.ReviewRepositoryTest.testFindReviewsByBusinessId" />
-      <item itemvalue="JUnit.BusinessServiceImplTest" />
+      <item itemvalue="JUnit.QrCodeControllerTest" />
       <item itemvalue="JUnit.QrCodeControllerTest.shouldFailGetAllQrWithoutAdminRole" />
       <item itemvalue="JUnit.QrCodeControllerTest.shouldGetAllQrCodesForAdmin" />
       <item itemvalue="JUnit.QrCodeServiceImplTest" />
@@ -246,10 +248,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.JwtWithSpringSecurityApplication" />
-        <item itemvalue="JUnit.BusinessServiceImplTest" />
         <item itemvalue="JUnit.QrCodeServiceImplTest" />
         <item itemvalue="JUnit.QrCodeControllerTest.shouldGetAllQrCodesForAdmin" />
         <item itemvalue="JUnit.QrCodeControllerTest.shouldFailGetAllQrWithoutAdminRole" />
+        <item itemvalue="JUnit.QrCodeControllerTest" />
       </list>
     </recent_temporary>
   </component>
@@ -279,6 +281,8 @@
       <workItem from="1770357056223" duration="1575000" />
       <workItem from="1770808594631" duration="2293000" />
       <workItem from="1770867738663" duration="22776000" />
+      <workItem from="1770957849778" duration="22031000" />
+      <workItem from="1771043284705" duration="6919000" />
     </task>
     <servers />
   </component>

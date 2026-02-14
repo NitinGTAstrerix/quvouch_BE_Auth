@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface QrCodeRepository extends JpaRepository<QrCode, String> {
 
@@ -24,4 +25,7 @@ public interface QrCodeRepository extends JpaRepository<QrCode, String> {
     Long getTotalScans(@Param("business") Business business);
 
     Long countByBusinessAndActiveTrue(Business business);
+
+    Optional<QrCode> findByBusiness_BusinessId(Integer business);
+
 }

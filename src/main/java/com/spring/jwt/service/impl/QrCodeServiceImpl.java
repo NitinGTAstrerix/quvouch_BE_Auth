@@ -14,6 +14,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -30,26 +33,37 @@ public class QrCodeServiceImpl implements QrCodeService {
         @Value("${app.qr.base-url}")
         private String baseUrl;
 
-        @Override
-        public byte[] createQrCode(Integer businessId) {
+    @Override
+    public byte[] createQrCode(Integer businessId) {
 
-            Business business = businessRepository.findById(businessId).orElseThrow(() -> new BusinessNotFound("Business not found"));
-            // 1. Generate unique QR ID
-            String qrId = UUID.randomUUID().toString();
+        Business business = businessRepository.findById(businessId)
+                .orElseThrow(() -> new BusinessNotFound("Business not found"));
 
-            // 2. Create QR link
-            String qrLink = baseUrl + qrId;
+        // 1. Generate unique QR ID
+        String qrId = UUID.randomUUID().toString();
 
-            // 3. Save QR metadata in DB
-            QrCode qrCode = new QrCode();
-            qrCode.setId(qrId);
-            qrCode.setQrLink(qrLink);
-            qrCode.setBusiness(business);
-            qrCodeRepository.save(qrCode);
+        // 2. Create QR link
+        String qrLink = baseUrl + qrId;
 
-            // 4. Generate QR image
-            return qrCodeGenerator.generateQrCode(qrLink, 300, 300);
-        }
+        // 3. Generate QR image FIRST
+        byte[] qrImageBytes = qrCodeGenerator.generateQrCode(qrLink, 300, 300);
+
+        // 4. Save QR metadata + image in DB
+        QrCode qrCode = new QrCode();
+        qrCode.setId(qrId);
+        qrCode.setQrLink(qrLink);
+        qrCode.setBusiness(business);
+
+        // 🔥 THIS LINE WAS MISSING
+        qrCode.setQrImage(qrImageBytes);
+
+        // 5. Save entity
+        qrCodeRepository.save(qrCode);
+
+        // 6. Return image
+        return qrImageBytes;
+    }
+
 
     @Override
     public List<QrCodeResponse> getAllQr() {
@@ -74,6 +88,19 @@ public class QrCodeServiceImpl implements QrCodeService {
         qrCode.setActive(false);
         qrCodeRepository.save(qrCode);
         return "Qr Code Disable";
+    }
+
+    @Override
+    public byte[] downloadQrCode(String qrId) {
+
+        QrCode qrCode = qrCodeRepository.findById(qrId)
+                .orElseThrow(() -> new RuntimeException("QR Code not found"));
+
+        if (qrCode.getQrImage() == null || qrCode.getQrImage().length == 0) {
+            throw new RuntimeException("QR image not found in database");
+        }
+
+        return qrCode.getQrImage();
     }
 
 }

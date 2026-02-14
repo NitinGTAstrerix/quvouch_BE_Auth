@@ -13,5 +13,5 @@ public interface QrCodeService {
 
     String DisableQrCode( String qrId);
 
-
+    byte[] downloadQrCode(String qrId);
 }

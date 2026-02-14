@@ -2,6 +2,7 @@ package com.spring.jwt.service.impl;
 
 import com.spring.jwt.dto.*;
 import com.spring.jwt.entity.Business;
+import com.spring.jwt.entity.QrCode;
 import com.spring.jwt.entity.Review;
 import com.spring.jwt.entity.User;
 import com.spring.jwt.exception.BaseException;
@@ -13,10 +14,15 @@ import com.spring.jwt.repository.ReviewRepository;
 import com.spring.jwt.repository.UserRepository;
 import com.spring.jwt.dto.BusinessDashboardDto;
 import com.spring.jwt.dto.RatingDistributionDto;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import com.spring.jwt.service.BusinessService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -211,5 +217,25 @@ public class BusinessServiceImpl implements BusinessService {
     @Override
     public List<Object[]> getMonthlyAnalytics(Integer businessId) {
         return (List<Object[]>) reviewRepository.getMonthlyAnalytics(businessId);
+    }
+
+    @Override
+    public UrlResource downloadQrCode(Integer businessId) {
+
+        QrCode qrCode = qrCodeRepository.findByBusiness_BusinessId(businessId)
+                .stream()
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("QR Code not found"));
+
+        try {
+
+            Path tempFile = Files.createTempFile("business-qr-", ".png");
+            Files.write(tempFile, qrCode.getQrImage());
+
+            return new UrlResource(tempFile.toUri());
+
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to load QR code", e);
+        }
     }
 }

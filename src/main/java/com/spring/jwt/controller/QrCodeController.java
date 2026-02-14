@@ -2,9 +2,11 @@ package com.spring.jwt.controller;
 
 import com.spring.jwt.dto.QrCodeResponse;
 import com.spring.jwt.entity.QrCode;
+import com.spring.jwt.service.BusinessService;
 import com.spring.jwt.service.QrCodeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.annotation.Resource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -20,6 +22,7 @@ import java.util.List;
 public class QrCodeController {
 
     private final QrCodeService qrCodeService;
+    private final BusinessService businessService;
 
     @Operation(summary = "Generate QR Code for a Business", description = "Generates a QR code image for the given business ID. ")
     @PostMapping("/generate/{businessId}")
@@ -37,27 +40,39 @@ public class QrCodeController {
     @SecurityRequirement(name = "bearerAuth")
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping
-    public ResponseEntity<List<QrCodeResponse>> getAllQrcodes()
-    {
+    public ResponseEntity<List<QrCodeResponse>> getAllQrcodes() {
         List<QrCodeResponse> allQr = qrCodeService.getAllQr();
         return ResponseEntity.ok(allQr);
     }
-    @Operation(summary = "Enable a QR Code",description = "Enables a disabled QR code. "+ "Only ADMIN and SALE_REPRESENTATIVE roles are allowed.")
+
+    @Operation(summary = "Enable a QR Code", description = "Enables a disabled QR code. " + "Only ADMIN and SALE_REPRESENTATIVE roles are allowed.")
     @SecurityRequirement(name = "bearerAuth")
     @PreAuthorize("hasAnyAuthority('ADMIN','SALE_REPRESENTATIVE')")
     @PutMapping("/{qrId}/enable")
-    public ResponseEntity<String> handelQrEnable(@PathVariable String qrId)
-    {
+    public ResponseEntity<String> handelQrEnable(@PathVariable String qrId) {
         String s = qrCodeService.EnableQrCode(qrId);
         return ResponseEntity.ok(s);
     }
-    @Operation(summary = "Disable a QR Code",description = "Enables a disabled QR code. "+ "Only ADMIN and SALE_REPRESENTATIVE roles are allowed.")
+
+    @Operation(summary = "Disable a QR Code", description = "Enables a disabled QR code. " + "Only ADMIN and SALE_REPRESENTATIVE roles are allowed.")
     @SecurityRequirement(name = "bearerAuth")
     @PreAuthorize("hasAnyAuthority('ADMIN','SALE_REPRESENTATIVE')")
     @PutMapping("/{qrId}/disable")
-    public ResponseEntity<String> handelQrDisable(@PathVariable String qrId)
-    {
+    public ResponseEntity<String> handelQrDisable(@PathVariable String qrId) {
         String s = qrCodeService.DisableQrCode(qrId);
         return ResponseEntity.ok(s);
+    }
+
+    @GetMapping("/download/{qrId}")
+    public ResponseEntity<byte[]> downloadQrCode(@PathVariable String qrId) {
+
+        byte[] qrImage = qrCodeService.downloadQrCode(qrId);
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.IMAGE_PNG)
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=\"qr-code-" + qrId + ".png\"")
+                .contentLength(qrImage.length)
+                .body(qrImage);
     }
 }

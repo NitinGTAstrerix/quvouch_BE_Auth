@@ -34,6 +34,13 @@ public class QrCode {
 
     private LocalDateTime updatedAt;
 
+    @Lob
+    @Column(name = "qr_image", columnDefinition = "LONGBLOB")
+    private byte[] qrImage;
+
+    @Column(name = "qr_code_path")
+    private String qrCodePath;
+
     @PrePersist
     public void onCreate() {
         this.createdAt = LocalDateTime.now();

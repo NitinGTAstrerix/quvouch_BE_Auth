@@ -8,10 +8,14 @@ import com.spring.jwt.service.BusinessService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -126,4 +130,16 @@ public class BusinessController {
         );
     }
 
+    @GetMapping("/qr/download/{businessId}")
+    public ResponseEntity<UrlResource> downloadQrCode(
+            @PathVariable Integer businessId) {
+
+        UrlResource resource = businessService.downloadQrCode(businessId);
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.IMAGE_PNG)
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=\"business-qr-" + businessId + ".png\"")
+                .body(resource);
+    }
 }
