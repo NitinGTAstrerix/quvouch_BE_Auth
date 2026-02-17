@@ -54,9 +54,9 @@ public class JwtWithSpringSecurityApplication {
 		System.out.println(" Application Started Successfully ");
 		System.out.println(" Swagger: http://localhost:8080/swagger-ui/index.html");
 		System.out.println("======================================");
-		Security.addProvider(new BouncyCastleProvider());
+		//Security.addProvider(new BouncyCastleProvider());
 
-		SpringApplication.run(JwtWithSpringSecurityApplication.class, args);
+		//SpringApplication.run(JwtWithSpringSecurityApplication.class, args);
 		System.err.println("  *****    *******  *******       *****   *******    *****    ******   *******" );
 		System.err.println(" *     *   *      *    *         *           *      *     *   *     *     *   " );
 		System.err.println("*       *  *      *    *         *           *     *       *  *     *     *   " );

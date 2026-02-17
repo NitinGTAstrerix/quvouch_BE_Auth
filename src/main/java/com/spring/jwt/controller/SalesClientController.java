@@ -4,12 +4,17 @@ import com.spring.jwt.dto.BusinessRequestDto;
 import com.spring.jwt.dto.BusinessResponseDto;
 import com.spring.jwt.dto.QrCodeResponse;
 import com.spring.jwt.dto.SalesDashboardDto;
+import com.spring.jwt.dto.UserProfileDTO;
 import com.spring.jwt.entity.Business;
 import com.spring.jwt.service.SalesClientService;
+import com.spring.jwt.service.UserService;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,6 +30,16 @@ import java.util.Map;
 public class SalesClientController {
 
     private final SalesClientService salesClientService;
+    private final UserService userService;   // ADD THIS
+
+    // NEW API → Get current logged-in Sales Representative profile
+    @Operation(summary = "Get current logged-in sales representative profile")
+    @PreAuthorize("hasAnyAuthority('SALE_REPRESENTATIVE', 'ADMIN')")
+    @GetMapping("/me")
+    public ResponseEntity<UserProfileDTO> getCurrentSalesProfile() {
+        UserProfileDTO profile = userService.getCurrentUserProfile();
+        return ResponseEntity.ok(profile);
+    }
 
     @Operation(summary = "Create a new client")
     @PreAuthorize("hasAnyAuthority('SALE_REPRESENTATIVE', 'ADMIN')")
@@ -59,8 +74,10 @@ public class SalesClientController {
     @Operation(summary = "Update an existing client")
     @PreAuthorize("hasAnyAuthority('SALE_REPRESENTATIVE', 'ADMIN')")
     @PutMapping("/{id}")
-    public ResponseEntity<BusinessResponseDto> updateClient(@PathVariable Integer id,
-                                                            @RequestBody @Valid BusinessRequestDto dto) {
+    public ResponseEntity<BusinessResponseDto> updateClient(
+            @PathVariable Integer id,
+            @RequestBody @Valid BusinessRequestDto dto) {
+
         return ResponseEntity.ok(salesClientService.updateClient(id, dto));
     }
 
@@ -99,7 +116,9 @@ public class SalesClientController {
     @Operation(summary = "Get clients filtered by status")
     @PreAuthorize("hasAnyAuthority('SALE_REPRESENTATIVE', 'ADMIN')")
     @GetMapping("/status")
-    public ResponseEntity<List<BusinessResponseDto>> getByStatus(@RequestParam Business.BusinessStatus value) {
+    public ResponseEntity<List<BusinessResponseDto>> getByStatus(
+            @RequestParam Business.BusinessStatus value) {
+
         return ResponseEntity.ok(salesClientService.getClientsByStatus(value));
     }
 

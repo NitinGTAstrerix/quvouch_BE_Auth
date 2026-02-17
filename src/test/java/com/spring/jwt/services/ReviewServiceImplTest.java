@@ -98,7 +98,7 @@ class ReviewServiceImplTest {
     @DisplayName("Stats: Should retrieve statistics correctly")
     void testGetReviewStatistics() {
 
-        ReviewStatsDTO mockStats = new ReviewStatsDTO(50, 40L, 10L, 4.2);
+        ReviewStatsDTO mockStats = new ReviewStatsDTO(50L, 40L, 10L, 4.2);
         when(reviewRepository.getReviewStatistics(businessId)).thenReturn(mockStats);
 
         ReviewStatsDTO result = reviewService.getReviewStatistics(businessId);

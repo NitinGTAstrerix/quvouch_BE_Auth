@@ -5,11 +5,11 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 @Entity
 @Getter
 @Setter
+@Table(name = "qr_code")
 public class QrCode {
 
     @Id
@@ -17,18 +17,25 @@ public class QrCode {
 
     private String qrLink;
 
+    @Column(name = "location_label")
     private String location;
 
     private Integer scanCount = 0;
 
     private boolean active = true;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "business_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "business_id", nullable = true)
     private Business business;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "assigned_by")
+    private User assignedBy;
+
+    private LocalDateTime assignedAt;
+
     @Enumerated(EnumType.STRING)
-    private QrStatus status = QrStatus.ACTIVE;
+    private QrStatus status = QrStatus.UNASSIGNED;
 
     private LocalDateTime createdAt;
 
@@ -45,13 +52,21 @@ public class QrCode {
     public void onCreate() {
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
+
+        if (this.status == null) {
+            this.status = QrStatus.UNASSIGNED;
+        }
     }
+
     @PreUpdate
     public void onUpdate() {
         this.updatedAt = LocalDateTime.now();
     }
 
     public enum QrStatus {
+
+        UNASSIGNED,
+        ASSIGNED,
         ACTIVE,
         INACTIVE
     }

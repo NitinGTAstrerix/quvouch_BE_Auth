@@ -28,4 +28,10 @@ public interface QrCodeRepository extends JpaRepository<QrCode, String> {
 
     Optional<QrCode> findByBusiness_BusinessId(Integer business);
 
+    List<QrCode> findByStatus(QrCode.QrStatus status);
+
+    List<QrCode> findByAssignedBy(User user);
+
+    List<QrCode> findByBusiness(Business business);
+
 }

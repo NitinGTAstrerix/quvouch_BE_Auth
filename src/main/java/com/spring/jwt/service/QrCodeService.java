@@ -1,6 +1,8 @@
 package com.spring.jwt.service;
 
+import com.spring.jwt.dto.AssignQrCodeRequest;
 import com.spring.jwt.dto.QrCodeResponse;
+import com.spring.jwt.entity.QrCode;
 
 import java.util.List;
 
@@ -14,4 +16,10 @@ public interface QrCodeService {
     String DisableQrCode( String qrId);
 
     byte[] downloadQrCode(String qrId);
+
+    void assignQrToBusiness(AssignQrCodeRequest request);
+
+    List<QrCode> getUnassignedQrCodes();
+
+    List<QrCode> getMyAssignedQrCodes();
 }
