@@ -1,10 +1,8 @@
 package com.spring.jwt.service;
 
-import com.spring.jwt.dto.BusinessRequestDto;
-import com.spring.jwt.dto.BusinessResponseDto;
-import com.spring.jwt.dto.QrCodeResponse;
-import com.spring.jwt.dto.SalesDashboardDto;
+import com.spring.jwt.dto.*;
 import com.spring.jwt.entity.Business;
+import com.spring.jwt.entity.QrCode;
 
 import java.util.List;
 
@@ -29,4 +27,10 @@ public interface SalesClientService {
     List<QrCodeResponse> getActiveQrCodes();
 
     void deleteClient(Integer id);
+
+    void assignQrToBusiness(AssignQrCodeRequest request);
+
+    List<QrCode> getUnassignedQrCodes();
+
+    List<QrCode> getMyAssignedQrCodes();
 }

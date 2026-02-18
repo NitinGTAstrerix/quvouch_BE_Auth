@@ -1,9 +1,6 @@
 package com.spring.jwt.service.impl;
 
-import com.spring.jwt.dto.BusinessRequestDto;
-import com.spring.jwt.dto.BusinessResponseDto;
-import com.spring.jwt.dto.QrCodeResponse;
-import com.spring.jwt.dto.SalesDashboardDto;
+import com.spring.jwt.dto.*;
 import com.spring.jwt.entity.Business;
 import com.spring.jwt.entity.QrCode;
 import com.spring.jwt.entity.User;
@@ -12,6 +9,8 @@ import com.spring.jwt.repository.BusinessRepository;
 import com.spring.jwt.repository.QrCodeRepository;
 import com.spring.jwt.repository.UserRepository;
 import com.spring.jwt.service.SalesClientService;
+import com.spring.jwt.service.UserService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -21,6 +20,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -31,6 +31,7 @@ public class SalesClientServiceImpl implements SalesClientService {
     private final QrCodeRepository qrCodeRepository;
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
+    private final UserService userService;
 
     private User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -221,5 +222,60 @@ public class SalesClientServiceImpl implements SalesClientService {
         Business business = businessRepository.findByBusinessIdAndUser(id, user).orElseThrow(() ->new RuntimeException("Client not found"));
 
         businessRepository.delete(business);
+    }
+
+
+    @Override
+    @Transactional
+    public void assignQrToBusiness(AssignQrCodeRequest request) {
+
+        QrCode qrCode = qrCodeRepository.findById(request.getQrCodeId())
+                .orElseThrow(() -> new RuntimeException("QR Code not found"));
+
+        if (qrCode.getStatus() != QrCode.QrStatus.UNASSIGNED) {
+            throw new RuntimeException("QR Code already assigned");
+        }
+
+        Business business = businessRepository.findById(request.getClientId())
+                .orElseThrow(() -> new RuntimeException("Business not found"));
+
+        // ✅ Correct way using your DTO structure
+        UserProfileDTO profile = userService.getCurrentUserProfile();
+
+        String userIdStr = profile.getUser().getUserId();
+
+        Long salesUserId = Long.parseLong(userIdStr);
+
+        User salesUser = userRepository.findById(salesUserId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        qrCode.setBusiness(business);
+        qrCode.setAssignedBy(salesUser);
+        qrCode.setAssignedAt(LocalDateTime.now());
+        qrCode.setLocation(request.getLocationLabel());
+        qrCode.setStatus(QrCode.QrStatus.ASSIGNED);
+
+        qrCodeRepository.save(qrCode);
+    }
+
+    @Override
+    public List<QrCode> getUnassignedQrCodes() {
+
+        return qrCodeRepository.findByStatus(QrCode.QrStatus.UNASSIGNED);
+    }
+
+    @Override
+    public List<QrCode> getMyAssignedQrCodes() {
+
+        UserProfileDTO profile = userService.getCurrentUserProfile();
+
+        String userIdStr = profile.getUser().getUserId();
+
+        Long salesUserId = Long.parseLong(userIdStr);
+
+        User salesUser = userRepository.findById(salesUserId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        return qrCodeRepository.findByAssignedBy(salesUser);
     }
 }
