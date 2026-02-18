@@ -3,6 +3,7 @@ package com.spring.jwt.controller;
 import com.spring.jwt.dto.BusinessDashboardDto;
 import com.spring.jwt.dto.BusinessRequestDto;
 import com.spring.jwt.dto.BusinessResponseDto;
+import com.spring.jwt.dto.MonthlyAnalyticsDTO;
 import com.spring.jwt.mapper.BusinessMapper;
 import com.spring.jwt.service.BusinessService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -120,15 +121,15 @@ public class BusinessController {
         return ResponseEntity.ok(link);
     }
 
-    @Operation(summary = "Review Analytics",description = "Get monthly review analytics")
+    @Operation(description = "Get monthly review analytics")
     @GetMapping("/analytics/{businessId}")
-    public ResponseEntity<List<Object[]>> getAnalytics(
+    public ResponseEntity<List<MonthlyAnalyticsDTO>> getAnalytics(
             @PathVariable Integer businessId) {
 
-        return ResponseEntity.ok(
-                businessService.getMonthlyAnalytics(businessId)
+        return ResponseEntity.ok(businessService.getMonthlyAnalytics(businessId)
         );
     }
+
 
     @GetMapping("/qr/download/{businessId}")
     public ResponseEntity<UrlResource> downloadQrCode(

@@ -1,11 +1,9 @@
 package com.spring.jwt.controller;
 
-import com.spring.jwt.dto.BusinessRequestDto;
-import com.spring.jwt.dto.BusinessResponseDto;
-import com.spring.jwt.dto.QrCodeResponse;
-import com.spring.jwt.dto.SalesDashboardDto;
-import com.spring.jwt.dto.UserProfileDTO;
+import com.spring.jwt.dto.*;
 import com.spring.jwt.entity.Business;
+import com.spring.jwt.entity.QrCode;
+import com.spring.jwt.service.QrCodeService;
 import com.spring.jwt.service.SalesClientService;
 import com.spring.jwt.service.UserService;
 
@@ -30,7 +28,8 @@ import java.util.Map;
 public class SalesClientController {
 
     private final SalesClientService salesClientService;
-    private final UserService userService;   // ADD THIS
+    private final UserService userService;
+    private final QrCodeService qrCodeService;
 
     // NEW API → Get current logged-in Sales Representative profile
     @Operation(summary = "Get current logged-in sales representative profile")
@@ -127,5 +126,42 @@ public class SalesClientController {
     @GetMapping("/qr/active")
     public ResponseEntity<List<QrCodeResponse>> getActiveQrs() {
         return ResponseEntity.ok(salesClientService.getActiveQrCodes());
+    }
+
+    @Operation(summary = "Assign QR Code to Client")
+    @PreAuthorize("hasAnyAuthority('SALE_REPRESENTATIVE','ADMIN')")
+    @PostMapping("/qrcodes/assign")
+    public ResponseEntity<?> assignQrCode(
+            @Valid @RequestBody AssignQrCodeRequest request) {
+
+        qrCodeService.assignQrToBusiness(request);
+
+        return ResponseEntity.ok(
+                Map.of(
+                        "message", "QR Code assigned successfully",
+                        "qrCodeId", request.getQrCodeId(),
+                        "clientId", request.getClientId()
+                )
+        );
+    }
+
+    @Operation(summary = "Get all unassigned QR Codes")
+    @PreAuthorize("hasAnyAuthority('SALE_REPRESENTATIVE','ADMIN')")
+    @GetMapping("/qrcodes/unassigned")
+    public ResponseEntity<List<QrCode>> getUnassignedQrCodes() {
+
+        return ResponseEntity.ok(
+                qrCodeService.getUnassignedQrCodes()
+        );
+    }
+
+    @Operation(summary = "Get QR Codes assigned by logged-in Sales Rep")
+    @PreAuthorize("hasAnyAuthority('SALE_REPRESENTATIVE','ADMIN')")
+    @GetMapping("/qrcodes/my")
+    public ResponseEntity<List<QrCode>> getMyAssignedQrCodes() {
+
+        return ResponseEntity.ok(
+                qrCodeService.getMyAssignedQrCodes()
+        );
     }
 }

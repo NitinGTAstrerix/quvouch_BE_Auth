@@ -116,17 +116,20 @@ public class QrCodeServiceImpl implements QrCodeService {
     @Transactional
     public void assignQrToBusiness(AssignQrCodeRequest request) {
 
+        // 1️⃣ Fetch QR
         QrCode qrCode = qrCodeRepository.findById(request.getQrCodeId())
                 .orElseThrow(() -> new RuntimeException("QR Code not found"));
 
+        // 2️⃣ Check if already assigned
         if (qrCode.getStatus() != QrCode.QrStatus.UNASSIGNED) {
             throw new RuntimeException("QR Code already assigned");
         }
 
+        // 3️⃣ Fetch Business (Client)
         Business business = businessRepository.findById(request.getClientId())
                 .orElseThrow(() -> new RuntimeException("Business not found"));
 
-        // ✅ Correct way using your DTO structure
+        // 4️⃣ Get logged-in Sales Rep
         UserProfileDTO profile = userService.getCurrentUserProfile();
 
         String userIdStr = profile.getUser().getUserId();
@@ -136,6 +139,7 @@ public class QrCodeServiceImpl implements QrCodeService {
         User salesUser = userRepository.findById(salesUserId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
+        // 5️⃣ Assign QR
         qrCode.setBusiness(business);
         qrCode.setAssignedBy(salesUser);
         qrCode.setAssignedAt(LocalDateTime.now());
@@ -145,12 +149,18 @@ public class QrCodeServiceImpl implements QrCodeService {
         qrCodeRepository.save(qrCode);
     }
 
+    // ==========================================
+    // GET ALL UNASSIGNED QRS
+    // ==========================================
     @Override
     public List<QrCode> getUnassignedQrCodes() {
 
         return qrCodeRepository.findByStatus(QrCode.QrStatus.UNASSIGNED);
     }
 
+    // ==========================================
+    // GET QRS ASSIGNED BY LOGGED-IN SALES REP
+    // ==========================================
     @Override
     public List<QrCode> getMyAssignedQrCodes() {
 
@@ -165,4 +175,5 @@ public class QrCodeServiceImpl implements QrCodeService {
 
         return qrCodeRepository.findByAssignedBy(salesUser);
     }
+
 }

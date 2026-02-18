@@ -215,8 +215,9 @@ public class BusinessServiceImpl implements BusinessService {
     }
 
     @Override
-    public List<Object[]> getMonthlyAnalytics(Integer businessId) {
-        return (List<Object[]>) reviewRepository.getMonthlyAnalytics(businessId);
+    public List<MonthlyAnalyticsDTO> getMonthlyAnalytics(Integer businessId) {
+
+        return reviewRepository.getMonthlyAnalytics(businessId);
     }
 
     @Override
