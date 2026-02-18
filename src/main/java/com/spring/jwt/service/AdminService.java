@@ -1,5 +1,7 @@
 package com.spring.jwt.service;
 
+import com.spring.jwt.dto.ClientDetailsDTO;
+import com.spring.jwt.dto.ClientListDTO;
 import com.spring.jwt.dto.SaleRepresentativeInfo;
 import com.spring.jwt.dto.UserDTO;
 import com.spring.jwt.entity.User;
@@ -11,5 +13,9 @@ public interface AdminService {
     public User getCurrentUserProfile();
     public List<SaleRepresentativeInfo> getAllSaleRepsWithClientCount();
     public UserDTO getSaleRepresentativeById(Long id);
+
+    List<ClientListDTO> getAllClients();
+
+    ClientDetailsDTO getClientDetails(Integer businessId);
 
 }
