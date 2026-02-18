@@ -1,5 +1,7 @@
 package com.spring.jwt.controller;
 
+import com.spring.jwt.dto.ClientDetailsDTO;
+import com.spring.jwt.dto.ClientListDTO;
 import com.spring.jwt.dto.SaleRepresentativeInfo;
 import com.spring.jwt.dto.UserDTO;
 import com.spring.jwt.service.AdminService;
@@ -34,5 +36,20 @@ public class AdminController {
                 adminService.getSaleRepresentativeById(id)
         );
     }
-}
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @GetMapping("/clients")
+    public ResponseEntity<List<ClientListDTO>> getAllClients() {
+        return ResponseEntity.ok(adminService.getAllClients());
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @GetMapping("/clients/{businessId}")
+    public ResponseEntity<ClientDetailsDTO> getClientDetails(
+            @PathVariable Integer businessId) {
+
+        return ResponseEntity.ok(
+                adminService.getClientDetails(businessId)
+        );
+    }}
 
