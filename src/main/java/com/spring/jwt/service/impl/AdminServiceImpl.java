@@ -1,13 +1,12 @@
 package com.spring.jwt.service.impl;
 
-import com.spring.jwt.dto.ClientDetailsDTO;
-import com.spring.jwt.dto.ClientListDTO;
-import com.spring.jwt.dto.SaleRepresentativeInfo;
-import com.spring.jwt.dto.UserDTO;
+import com.spring.jwt.dto.*;
+import com.spring.jwt.entity.QrCode;
 import com.spring.jwt.entity.User;
 import com.spring.jwt.exception.BaseException;
 import com.spring.jwt.mapper.UserMapper;
 import com.spring.jwt.repository.BusinessRepository;
+import com.spring.jwt.repository.QrCodeRepository;
 import com.spring.jwt.repository.UserRepository;
 import com.spring.jwt.service.AdminService;
 import lombok.AllArgsConstructor;
@@ -27,6 +26,7 @@ public class AdminServiceImpl implements AdminService {
 
     private final UserRepository userRepository;
     private final BusinessRepository businessRepository;
+    private final QrCodeRepository qrCodeRepository;
     private final UserMapper userMapper;
 
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -115,5 +115,12 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public ClientDetailsDTO getClientDetails(Integer businessId) {
         return businessRepository.getClientDetails(businessId);
+    }
+
+    @Override
+    public List<AdminQrCodeDTO> getAllQrCodes() {
+
+        return qrCodeRepository.getAllQrCodesForAdmin();
+
     }
 }

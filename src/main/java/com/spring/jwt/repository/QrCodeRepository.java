@@ -1,5 +1,6 @@
 package com.spring.jwt.repository;
 
+import com.spring.jwt.dto.AdminQrCodeDTO;
 import com.spring.jwt.entity.Business;
 import com.spring.jwt.entity.QrCode;
 import com.spring.jwt.entity.User;
@@ -32,6 +33,23 @@ public interface QrCodeRepository extends JpaRepository<QrCode, String> {
 
     List<QrCode> findByAssignedBy(User user);
 
-    List<QrCode> findByBusiness(Business business);
-
+    @Query("""
+SELECT new com.spring.jwt.dto.AdminQrCodeDTO(
+    q.id,
+    COALESCE(b.businessName,'Unassigned'),
+    q.location,
+    q.scanCount,
+    COUNT(r),
+    q.qrLink,
+    q.qrCodePath,
+    q.status,
+    q.createdAt
+)
+FROM QrCode q
+LEFT JOIN q.business b
+LEFT JOIN Review r ON CAST(r.qrCodeId AS string) = q.id
+GROUP BY q.id, b.businessName, q.location, q.scanCount, q.qrLink, q.qrCodePath, q.status, q.createdAt
+ORDER BY q.createdAt DESC
+""")
+    List<AdminQrCodeDTO> getAllQrCodesForAdmin();
 }

@@ -148,6 +148,8 @@ public class AppConfig {
                 .requestMatchers(jwtConfig.getUrl()).permitAll()
                 .requestMatchers(jwtConfig.getRefreshUrl()).permitAll()
 
+                .requestMatchers("/api/v1/admin/**").hasAuthority("ADMIN")
+
                 .requestMatchers(
                         "/v2/api-docs",
                         "/v3/api-docs",

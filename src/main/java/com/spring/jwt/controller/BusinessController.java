@@ -34,7 +34,7 @@ public class BusinessController {
 
     @Operation(summary = "create business apis", description = "This is create the business apis ")
     @SecurityRequirement(name = "bearerAuth")
-    @PreAuthorize("hasAnyAuthority('ADMIN','SALE_REPRESENTATIVE')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','SALE_REPRESENTATIVE','CLIENT')")
     @PostMapping
     public ResponseEntity<BusinessResponseDto> creteBusiness(@Valid @RequestBody BusinessRequestDto businessRequestDto)
     {

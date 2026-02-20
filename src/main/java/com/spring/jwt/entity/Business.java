@@ -27,6 +27,7 @@ public class Business {
     private String address;
     private String phoneNumber;
 
+    @Column(name = "business_email")
     private String businessEmail;
 
     @Enumerated(EnumType.STRING)

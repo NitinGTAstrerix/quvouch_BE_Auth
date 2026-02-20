@@ -15,6 +15,7 @@ public class BusinessMapper {
                 .address(business.getAddress())
                 .phoneNumber(business.getPhoneNumber())
                 .businessEmail(business.getBusinessEmail())
+                .status(business.getStatus())
                 .createdAt(business.getCreatedAt())
                 .updatedAt(business.getUpdatedAt())
                 .userId(business.getUser().getId())
@@ -28,6 +29,9 @@ public class BusinessMapper {
                 .businessType(businessRequestDto.getBusinessType())
                 .address(businessRequestDto.getAddress())
                 .phoneNumber(businessRequestDto.getPhoneNumber())
+                .businessEmail(businessRequestDto.getBusinessEmail())
+                .status(Business.BusinessStatus.ACTIVE)
                 .build();
     }
+
 }
