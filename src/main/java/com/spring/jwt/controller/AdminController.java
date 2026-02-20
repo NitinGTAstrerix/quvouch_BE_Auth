@@ -3,16 +3,14 @@ package com.spring.jwt.controller;
 import com.spring.jwt.dto.FeedbackResponseDto;
 import com.spring.jwt.dto.SaleRepresentativeInfo;
 import com.spring.jwt.dto.UserDTO;
+import com.spring.jwt.dto.*;
 import com.spring.jwt.service.AdminService;
 import com.spring.jwt.service.FeedbackService;
 import com.spring.jwt.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -49,5 +47,30 @@ public class AdminController {
         );
     }
 
-}
 
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @GetMapping("/clients")
+    public ResponseEntity<List<ClientListDTO>> getAllClients() {
+        return ResponseEntity.ok(adminService.getAllClients());
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @GetMapping("/clients/{businessId}")
+    public ResponseEntity<ClientDetailsDTO> getClientDetails(
+            @PathVariable Integer businessId) {
+
+        return ResponseEntity.ok(
+                adminService.getClientDetails(businessId)
+        );
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @GetMapping("/qrcodes")
+    public ResponseEntity<List<AdminQrCodeDTO>> getAllQrCodes() {
+
+        return ResponseEntity.ok(
+                adminService.getAllQrCodes()
+        );
+
+    }
+}
