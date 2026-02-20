@@ -164,7 +164,6 @@ public class AppConfig {
                 .requestMatchers(HttpMethod.POST, "/api/v1/qr/*/rate").permitAll()
                 .requestMatchers("/api/public/**").permitAll()
                 .requestMatchers("/user/**").permitAll()
-
                 .requestMatchers("/api/v1/qr/reviews/business/**").hasAnyAuthority("ADMIN", "SALE_REPRESENTATIVE", "CLIENT")
 
                 .anyRequest().authenticated());
@@ -174,7 +173,11 @@ public class AppConfig {
             new org.springframework.security.web.util.matcher.OrRequestMatcher(
                 new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/auth/**"),
                 new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/public/**"),
-                new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/v1/users/register"), new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/v1/users/password/**"), new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/v1/qr/reviews/**"), new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/v1/qr/*/rate"),
+                new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/v1/users/register"),
+                    new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/v1/users/password/**"),
+                    new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/v1/qr/reviews/**"),
+                    new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/v1/qr/*/rate"),
+                new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/v1/feedback",HttpMethod.POST.name()),
                 new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/scan/qr/**"),
                 new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/v2/api-docs/**"),
                 new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/v3/api-docs/**"),

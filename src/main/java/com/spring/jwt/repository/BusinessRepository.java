@@ -39,4 +39,6 @@ public interface BusinessRepository extends JpaRepository<Business, Integer> {
        """)
     List<Object[]> getMonthlyAnalytics(@Param("businessId") Integer businessId);
 
+    List<Business> findByUser_IdIn(List<Integer> userIds);
+
 }

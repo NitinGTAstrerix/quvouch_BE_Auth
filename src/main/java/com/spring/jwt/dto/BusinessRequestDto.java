@@ -31,4 +31,6 @@ public class BusinessRequestDto {
     @NotBlank(message = "Customer email is required")
     @Email(message = "Invalid email format")
     private String businessEmail;
+
+    private Long clientId;
 }

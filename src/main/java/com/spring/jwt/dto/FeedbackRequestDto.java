@@ -19,5 +19,5 @@ public class FeedbackRequestDto {
     @Max(5)
     private Integer rating;
 
-    private Long businessId;
+    private Integer businessId;
 }

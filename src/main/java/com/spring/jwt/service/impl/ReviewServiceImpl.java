@@ -1,16 +1,23 @@
 package com.spring.jwt.service.impl;
 
+import com.spring.jwt.dto.FeedbackResponseDto;
 import com.spring.jwt.dto.ReviewResponse;
 import com.spring.jwt.dto.ReviewStatsDTO;
 import com.spring.jwt.entity.Business;
+import com.spring.jwt.entity.Feedback;
 import com.spring.jwt.entity.Review;
 import com.spring.jwt.dto.ReviewRequestDto;
+import com.spring.jwt.entity.User;
 import com.spring.jwt.exception.ResourceNotFoundException;
+import com.spring.jwt.mapper.FeedbackMapper;
 import com.spring.jwt.mapper.ReviewMapper;
 import com.spring.jwt.repository.BusinessRepository;
+import com.spring.jwt.repository.FeedbackRepository;
 import com.spring.jwt.repository.ReviewRepository;
+import com.spring.jwt.repository.UserRepository;
 import com.spring.jwt.service.ReviewService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +25,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @AllArgsConstructor
 public class ReviewServiceImpl implements ReviewService {
@@ -25,6 +33,9 @@ public class ReviewServiceImpl implements ReviewService {
     private final ReviewRepository reviewRepository;
     private final BusinessRepository businessRepository;
     private final ReviewMapper reviewMapper;
+    private final UserRepository userRepository;
+    private final FeedbackRepository feedbackRepository;
+    private final FeedbackMapper feedbackMapper;
 
     @Override
     @Transactional
@@ -88,4 +99,45 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
 
+    @Override
+    public List<FeedbackResponseDto> getReviewsBySaleRep(Integer saleRepId) {
+
+        // 1️⃣ get clients
+        List<User> clients = userRepository.findBySaleRepresentative_Id(saleRepId);
+        log.info("All clients {}",clients);
+        if (clients == null || clients.isEmpty()) {
+            log.info("No clients found for saleRep {}", saleRepId);
+            return List.of();
+        }
+
+        List<Integer> clientIds = clients.stream()
+                .map(User::getId)
+                .toList();
+
+        // 2️⃣ get businesses
+        List<Business> businesses = businessRepository.findByUser_IdIn(clientIds);
+
+        if (businesses == null || businesses.isEmpty()) {
+            log.info("No businesses found for clients {}", clientIds);
+            return List.of();
+        }
+
+        List<Integer> businessIds = businesses.stream()
+                .map(Business::getBusinessId)
+                .toList();
+
+        // 3️⃣ get feedbacks
+        List<Feedback> feedbacks =
+                feedbackRepository.findByBusiness_BusinessIdIn(businessIds);
+
+        if (feedbacks == null || feedbacks.isEmpty()) {
+            log.info("No feedback found for businesses {}", businessIds);
+            return List.of();
+        }
+
+        // 4️⃣ map DTO
+        return feedbacks.stream()
+                .map(feedbackMapper::toDto)
+                .toList();
+    }
 }

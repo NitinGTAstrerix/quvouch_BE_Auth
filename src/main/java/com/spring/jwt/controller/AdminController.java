@@ -1,8 +1,11 @@
 package com.spring.jwt.controller;
 
+import com.spring.jwt.dto.FeedbackResponseDto;
 import com.spring.jwt.dto.SaleRepresentativeInfo;
 import com.spring.jwt.dto.UserDTO;
 import com.spring.jwt.service.AdminService;
+import com.spring.jwt.service.FeedbackService;
+import com.spring.jwt.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,6 +22,7 @@ import java.util.List;
 public class AdminController {
 
     private final AdminService adminService;
+    private final ReviewService reviewService;
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/sale-representatives")
@@ -34,5 +38,16 @@ public class AdminController {
                 adminService.getSaleRepresentativeById(id)
         );
     }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @GetMapping("/reviews/salerep/{saleRepId}")
+    public ResponseEntity<List<FeedbackResponseDto>> getReviewsBySaleRep(
+            @PathVariable Integer saleRepId) {
+
+        return ResponseEntity.ok(
+                reviewService.getReviewsBySaleRep(saleRepId)
+        );
+    }
+
 }
 

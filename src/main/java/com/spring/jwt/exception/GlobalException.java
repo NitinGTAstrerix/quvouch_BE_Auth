@@ -309,4 +309,14 @@ public class GlobalException extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(body,HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(FeedbackAlreadyAvaliable.class)
+    public ResponseEntity<Map<String,Object>> handleFeedbackalreadyAvalibale(FeedbackAlreadyAvaliable e)
+    {
+        Map<String, Object> body = new HashMap<>();
+        body.put("timestamp",new Date());
+        body.put("status", HttpStatus.FOUND);
+        body.put("error", "You all ready provide feedback");
+        body.put("message", e.getMessage());
+        return new ResponseEntity<>(body,HttpStatus.FOUND);
+    }
 }

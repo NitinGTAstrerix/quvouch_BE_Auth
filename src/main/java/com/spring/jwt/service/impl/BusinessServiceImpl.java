@@ -46,17 +46,63 @@ public class BusinessServiceImpl implements BusinessService {
 
 
     @Override
-    public BusinessResponseDto createBusiness(BusinessRequestDto businessRequestDto) {
+    public BusinessResponseDto createBusiness(BusinessRequestDto dto) {
 
-        if (ObjectUtils.isEmpty(businessRequestDto.getBusinessName()))
-        {
-            throw new BaseException(String.valueOf(HttpStatus.NOT_FOUND),"Please Enter Business Name");
+        User loggedUser = getCurrentUserProfile();
+
+        if (loggedUser == null) {
+            throw new RuntimeException("Logged user not found");
         }
-        Business business = mapper.toBusinessRequest(businessRequestDto);
-        business.setUser(getCurrentUserProfile());
+
+        // 2️⃣ Check role
+        boolean isAdmin = loggedUser.getRoles().stream()
+                .anyMatch(r -> r.getName().equals("ADMIN"));
+
+        boolean isSaleRep = loggedUser.getRoles().stream()
+                .anyMatch(r -> r.getName().equals("SALE_REPRESENTATIVE"));
+
+        if (!isAdmin && !isSaleRep) {
+            throw new RuntimeException("Only Admin or Sale Rep can create business");
+        }
+
+        // 3️⃣ Get client
+        User client = userRepository.findById(dto.getClientId())
+                .orElseThrow(() -> new RuntimeException("Client not found"));
+
+        // 4️⃣ Verify client role
+        boolean isClient = client.getRoles().stream()
+                .anyMatch(r -> r.getName().equals("CLIENT"));
+
+        if (!isClient) {
+            throw new RuntimeException("Selected user is not a client");
+        }
+
+        // 5️⃣ Security check for SALE REP
+        if (isSaleRep) {
+
+            // sale rep can create only for his clients
+            if (client.getSaleRepresentative() == null ||
+                    !client.getSaleRepresentative().getId().equals(loggedUser.getId())) {
+
+                throw new RuntimeException("You can create business only for your assigned clients");
+            }
+        }
+
+        // 6️⃣ Create business
+        Business business = new Business();
+
+        business.setBusinessName(dto.getBusinessName());
+        business.setBusinessType(dto.getBusinessType());
+        business.setAddress(dto.getAddress());
+        business.setPhoneNumber(dto.getPhoneNumber());
+
+        business.setUser(client);
+
         Business saved = businessRepository.save(business);
+
         return mapper.toBusiness(saved);
     }
+
 
     @Override
     public BusinessResponseDto getBusinessById(Integer businessId) {

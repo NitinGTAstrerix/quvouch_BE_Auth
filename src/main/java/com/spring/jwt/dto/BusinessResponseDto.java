@@ -20,6 +20,5 @@ public class BusinessResponseDto {
     private String businessEmail;
     private Instant createdAt;
     private Instant updatedAt;
-
-    private Integer userId;
+    private Integer ClientId;
 }
