@@ -124,28 +124,46 @@ public class SalesClientServiceImpl implements SalesClientService {
 
         User user = getCurrentUser();
 
-        Business business = businessRepository
-                .findByBusinessIdAndUser(id, user)
-                .orElseThrow(() ->
-                        new ResponseStatusException(
-                                HttpStatus.NOT_FOUND,
-                                "Client not found"
-                        )
-                );
+        boolean isAdmin = user.getRoles().stream()
+                .anyMatch(role -> role.getName().equals("ADMIN"));
 
-        if (business.getStatus() == null) {
-            business.setStatus(Business.BusinessStatus.PENDING);
+        Business business;
+
+        // ADMIN can toggle any client
+        if (isAdmin) {
+
+            business = businessRepository.findById(id)
+                    .orElseThrow(() ->
+                            new ResponseStatusException(
+                                    HttpStatus.NOT_FOUND,
+                                    "Client not found"
+                            )
+                    );
+
+        } else {
+            // SALE_REPRESENTATIVE can toggle only their own clients
+            business = businessRepository
+                    .findByBusinessIdAndUser(id, user)
+                    .orElseThrow(() ->
+                            new ResponseStatusException(
+                                    HttpStatus.NOT_FOUND,
+                                    "Client not found"
+                            )
+                    );
         }
 
-        Business.BusinessStatus newStatus =
-                business.getStatus().next();
+        Business.BusinessStatus currentStatus =
+                business.getStatus() == null
+                        ? Business.BusinessStatus.PENDING
+                        : business.getStatus();
+
+        Business.BusinessStatus newStatus = currentStatus.next();
 
         business.setStatus(newStatus);
-
         businessRepository.save(business);
+
         return newStatus;
     }
-
 
     @Override
     public SalesDashboardDto getDashboardData() {

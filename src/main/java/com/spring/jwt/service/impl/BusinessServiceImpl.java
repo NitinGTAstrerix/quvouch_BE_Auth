@@ -54,47 +54,61 @@ public class BusinessServiceImpl implements BusinessService {
             throw new RuntimeException("Logged user not found");
         }
 
-        // 2️⃣ Check role
         boolean isAdmin = loggedUser.getRoles().stream()
                 .anyMatch(r -> r.getName().equals("ADMIN"));
 
         boolean isSaleRep = loggedUser.getRoles().stream()
                 .anyMatch(r -> r.getName().equals("SALE_REPRESENTATIVE"));
 
-        if (!isAdmin && !isSaleRep) {
-            throw new RuntimeException("Only Admin or Sale Rep can create business");
-        }
-
-        // 3️⃣ Get client
-        User client = userRepository.findById(dto.getClientId())
-                .orElseThrow(() -> new RuntimeException("Client not found"));
-
-        // 4️⃣ Verify client role
-        boolean isClient = client.getRoles().stream()
+        boolean isClient = loggedUser.getRoles().stream()
                 .anyMatch(r -> r.getName().equals("CLIENT"));
 
-        if (!isClient) {
-            throw new RuntimeException("Selected user is not a client");
+        if (!isAdmin && !isSaleRep && !isClient) {
+            throw new RuntimeException("You are not authorized to create business");
         }
 
-        // 5️⃣ Security check for SALE REP
-        if (isSaleRep) {
+        User client;
 
-            // sale rep can create only for his clients
+        // ✅ If ADMIN → can select any client
+        if (isAdmin) {
+
+            client = userRepository.findById(dto.getClientId())
+                    .orElseThrow(() -> new RuntimeException("Client not found"));
+
+        }
+        // ✅ If SALE REP → only for assigned clients
+        else if (isSaleRep) {
+
+            client = userRepository.findById(dto.getClientId())
+                    .orElseThrow(() -> new RuntimeException("Client not found"));
+
             if (client.getSaleRepresentative() == null ||
                     !client.getSaleRepresentative().getId().equals(loggedUser.getId())) {
 
                 throw new RuntimeException("You can create business only for your assigned clients");
             }
         }
+        // ✅ If CLIENT → create only for self
+        else {
 
-        // 6️⃣ Create business
+            client = loggedUser;
+
+            // Optional: prevent client from passing another clientId
+            if (dto.getClientId() != null &&
+                    !dto.getClientId().equals(loggedUser.getId())) {
+
+                throw new RuntimeException("Client can create business only for themselves");
+            }
+        }
+
         Business business = new Business();
 
         business.setBusinessName(dto.getBusinessName());
         business.setBusinessType(dto.getBusinessType());
         business.setAddress(dto.getAddress());
         business.setPhoneNumber(dto.getPhoneNumber());
+        business.setBusinessEmail(dto.getBusinessEmail());
+        business.setStatus(Business.BusinessStatus.ACTIVE);
 
         business.setUser(client);
 
@@ -102,7 +116,6 @@ public class BusinessServiceImpl implements BusinessService {
 
         return mapper.toBusiness(saved);
     }
-
 
     @Override
     public BusinessResponseDto getBusinessById(Integer businessId) {
