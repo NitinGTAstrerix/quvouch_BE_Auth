@@ -73,4 +73,6 @@ GROUP BY b.businessId
 """)
     ClientDetailsDTO getClientDetails(@Param("businessId") Integer businessId);
 
+    Optional<Business> findByBusinessIdAndUser_SaleRepresentative(Integer id, User saleRep);
+
 }

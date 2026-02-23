@@ -120,38 +120,58 @@ public class SalesClientServiceImpl implements SalesClientService {
     }
 
     @Override
-    public Business.BusinessStatus changeStatus(Integer id) {
+    @Transactional
+    public Business.BusinessStatus changeStatus(Integer businessId) {
 
-        User user = getCurrentUser();
+        User loggedUser = getCurrentUser();
 
-        boolean isAdmin = user.getRoles().stream()
+        boolean isAdmin = loggedUser.getRoles().stream()
                 .anyMatch(role -> role.getName().equals("ADMIN"));
+
+        boolean isSaleRep = loggedUser.getRoles().stream()
+                .anyMatch(role -> role.getName().equals("SALE_REPRESENTATIVE"));
 
         Business business;
 
-        // ADMIN can toggle any client
+        // ✅ ADMIN → can toggle any business
         if (isAdmin) {
 
-            business = businessRepository.findById(id)
+            business = businessRepository.findById(businessId)
                     .orElseThrow(() ->
                             new ResponseStatusException(
                                     HttpStatus.NOT_FOUND,
-                                    "Client not found"
+                                    "Business not found"
                             )
                     );
 
-        } else {
-            // SALE_REPRESENTATIVE can toggle only their own clients
+        }
+        // ✅ SALE_REPRESENTATIVE → only businesses of their assigned clients
+        else if (isSaleRep) {
+
             business = businessRepository
-                    .findByBusinessIdAndUser(id, user)
+                    .findByBusinessIdAndUser_SaleRepresentative(businessId, loggedUser)
                     .orElseThrow(() ->
                             new ResponseStatusException(
                                     HttpStatus.NOT_FOUND,
-                                    "Client not found"
+                                    "Business not found or not assigned to you"
+                            )
+                    );
+
+        }
+        // ✅ CLIENT → only their own businesses
+        else {
+
+            business = businessRepository
+                    .findByBusinessIdAndUser(businessId, loggedUser)
+                    .orElseThrow(() ->
+                            new ResponseStatusException(
+                                    HttpStatus.NOT_FOUND,
+                                    "Business not found"
                             )
                     );
         }
 
+        // 🔄 Toggle Logic
         Business.BusinessStatus currentStatus =
                 business.getStatus() == null
                         ? Business.BusinessStatus.PENDING

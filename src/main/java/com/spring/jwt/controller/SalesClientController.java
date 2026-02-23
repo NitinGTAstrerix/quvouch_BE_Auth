@@ -80,18 +80,18 @@ public class SalesClientController {
         return ResponseEntity.ok(salesClientService.updateClient(id, dto));
     }
 
-    @Operation(summary = "Toggle client status: PENDING → ACTIVE → INACTIVE")
+    @Operation(summary = "Toggle business status: PENDING → ACTIVE → INACTIVE")
     @PreAuthorize("hasAnyAuthority('SALE_REPRESENTATIVE', 'ADMIN')")
-    @PatchMapping("/{id}/status/toggle")
-    public ResponseEntity<?> toggleClientStatus(@PathVariable Integer id) {
+    @PatchMapping("/business/{id}/status/toggle")
+    public ResponseEntity<?> toggleBusinessStatus(@PathVariable Integer id) {
 
         Business.BusinessStatus status =
                 salesClientService.changeStatus(id);
 
         return ResponseEntity.ok(
                 Map.of(
-                        "message", "Status updated successfully",
-                        "clientId", id,
+                        "message", "Business status updated successfully",
+                        "businessId", id,
                         "status", status
                 )
         );
