@@ -1,9 +1,6 @@
 package com.spring.jwt.controller;
 
-import com.spring.jwt.dto.BusinessDashboardDto;
-import com.spring.jwt.dto.BusinessRequestDto;
-import com.spring.jwt.dto.BusinessResponseDto;
-import com.spring.jwt.dto.MonthlyAnalyticsDTO;
+import com.spring.jwt.dto.*;
 import com.spring.jwt.mapper.BusinessMapper;
 import com.spring.jwt.service.BusinessService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -142,5 +139,18 @@ public class BusinessController {
                 .header(HttpHeaders.CONTENT_DISPOSITION,
                         "attachment; filename=\"business-qr-" + businessId + ".png\"")
                 .body(resource);
+    }
+
+    @Operation(summary = "Get customer reviews for logged-in client")
+    @PreAuthorize("hasAuthority('CLIENT')")
+    @GetMapping("/reviews")
+    public ResponseEntity<List<ReviewResponseDto>> getMyReviews(
+            @RequestParam(required = false) Integer rating,
+            @RequestParam(required = false) String keyword
+    ) {
+
+        return ResponseEntity.ok(
+                businessService.getMyBusinessReviews(rating, keyword)
+        );
     }
 }

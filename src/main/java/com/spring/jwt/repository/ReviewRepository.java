@@ -5,6 +5,7 @@ import com.spring.jwt.dto.ReviewStatsDTO;
 import com.spring.jwt.entity.QrCode;
 import com.spring.jwt.entity.Review;
 import com.spring.jwt.entity.Review.ReviewStatus;
+import com.spring.jwt.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -56,4 +57,10 @@ GROUP BY YEAR(r.createdAt), MONTH(r.createdAt)
 ORDER BY YEAR(r.createdAt), MONTH(r.createdAt)
 """)
     List<MonthlyAnalyticsDTO> getMonthlyAnalytics(@Param("businessId") Integer businessId);
+
+    List<Review> findByBusiness_User(User user);
+
+    List<Review> findByBusiness_UserAndRating(User user, Integer rating);
+
+    List<Review> findByBusiness_UserAndFeedbackTextContainingIgnoreCase(User user, String keyword);
 }

@@ -1,5 +1,6 @@
 package com.spring.jwt.mapper;
 
+import com.spring.jwt.dto.ClientResponseDto;
 import com.spring.jwt.dto.UserDTO;
 import com.spring.jwt.entity.Role;
 import com.spring.jwt.entity.User;
@@ -102,5 +103,15 @@ public class UserMapper {
             log.warn("Decryption failed, returning original value: {}", e.getMessage());
             return value;
         }
+    }
+    public ClientResponseDto toClientResponseDto(User user) {
+
+        return ClientResponseDto.builder()
+                .clientId(user.getId())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .email(user.getEmail())
+                .mobileNumber(user.getMobileNumber())
+                .build();
     }
 } 

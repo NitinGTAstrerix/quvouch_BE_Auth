@@ -164,4 +164,14 @@ public class SalesClientController {
                 qrCodeService.getMyAssignedQrCodes()
         );
     }
+
+    @Operation(summary = "Get all clients registered by logged-in Sales Representative")
+    @PreAuthorize("hasAuthority('SALE_REPRESENTATIVE')")
+    @GetMapping("/registered-users")
+    public ResponseEntity<List<ClientResponseDto>> getMyRegisteredUsers() {
+
+        return ResponseEntity.ok(
+                salesClientService.getMyRegisteredClients()
+        );
+    }
 }

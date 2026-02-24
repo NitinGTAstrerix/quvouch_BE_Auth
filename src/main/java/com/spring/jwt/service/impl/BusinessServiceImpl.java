@@ -298,4 +298,39 @@ public class BusinessServiceImpl implements BusinessService {
             throw new RuntimeException("Failed to load QR code", e);
         }
     }
+
+    @Override
+    public List<ReviewResponseDto> getMyBusinessReviews(
+            Integer rating,
+            String keyword) {
+
+        User user = getCurrentUserProfile();
+
+        List<Review> reviews;
+
+        if (rating != null) {
+            reviews = reviewRepository
+                    .findByBusiness_UserAndRating(user, rating);
+        }
+        else if (keyword != null && !keyword.isBlank()) {
+            reviews = reviewRepository
+                    .findByBusiness_UserAndFeedbackTextContainingIgnoreCase(user, keyword);
+        }
+        else {
+            reviews = reviewRepository
+                    .findByBusiness_User(user);
+        }
+
+        return reviews.stream()
+                .map(review -> ReviewResponseDto.builder()
+                        .reviewId(review.getId())
+                        .customerName(review.getCustomerName())
+                        .rating(review.getRating())
+                        .comment(review.getFeedbackText())   // ✅ correct field
+                        .location(review.getBusiness().getBusinessName()) // ✅ using business
+                        .createdAt(review.getCreatedAt())
+                        .build()
+                )
+                .toList();
+    }
 }

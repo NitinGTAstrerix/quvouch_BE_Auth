@@ -3,6 +3,7 @@ package com.spring.jwt.service;
 import com.spring.jwt.dto.*;
 import com.spring.jwt.entity.Business;
 import com.spring.jwt.entity.QrCode;
+import jakarta.transaction.Transactional;
 
 import java.util.List;
 
@@ -28,9 +29,12 @@ public interface SalesClientService {
 
     void deleteClient(Integer id);
 
+    @Transactional
     void assignQrToBusiness(AssignQrCodeRequest request);
 
     List<QrCode> getUnassignedQrCodes();
 
     List<QrCode> getMyAssignedQrCodes();
+
+    List<ClientResponseDto> getMyRegisteredClients();
 }

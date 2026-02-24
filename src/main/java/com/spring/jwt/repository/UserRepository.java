@@ -29,4 +29,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Long countBySaleRepresentative_Id(Integer saleRepId);
 
+    List<User> findBySaleRepresentativeAndRoles_Name(User saleRepresentative, String roleName);
+
 }

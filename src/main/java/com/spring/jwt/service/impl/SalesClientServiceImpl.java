@@ -5,11 +5,13 @@ import com.spring.jwt.entity.Business;
 import com.spring.jwt.entity.QrCode;
 import com.spring.jwt.entity.User;
 import com.spring.jwt.exception.BaseException;
+import com.spring.jwt.mapper.UserMapper;
 import com.spring.jwt.repository.BusinessRepository;
 import com.spring.jwt.repository.QrCodeRepository;
 import com.spring.jwt.repository.UserRepository;
 import com.spring.jwt.service.SalesClientService;
 import com.spring.jwt.service.UserService;
+import com.spring.jwt.service.security.UserDetailsCustom;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -32,18 +34,26 @@ public class SalesClientServiceImpl implements SalesClientService {
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
     private final UserService userService;
+    private final UserMapper userMapper;
 
     private User getCurrentUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || !authentication.isAuthenticated())
-        {
-            throw new BaseException(String.valueOf(HttpStatus.UNAUTHORIZED.value()),"User is not Authenticated");
+
+        Authentication authentication =
+                SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null || !authentication.isAuthenticated()) {
+            throw new BaseException(
+                    String.valueOf(HttpStatus.UNAUTHORIZED.value()),
+                    "User is not Authenticated"
+            );
         }
+
         String email = authentication.getName();
+
         User user = userRepository.findByEmail(email);
-        if (user == null)
-        {
-            throw new UsernameNotFoundException("User is not found");
+
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found");
         }
 
         return user;
@@ -263,8 +273,8 @@ public class SalesClientServiceImpl implements SalesClientService {
     }
 
 
-    @Override
     @Transactional
+    @Override
     public void assignQrToBusiness(AssignQrCodeRequest request) {
 
         QrCode qrCode = qrCodeRepository.findById(request.getQrCodeId())
@@ -316,4 +326,18 @@ public class SalesClientServiceImpl implements SalesClientService {
 
         return qrCodeRepository.findByAssignedBy(salesUser);
     }
+
+    @Override
+    public List<ClientResponseDto> getMyRegisteredClients() {
+
+        User loggedUser = getCurrentUser();
+
+        List<User> clients = userRepository
+                .findBySaleRepresentativeAndRoles_Name(loggedUser, "CLIENT");
+
+        return clients.stream()
+                .map(userMapper::toClientResponseDto)
+                .toList();
+    }
 }
+
