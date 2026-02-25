@@ -2,14 +2,19 @@ package com.spring.jwt.service.impl;
 
 import com.spring.jwt.dto.*;
 import com.spring.jwt.entity.QrCode;
+import com.spring.jwt.entity.Review;
 import com.spring.jwt.entity.User;
 import com.spring.jwt.exception.BaseException;
 import com.spring.jwt.mapper.UserMapper;
 import com.spring.jwt.repository.BusinessRepository;
 import com.spring.jwt.repository.QrCodeRepository;
+import com.spring.jwt.repository.ReviewRepository;
 import com.spring.jwt.repository.UserRepository;
 import com.spring.jwt.service.AdminService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -27,6 +32,7 @@ public class AdminServiceImpl implements AdminService {
     private final UserRepository userRepository;
     private final BusinessRepository businessRepository;
     private final QrCodeRepository qrCodeRepository;
+    private final ReviewRepository reviewRepository;
     private final UserMapper userMapper;
 
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -122,5 +128,25 @@ public class AdminServiceImpl implements AdminService {
 
         return qrCodeRepository.getAllQrCodesForAdmin();
 
+    }
+
+    @Override
+    public List<AdminRecentReviewDto> getRecentReviews() {
+
+        Pageable pageable = PageRequest.of(0, 5); // latest 5 reviews
+
+        Page<Review> reviewPage =
+                reviewRepository.findAllByOrderByCreatedAtDesc(pageable);
+
+        return reviewPage.stream()
+                .map(review -> AdminRecentReviewDto.builder()
+                        .rating(review.getRating())
+                        .businessName(review.getBusiness().getBusinessName())
+                        .comment(review.getFeedbackText())
+                        .customerName(review.getCustomerName())
+                        .time(review.getCreatedAt())
+                        .build()
+                )
+                .toList();
     }
 }

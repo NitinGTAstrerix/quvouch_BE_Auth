@@ -16,4 +16,6 @@ public interface AdminService {
     ClientDetailsDTO getClientDetails(Integer businessId);
 
     List<AdminQrCodeDTO> getAllQrCodes();
+
+    List<AdminRecentReviewDto> getRecentReviews();
 }

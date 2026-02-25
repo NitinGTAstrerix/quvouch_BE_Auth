@@ -4,6 +4,7 @@ import com.spring.jwt.dto.FeedbackResponseDto;
 import com.spring.jwt.dto.SaleRepresentativeInfo;
 import com.spring.jwt.dto.UserDTO;
 import com.spring.jwt.dto.*;
+import com.spring.jwt.entity.Review;
 import com.spring.jwt.service.AdminService;
 import com.spring.jwt.service.FeedbackService;
 import com.spring.jwt.service.ReviewService;
@@ -71,6 +72,11 @@ public class AdminController {
         return ResponseEntity.ok(
                 adminService.getAllQrCodes()
         );
+    }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @GetMapping("/dashboard/recent-reviews")
+    public ResponseEntity<List<AdminRecentReviewDto>> getRecentReviews() {
+        return ResponseEntity.ok(adminService.getRecentReviews());
     }
 }

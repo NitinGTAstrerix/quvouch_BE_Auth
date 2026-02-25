@@ -6,6 +6,8 @@ import com.spring.jwt.entity.QrCode;
 import com.spring.jwt.entity.Review;
 import com.spring.jwt.entity.Review.ReviewStatus;
 import com.spring.jwt.entity.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -32,6 +34,7 @@ public interface ReviewRepository extends JpaRepository<Review, UUID> {
     ReviewStatsDTO getReviewStatistics(@Param("businessId") Integer businessId);
 
     List<Review> findByQrCodeId(UUID qrCodeId);
+
     @Query("""
         SELECT r.rating, COUNT(r)
         FROM Review r
@@ -41,7 +44,8 @@ public interface ReviewRepository extends JpaRepository<Review, UUID> {
     List<Object[]> getRatingDistribution(@Param("businessId") Integer businessId);
 
     @Query("""
-SELECT new com.spring.jwt.dto.MonthlyAnalyticsDTO(
+
+            SELECT new com.spring.jwt.dto.MonthlyAnalyticsDTO(
     MONTH(r.createdAt),
     YEAR(r.createdAt),
     COUNT(r),
@@ -63,4 +67,7 @@ ORDER BY YEAR(r.createdAt), MONTH(r.createdAt)
     List<Review> findByBusiness_UserAndRating(User user, Integer rating);
 
     List<Review> findByBusiness_UserAndFeedbackTextContainingIgnoreCase(User user, String keyword);
+
+    Page<Review> findAllByOrderByCreatedAtDesc(Pageable pageable);
+
 }
