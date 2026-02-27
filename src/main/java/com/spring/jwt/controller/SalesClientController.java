@@ -128,23 +128,6 @@ public class SalesClientController {
         return ResponseEntity.ok(salesClientService.getActiveQrCodes());
     }
 
-    @Operation(summary = "Assign QR Code to Client")
-    @PreAuthorize("hasAnyAuthority('SALE_REPRESENTATIVE','ADMIN')")
-    @PostMapping("/qrcodes/assign")
-    public ResponseEntity<?> assignQrCode(
-            @Valid @RequestBody AssignQrCodeRequest request) {
-
-        qrCodeService.assignQrToBusiness(request);
-
-        return ResponseEntity.ok(
-                Map.of(
-                        "message", "QR Code assigned successfully",
-                        "qrCodeId", request.getQrCodeId(),
-                        "clientId", request.getClientId()
-                )
-        );
-    }
-
     @Operation(summary = "Get all unassigned QR Codes")
     @PreAuthorize("hasAnyAuthority('SALE_REPRESENTATIVE','ADMIN')")
     @GetMapping("/qrcodes/unassigned")

@@ -112,43 +112,6 @@ public class QrCodeServiceImpl implements QrCodeService {
         return qrCode.getQrImage();
     }
 
-    @Override
-    @Transactional
-    public void assignQrToBusiness(AssignQrCodeRequest request) {
-
-        // 1️⃣ Fetch QR
-        QrCode qrCode = qrCodeRepository.findById(request.getQrCodeId())
-                .orElseThrow(() -> new RuntimeException("QR Code not found"));
-
-        // 2️⃣ Check if already assigned
-        if (qrCode.getStatus() != QrCode.QrStatus.UNASSIGNED) {
-            throw new RuntimeException("QR Code already assigned");
-        }
-
-        // 3️⃣ Fetch Business (Client)
-        Business business = businessRepository.findById(request.getClientId())
-                .orElseThrow(() -> new RuntimeException("Business not found"));
-
-        // 4️⃣ Get logged-in Sales Rep
-        UserProfileDTO profile = userService.getCurrentUserProfile();
-
-        String userIdStr = profile.getUser().getUserId();
-
-        Long salesUserId = Long.parseLong(userIdStr);
-
-        User salesUser = userRepository.findById(salesUserId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        // 5️⃣ Assign QR
-        qrCode.setBusiness(business);
-        qrCode.setAssignedBy(salesUser);
-        qrCode.setAssignedAt(LocalDateTime.now());
-        qrCode.setLocation(request.getLocationLabel());
-        qrCode.setStatus(QrCode.QrStatus.ASSIGNED);
-
-        qrCodeRepository.save(qrCode);
-    }
-
     // ==========================================
     // GET ALL UNASSIGNED QRS
     // ==========================================

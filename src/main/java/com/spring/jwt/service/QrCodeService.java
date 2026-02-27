@@ -17,8 +17,6 @@ public interface QrCodeService {
 
     byte[] downloadQrCode(String qrId);
 
-    void assignQrToBusiness(AssignQrCodeRequest request);
-
     List<QrCode> getUnassignedQrCodes();
 
     List<QrCode> getMyAssignedQrCodes();

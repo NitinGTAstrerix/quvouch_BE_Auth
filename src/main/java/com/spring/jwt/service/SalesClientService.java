@@ -29,9 +29,6 @@ public interface SalesClientService {
 
     void deleteClient(Integer id);
 
-    @Transactional
-    void assignQrToBusiness(AssignQrCodeRequest request);
-
     List<QrCode> getUnassignedQrCodes();
 
     List<QrCode> getMyAssignedQrCodes();

@@ -79,4 +79,23 @@ public class AdminController {
     public ResponseEntity<List<AdminRecentReviewDto>> getRecentReviews() {
         return ResponseEntity.ok(adminService.getRecentReviews());
     }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @GetMapping("/qrcodes/{id}/download")
+    public ResponseEntity<byte[]> downloadQrCode(@PathVariable String id) {
+
+        byte[] image = adminService.downloadQrCode(id);
+
+        return ResponseEntity.ok()
+                .header("Content-Disposition", "attachment; filename=qr-" + id + ".png")
+                .header("Content-Type", "image/png")
+                .body(image);
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @GetMapping("/qrcodes/{id}/link")
+    public ResponseEntity<String> getQrCodeLink(@PathVariable String id) {
+
+        return ResponseEntity.ok(adminService.getQrCodeLink(id));
+    }
 }

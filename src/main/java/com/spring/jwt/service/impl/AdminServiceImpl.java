@@ -149,4 +149,26 @@ public class AdminServiceImpl implements AdminService {
                 )
                 .toList();
     }
+
+    @Override
+    public byte[] downloadQrCode(String id) {
+
+        QrCode qrCode = qrCodeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("QR Code not found"));
+
+        if (qrCode.getQrImage() == null) {
+            throw new RuntimeException("QR Image not available");
+        }
+
+        return qrCode.getQrImage();
+    }
+
+    @Override
+    public String getQrCodeLink(String id) {
+
+        QrCode qrCode = qrCodeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("QR Code not found"));
+
+        return qrCode.getQrLink();
+    }
 }

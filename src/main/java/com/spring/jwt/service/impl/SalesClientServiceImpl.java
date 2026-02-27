@@ -272,40 +272,6 @@ public class SalesClientServiceImpl implements SalesClientService {
         businessRepository.delete(business);
     }
 
-
-    @Transactional
-    @Override
-    public void assignQrToBusiness(AssignQrCodeRequest request) {
-
-        QrCode qrCode = qrCodeRepository.findById(request.getQrCodeId())
-                .orElseThrow(() -> new RuntimeException("QR Code not found"));
-
-        if (qrCode.getStatus() != QrCode.QrStatus.UNASSIGNED) {
-            throw new RuntimeException("QR Code already assigned");
-        }
-
-        Business business = businessRepository.findById(request.getClientId())
-                .orElseThrow(() -> new RuntimeException("Business not found"));
-
-        // ✅ Correct way using your DTO structure
-        UserProfileDTO profile = userService.getCurrentUserProfile();
-
-        String userIdStr = profile.getUser().getUserId();
-
-        Long salesUserId = Long.parseLong(userIdStr);
-
-        User salesUser = userRepository.findById(salesUserId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        qrCode.setBusiness(business);
-        qrCode.setAssignedBy(salesUser);
-        qrCode.setAssignedAt(LocalDateTime.now());
-        qrCode.setLocation(request.getLocationLabel());
-        qrCode.setStatus(QrCode.QrStatus.ASSIGNED);
-
-        qrCodeRepository.save(qrCode);
-    }
-
     @Override
     public List<QrCode> getUnassignedQrCodes() {
 

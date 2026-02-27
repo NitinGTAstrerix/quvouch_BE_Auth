@@ -12,8 +12,8 @@ public class AssignQrCodeRequest {
     @NotBlank(message = "QR Code ID is required")
     private String qrCodeId;
 
-    @NotNull(message = "Client ID is required")
-    private Integer clientId;
+    @NotNull(message = "Business ID is required")
+    private Integer businessId;
 
     private String locationLabel;
 }

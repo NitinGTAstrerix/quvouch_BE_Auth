@@ -18,4 +18,8 @@ public interface AdminService {
     List<AdminQrCodeDTO> getAllQrCodes();
 
     List<AdminRecentReviewDto> getRecentReviews();
+
+    byte[] downloadQrCode(String id);
+
+    String getQrCodeLink(String id);
 }
