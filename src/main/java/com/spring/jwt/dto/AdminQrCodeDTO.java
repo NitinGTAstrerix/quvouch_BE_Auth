@@ -22,8 +22,6 @@ public class AdminQrCodeDTO {
 
     private String qrLink;
 
-    private String qrCodePath;
-
     private QrStatus status;
 
     private LocalDateTime createdAt;

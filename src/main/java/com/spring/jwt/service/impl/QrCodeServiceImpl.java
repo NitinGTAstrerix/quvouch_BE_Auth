@@ -43,33 +43,45 @@ public class QrCodeServiceImpl implements QrCodeService {
         private String baseUrl;
 
     @Override
-    public byte[] createQrCode(Integer businessId) {
+    public byte[] createQrCode(Integer businessId, String location) {
 
+        // 🔒 Validate location
+        if (location == null || location.trim().isEmpty()) {
+            throw new IllegalArgumentException("Location is required");
+        }
+
+        // 1️⃣ Fetch business
         Business business = businessRepository.findById(businessId)
                 .orElseThrow(() -> new BusinessNotFound("Business not found"));
 
-        // 1. Generate unique QR ID
+        // 2️⃣ Prevent duplicate location QR
+        boolean exists = qrCodeRepository
+                .existsByBusinessAndLocationIgnoreCase(business, location.trim());
+
+        if (exists) {
+            throw new RuntimeException("QR already exists for this location");
+        }
+
+        // 3️⃣ Generate unique QR ID
         String qrId = UUID.randomUUID().toString();
 
-        // 2. Create QR link
+        // 4️⃣ Create QR link
         String qrLink = baseUrl + qrId;
 
-        // 3. Generate QR image FIRST
+        // 5️⃣ Generate QR image
         byte[] qrImageBytes = qrCodeGenerator.generateQrCode(qrLink, 300, 300);
 
-        // 4. Save QR metadata + image in DB
+        // 6️⃣ Save QR metadata
         QrCode qrCode = new QrCode();
         qrCode.setId(qrId);
         qrCode.setQrLink(qrLink);
         qrCode.setBusiness(business);
-
-        // 🔥 THIS LINE WAS MISSING
+        qrCode.setLocation(location.trim());   // ✅ IMPORTANT
         qrCode.setQrImage(qrImageBytes);
 
-        // 5. Save entity
         qrCodeRepository.save(qrCode);
 
-        // 6. Return image
+        // 7️⃣ Return image
         return qrImageBytes;
     }
 

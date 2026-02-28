@@ -96,17 +96,32 @@ public class BusinessController {
 
         return ResponseEntity.ok(dashboard);
     }
-    @Operation(summary = "Export Reviews",description = "Download all reviews of a business in CSV format")
+
+
+    @Operation(summary = "Export Reviews", description = "Download all reviews of a business in CSV or PDF format")
     @GetMapping("/export/{businessId}")
     public ResponseEntity<byte[]> exportReviews(
-            @PathVariable Integer businessId) {
+            @PathVariable Integer businessId,
+            @RequestParam(defaultValue = "pdf") String format) {
 
-        byte[] file = businessService.exportReviewsAsCsv(businessId);
+        byte[] file;
+
+        // Default PDF
+        if (format.equalsIgnoreCase("csv")) {
+            file = businessService.exportReviewsAsCsv(businessId);
+
+            return ResponseEntity.ok()
+                    .header("Content-Disposition", "attachment; filename=reviews.csv")
+                    .header("Content-Type", "text/csv")
+                    .body(file);
+        }
+
+        // Default or when format=pdf
+        file = businessService.exportReviewsAsPdf(businessId);
 
         return ResponseEntity.ok()
-                .header("Content-Disposition",
-                        "attachment; filename=reviews.csv")
-                .header("Content-Type", "text/csv")
+                .header("Content-Disposition", "attachment; filename=reviews.pdf")
+                .header("Content-Type", "application/pdf")
                 .body(file);
     }
     @Operation(summary = "Share Reviews",description = "Generate a public shareable link for reviews")

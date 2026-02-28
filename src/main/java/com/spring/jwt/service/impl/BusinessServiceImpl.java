@@ -14,10 +14,15 @@ import com.spring.jwt.repository.ReviewRepository;
 import com.spring.jwt.repository.UserRepository;
 import com.spring.jwt.dto.BusinessDashboardDto;
 import com.spring.jwt.dto.RatingDistributionDto;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Table;
 
+import java.io.ByteArrayOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import com.spring.jwt.service.BusinessService;
 import lombok.AllArgsConstructor;
@@ -31,7 +36,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
+
 
 @AllArgsConstructor
 @Slf4j
@@ -260,6 +265,44 @@ public class BusinessServiceImpl implements BusinessService {
         }
 
         return sb.toString().getBytes();
+    }
+
+    @Override
+    public byte[] exportReviewsAsPdf(Integer businessId) {
+
+        List<Review> reviews = reviewRepository.findByBusiness_BusinessId(businessId);
+
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+
+            PdfWriter writer = new PdfWriter(baos);
+            PdfDocument pdf = new PdfDocument(writer);
+            Document document = new Document(pdf);
+
+            document.add(new Paragraph("Reviews Report"));
+            document.add(new Paragraph(" "));
+
+            Table table = new Table(4);
+
+            table.addHeaderCell("Customer");
+            table.addHeaderCell("Rating");
+            table.addHeaderCell("Feedback Text");
+            table.addHeaderCell("Date");
+
+            for (Review review : reviews) {
+                table.addCell(review.getCustomerName());
+                table.addCell(String.valueOf(review.getRating()));
+                table.addCell(review.getFeedbackText());
+                table.addCell(review.getCreatedAt().toString());
+            }
+
+            document.add(table);
+            document.close();
+
+            return baos.toByteArray();
+
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to export PDF", e);
+        }
     }
 
     private String safe(String value) {

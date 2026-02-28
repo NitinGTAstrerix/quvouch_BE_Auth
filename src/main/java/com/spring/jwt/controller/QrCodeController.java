@@ -1,12 +1,14 @@
 package com.spring.jwt.controller;
 
 import com.spring.jwt.dto.QrCodeResponse;
+import com.spring.jwt.dto.QrGenerateRequest;
 import com.spring.jwt.entity.QrCode;
 import com.spring.jwt.service.BusinessService;
 import com.spring.jwt.service.QrCodeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.annotation.Resource;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -25,17 +27,21 @@ public class QrCodeController {
     private final BusinessService businessService;
 
     @Operation(summary = "Generate QR Code for a Business", description = "Generates a QR code image for the given business ID. ")
-    @PostMapping("/generate/{businessId}")
-    public ResponseEntity<byte[]> generateQrCode(@PathVariable Integer businessId) {
+    @PostMapping("/generate")
+    public ResponseEntity<byte[]> generateQrCode(
 
-        byte[] qrImage = qrCodeService.createQrCode(businessId);
+            @Valid @RequestBody QrGenerateRequest request) {
+
+        byte[] qrImage = qrCodeService.createQrCode(
+                request.getBusinessId(),
+                request.getLocation()
+        );
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=qrcode.png")
                 .contentType(MediaType.IMAGE_PNG)
                 .body(qrImage);
     }
-
     @Operation(summary = "Get all QR Codes", description = "Fetches all QR codes in the system. " + "This API is accessible only by ADMIN users.")
     @SecurityRequirement(name = "bearerAuth")
     @PreAuthorize("hasAuthority('ADMIN')")

@@ -3,6 +3,7 @@ package com.spring.jwt.repository;
 import com.spring.jwt.dto.ClientDetailsDTO;
 import com.spring.jwt.dto.ClientListDTO;
 import com.spring.jwt.entity.Business;
+import com.spring.jwt.entity.Review;
 import com.spring.jwt.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -74,5 +75,16 @@ GROUP BY b.businessId
     ClientDetailsDTO getClientDetails(@Param("businessId") Integer businessId);
 
     Optional<Business> findByBusinessIdAndUser_SaleRepresentative(Integer id, User saleRep);
+
+    @Query("""
+    SELECT b
+    FROM Business b
+    WHERE b.businessId = :businessId
+    AND b.user.saleRepresentative.id = :saleRepId
+""")
+    Optional<Business> findAssignedBusiness(
+            @Param("businessId") Integer businessId,
+            @Param("saleRepId") Integer saleRepId
+    );
 
 }

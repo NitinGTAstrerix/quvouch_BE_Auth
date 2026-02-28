@@ -7,7 +7,8 @@ import com.spring.jwt.entity.QrCode;
 import java.util.List;
 
 public interface QrCodeService {
-    byte[] createQrCode(Integer businessId);
+
+    byte[] createQrCode(Integer businessId, String location);
 
     List<QrCodeResponse> getAllQr();
 

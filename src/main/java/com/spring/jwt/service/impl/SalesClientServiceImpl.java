@@ -159,7 +159,7 @@ public class SalesClientServiceImpl implements SalesClientService {
         else if (isSaleRep) {
 
             business = businessRepository
-                    .findByBusinessIdAndUser_SaleRepresentative(businessId, loggedUser)
+                    .findAssignedBusiness(businessId, loggedUser.getId())
                     .orElseThrow(() ->
                             new ResponseStatusException(
                                     HttpStatus.NOT_FOUND,
@@ -270,27 +270,6 @@ public class SalesClientServiceImpl implements SalesClientService {
         Business business = businessRepository.findByBusinessIdAndUser(id, user).orElseThrow(() ->new RuntimeException("Client not found"));
 
         businessRepository.delete(business);
-    }
-
-    @Override
-    public List<QrCode> getUnassignedQrCodes() {
-
-        return qrCodeRepository.findByStatus(QrCode.QrStatus.UNASSIGNED);
-    }
-
-    @Override
-    public List<QrCode> getMyAssignedQrCodes() {
-
-        UserProfileDTO profile = userService.getCurrentUserProfile();
-
-        String userIdStr = profile.getUser().getUserId();
-
-        Long salesUserId = Long.parseLong(userIdStr);
-
-        User salesUser = userRepository.findById(salesUserId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        return qrCodeRepository.findByAssignedBy(salesUser);
     }
 
     @Override

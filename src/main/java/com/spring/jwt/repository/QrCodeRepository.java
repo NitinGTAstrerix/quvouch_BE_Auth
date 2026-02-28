@@ -41,7 +41,6 @@ SELECT new com.spring.jwt.dto.AdminQrCodeDTO(
     q.scanCount,
     COUNT(r),
     q.qrLink,
-    q.qrCodePath,
     q.status,
     q.createdAt
 )
@@ -52,4 +51,6 @@ GROUP BY q.id, b.businessName, q.location, q.scanCount, q.qrLink, q.qrCodePath, 
 ORDER BY q.createdAt DESC
 """)
     List<AdminQrCodeDTO> getAllQrCodesForAdmin();
+
+    boolean existsByBusinessAndLocationIgnoreCase(Business business, String location);
 }

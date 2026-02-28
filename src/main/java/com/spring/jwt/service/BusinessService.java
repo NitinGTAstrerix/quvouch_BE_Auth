@@ -29,6 +29,8 @@ public interface BusinessService {
 
     byte[] exportReviewsAsCsv(Integer businessId);
 
+    byte[] exportReviewsAsPdf(Integer businessId);
+
     String generateShareLink(Integer businessId);
 
     List<MonthlyAnalyticsDTO> getMonthlyAnalytics(Integer businessId);

@@ -128,16 +128,6 @@ public class SalesClientController {
         return ResponseEntity.ok(salesClientService.getActiveQrCodes());
     }
 
-    @Operation(summary = "Get all unassigned QR Codes")
-    @PreAuthorize("hasAnyAuthority('SALE_REPRESENTATIVE','ADMIN')")
-    @GetMapping("/qrcodes/unassigned")
-    public ResponseEntity<List<QrCode>> getUnassignedQrCodes() {
-
-        return ResponseEntity.ok(
-                qrCodeService.getUnassignedQrCodes()
-        );
-    }
-
     @Operation(summary = "Get QR Codes assigned by logged-in Sales Rep")
     @PreAuthorize("hasAnyAuthority('SALE_REPRESENTATIVE','ADMIN')")
     @GetMapping("/qrcodes/my")

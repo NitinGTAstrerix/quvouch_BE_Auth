@@ -17,7 +17,7 @@ public class QrCode {
 
     private String qrLink;
 
-    @Column(name = "location_label")
+    @Column(name = "location_label", nullable = false)
     private String location;
 
     private Integer scanCount = 0;

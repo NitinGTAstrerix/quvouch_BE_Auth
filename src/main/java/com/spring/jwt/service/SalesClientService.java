@@ -29,9 +29,5 @@ public interface SalesClientService {
 
     void deleteClient(Integer id);
 
-    List<QrCode> getUnassignedQrCodes();
-
-    List<QrCode> getMyAssignedQrCodes();
-
     List<ClientResponseDto> getMyRegisteredClients();
 }
