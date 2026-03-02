@@ -124,32 +124,4 @@ public class QrCodeServiceImpl implements QrCodeService {
 
         return qrCode.getQrImage();
     }
-
-    // ==========================================
-    // GET ALL UNASSIGNED QRS
-    // ==========================================
-    @Override
-    public List<QrCode> getUnassignedQrCodes() {
-
-        return qrCodeRepository.findByStatus(QrCode.QrStatus.UNASSIGNED);
-    }
-
-    // ==========================================
-    // GET QRS ASSIGNED BY LOGGED-IN SALES REP
-    // ==========================================
-    @Override
-    public List<QrCode> getMyAssignedQrCodes() {
-
-        UserProfileDTO profile = userService.getCurrentUserProfile();
-
-        String userIdStr = profile.getUser().getUserId();
-
-        Long salesUserId = Long.parseLong(userIdStr);
-
-        User salesUser = userRepository.findById(salesUserId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        return qrCodeRepository.findByAssignedBy(salesUser);
-    }
-
 }

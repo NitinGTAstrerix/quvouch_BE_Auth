@@ -29,10 +29,6 @@ public interface QrCodeRepository extends JpaRepository<QrCode, String> {
 
     Optional<QrCode> findByBusiness_BusinessId(Integer business);
 
-    List<QrCode> findByStatus(QrCode.QrStatus status);
-
-    List<QrCode> findByAssignedBy(User user);
-
     @Query("""
 SELECT new com.spring.jwt.dto.AdminQrCodeDTO(
     q.id,
@@ -53,4 +49,6 @@ ORDER BY q.createdAt DESC
     List<AdminQrCodeDTO> getAllQrCodesForAdmin();
 
     boolean existsByBusinessAndLocationIgnoreCase(Business business, String location);
+
+    List<QrCode> findByAssignedBy(User assignedBy);
 }

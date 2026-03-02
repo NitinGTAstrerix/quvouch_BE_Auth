@@ -36,7 +36,7 @@ public class QrCode {
     private LocalDateTime assignedAt;
 
     @Enumerated(EnumType.STRING)
-    private QrStatus status = QrStatus.UNASSIGNED;
+    private QrStatus status = QrStatus.ACTIVE;
 
     private LocalDateTime createdAt;
 
@@ -55,7 +55,7 @@ public class QrCode {
         this.updatedAt = LocalDateTime.now();
 
         if (this.status == null) {
-            this.status = QrStatus.UNASSIGNED;
+            this.status = QrStatus.ACTIVE;
         }
     }
 
@@ -65,9 +65,6 @@ public class QrCode {
     }
 
     public enum QrStatus {
-
-        UNASSIGNED,
-        ASSIGNED,
         ACTIVE,
         INACTIVE
     }

@@ -3,6 +3,9 @@ package com.spring.jwt.controller;
 import com.spring.jwt.dto.*;
 import com.spring.jwt.entity.Business;
 import com.spring.jwt.entity.QrCode;
+import com.spring.jwt.entity.User;
+import com.spring.jwt.repository.QrCodeRepository;
+import com.spring.jwt.repository.UserRepository;
 import com.spring.jwt.service.QrCodeService;
 import com.spring.jwt.service.SalesClientService;
 import com.spring.jwt.service.UserService;
@@ -16,6 +19,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,7 +34,8 @@ public class SalesClientController {
 
     private final SalesClientService salesClientService;
     private final UserService userService;
-    private final QrCodeService qrCodeService;
+    private final QrCodeRepository qrCodeRepository;
+    private final UserRepository  userRepository;
 
     // NEW API → Get current logged-in Sales Representative profile
     @Operation(summary = "Get current logged-in sales representative profile")
@@ -128,14 +134,27 @@ public class SalesClientController {
         return ResponseEntity.ok(salesClientService.getActiveQrCodes());
     }
 
-    @Operation(summary = "Get QR Codes assigned by logged-in Sales Rep")
     @PreAuthorize("hasAnyAuthority('SALE_REPRESENTATIVE','ADMIN')")
     @GetMapping("/qrcodes/my")
     public ResponseEntity<List<QrCode>> getMyAssignedQrCodes() {
 
-        return ResponseEntity.ok(
-                qrCodeService.getMyAssignedQrCodes()
-        );
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User loggedUser;
+
+        if (principal instanceof UserDetails userDetails) {
+            loggedUser = userRepository.findByEmail(userDetails.getUsername()); // findByEmail returns User
+            if (loggedUser == null) {
+                throw new RuntimeException("User not found");
+            }
+        } else {
+            throw new RuntimeException("User not authenticated");
+        }
+
+        List<QrCode> qrCodes = qrCodeRepository.findByAssignedBy(loggedUser).stream()
+                .filter(q -> q.getStatus() == QrCode.QrStatus.ACTIVE)
+                .toList();
+
+        return ResponseEntity.ok(qrCodes);
     }
 
     @Operation(summary = "Get all clients registered by logged-in Sales Representative")
