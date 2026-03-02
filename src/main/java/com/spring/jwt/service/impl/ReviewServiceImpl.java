@@ -1,12 +1,9 @@
 package com.spring.jwt.service.impl;
 
-import com.spring.jwt.dto.FeedbackResponseDto;
-import com.spring.jwt.dto.ReviewResponse;
-import com.spring.jwt.dto.ReviewStatsDTO;
+import com.spring.jwt.dto.*;
 import com.spring.jwt.entity.Business;
 import com.spring.jwt.entity.Feedback;
 import com.spring.jwt.entity.Review;
-import com.spring.jwt.dto.ReviewRequestDto;
 import com.spring.jwt.entity.User;
 import com.spring.jwt.exception.ResourceNotFoundException;
 import com.spring.jwt.mapper.FeedbackMapper;
@@ -41,8 +38,16 @@ public class ReviewServiceImpl implements ReviewService {
     @Transactional
     public Review submitReview(ReviewRequestDto requestDto) {
 
+        if (reviewRepository.existsByCustomerEmail(requestDto.getCustomerEmail())) {
+            throw new IllegalArgumentException(
+                    "This email has already submitted a review."
+            );
+        }
+
         Business business = businessRepository.findById(requestDto.getBusinessId())
-                .orElseThrow(() -> new RuntimeException("Business not found with ID: " + requestDto.getBusinessId()));
+                .orElseThrow(() ->
+                        new RuntimeException("Business not found with ID: " + requestDto.getBusinessId())
+                );
 
         Review review = new Review();
         review.setBusiness(business);
@@ -54,11 +59,9 @@ public class ReviewServiceImpl implements ReviewService {
         review.setFeedbackText(requestDto.getFeedbackText());
         review.setFeedbackCategory(requestDto.getFeedbackCategory());
 
-        String clientGoogleUrl = "https://search.google.com/local/writereview?placeid=EXAMPLE";
-
         if (requestDto.getRating() >= 4) {
             review.setStatus(Review.ReviewStatus.PUBLIC);
-            review.setRedirectUrl(clientGoogleUrl);
+            review.setRedirectUrl("https://search.google.com/local/writereview?placeid=EXAMPLE");
         } else {
             review.setStatus(Review.ReviewStatus.INTERNAL);
             review.setRedirectUrl(null);
@@ -104,7 +107,7 @@ public class ReviewServiceImpl implements ReviewService {
 
         // 1️⃣ get clients
         List<User> clients = userRepository.findBySaleRepresentative_Id(saleRepId);
-        log.info("All clients {}",clients);
+        log.info("All clients {}", clients);
         if (clients == null || clients.isEmpty()) {
             log.info("No clients found for saleRep {}", saleRepId);
             return List.of();
@@ -139,5 +142,31 @@ public class ReviewServiceImpl implements ReviewService {
         return feedbacks.stream()
                 .map(feedbackMapper::toDto)
                 .toList();
+    }
+
+    @Override
+    @Transactional
+    public ReviewResponse updateReviewByEmail(String email, ReviewUpdateRequestDto requestDto) {
+
+        Review review = reviewRepository.findByCustomerEmail(email)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Review not found for email: " + email)
+                );
+
+        review.setRating(requestDto.getRating());
+        review.setCustomerName(requestDto.getCustomerName());
+        review.setCustomerPhone(requestDto.getCustomerPhone());
+        review.setFeedbackText(requestDto.getFeedbackText());
+        review.setFeedbackCategory(requestDto.getFeedbackCategory());
+
+        if (requestDto.getRating() >= 4) {
+            review.setStatus(Review.ReviewStatus.PUBLIC);
+            review.setRedirectUrl("https://search.google.com/local/writereview?placeid=EXAMPLE");
+        } else {
+            review.setStatus(Review.ReviewStatus.INTERNAL);
+            review.setRedirectUrl(null);
+        }
+
+        return reviewMapper.toResponse(review);
     }
 }

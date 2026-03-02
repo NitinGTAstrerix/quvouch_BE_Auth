@@ -14,4 +14,6 @@ public interface FeedbackService {
     FeedbackResponseDto getFeedbackById(Long id);
 
     void deleteFeedback(Long id);
+
+    FeedbackResponseDto updateFeedback(Long id, FeedbackRequestDto request);
 }

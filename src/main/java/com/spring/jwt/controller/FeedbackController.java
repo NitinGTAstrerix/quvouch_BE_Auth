@@ -1,6 +1,7 @@
 package com.spring.jwt.controller;
 
 import com.spring.jwt.dto.FeedbackRequestDto;
+import com.spring.jwt.dto.FeedbackResponseDto;
 import com.spring.jwt.service.FeedbackService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -38,5 +39,13 @@ public class FeedbackController {
     public ResponseEntity<?> deleteFeedback(@PathVariable Long id) {
         feedbackService.deleteFeedback(id);
         return ResponseEntity.ok("Deleted successfully");
+    }
+
+    @PutMapping("/feedback/{id}")
+    public ResponseEntity<FeedbackResponseDto> updateFeedback(
+            @PathVariable Long id,
+            @RequestBody FeedbackRequestDto request) {
+
+        return ResponseEntity.ok(feedbackService.updateFeedback(id, request));
     }
 }

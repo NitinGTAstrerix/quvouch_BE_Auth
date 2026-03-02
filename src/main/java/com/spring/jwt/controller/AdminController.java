@@ -8,6 +8,7 @@ import com.spring.jwt.entity.Review;
 import com.spring.jwt.service.AdminService;
 import com.spring.jwt.service.FeedbackService;
 import com.spring.jwt.service.ReviewService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,12 +24,14 @@ public class AdminController {
     private final AdminService adminService;
     private final ReviewService reviewService;
 
+    @Operation(summary = "Get All Sales Representative", description = "Detailed List of All Sales Representative")
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/sale-representatives")
     public ResponseEntity<List<SaleRepresentativeInfo>> getSaleReps() {
         return ResponseEntity.ok(adminService.getAllSaleRepsWithClientCount());
     }
 
+    @Operation(summary = "Get Sales Representative by His ID", description = "Details of Single Sales Representative using his ID")
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/sale-representatives/{id}")
     public ResponseEntity<UserDTO> getSaleRepById(@PathVariable Long id) {
@@ -49,12 +52,14 @@ public class AdminController {
     }
 
 
+    @Operation(summary = "Get All Clients", description = "Detailed List of All Clients")
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/clients")
     public ResponseEntity<List<ClientListDTO>> getAllClients() {
         return ResponseEntity.ok(adminService.getAllClients());
     }
 
+    @Operation(summary = "Get Business of a Client using Business ID", description = "Details of Single Business using his ID")
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/clients/{businessId}")
     public ResponseEntity<ClientDetailsDTO> getClientDetails(
@@ -65,6 +70,7 @@ public class AdminController {
         );
     }
 
+    @Operation(summary = "Get all QR Codes", description = "Details of all QR Codes of All Business")
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/qrcodes")
     public ResponseEntity<List<AdminQrCodeDTO>> getAllQrCodes() {
@@ -74,12 +80,14 @@ public class AdminController {
         );
     }
 
+    @Operation(summary = "Get Recent Reviews", description = "Details All Recent Reviews for all Business")
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/dashboard/recent-reviews")
     public ResponseEntity<List<AdminRecentReviewDto>> getRecentReviews() {
         return ResponseEntity.ok(adminService.getRecentReviews());
     }
 
+    @Operation(summary = "Download QR Code of a Business using Business ID", description = "Download QR Code of Any Business")
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/qrcodes/{id}/download")
     public ResponseEntity<byte[]> downloadQrCode(@PathVariable String id) {
@@ -92,6 +100,7 @@ public class AdminController {
                 .body(image);
     }
 
+    @Operation(summary = "Get QR Code Link using QR Code ID", description = "Generating QR Code Link for Sharing")
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/qrcodes/{id}/link")
     public ResponseEntity<String> getQrCodeLink(@PathVariable String id) {

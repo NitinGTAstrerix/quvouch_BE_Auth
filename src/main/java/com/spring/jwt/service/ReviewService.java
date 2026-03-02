@@ -1,9 +1,6 @@
 package com.spring.jwt.service;
 
-import com.spring.jwt.dto.FeedbackResponseDto;
-import com.spring.jwt.dto.ReviewRequestDto;
-import com.spring.jwt.dto.ReviewResponse;
-import com.spring.jwt.dto.ReviewStatsDTO;
+import com.spring.jwt.dto.*;
 import com.spring.jwt.entity.Review;
 
 import java.util.List;
@@ -22,4 +19,6 @@ public interface ReviewService {
     List<ReviewResponse> getReviewsByQrCode(UUID qrCodeId);
 
     List<FeedbackResponseDto> getReviewsBySaleRep(Integer saleRepId);
+
+    ReviewResponse updateReviewByEmail(String email, ReviewUpdateRequestDto requestDto);
 }

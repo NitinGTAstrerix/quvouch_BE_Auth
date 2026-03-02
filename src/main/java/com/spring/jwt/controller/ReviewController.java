@@ -3,6 +3,7 @@ package com.spring.jwt.controller;
 import com.spring.jwt.dto.ReviewRequestDto;
 import com.spring.jwt.dto.ReviewResponse;
 import com.spring.jwt.dto.ReviewStatsDTO;
+import com.spring.jwt.dto.ReviewUpdateRequestDto;
 import com.spring.jwt.entity.Review;
 import com.spring.jwt.mapper.ReviewMapper;
 import com.spring.jwt.service.ReviewService;
@@ -64,5 +65,17 @@ public class ReviewController {
         return ResponseEntity.ok(
                 reviewService.getReviewsByQrCode(qrCodeId)
         );
+    }
+
+    @Operation(summary = "Update Review by Email", description = "Allows a customer to update their review using their email. One email = one review.")
+    @PutMapping("/reviews")
+    public ResponseEntity<ReviewResponse> updateByEmail(
+            @RequestParam String email,
+            @RequestBody @Valid ReviewUpdateRequestDto requestDto) {
+
+        ReviewResponse response =
+                reviewService.updateReviewByEmail(email, requestDto);
+
+        return ResponseEntity.ok(response);
     }
 }

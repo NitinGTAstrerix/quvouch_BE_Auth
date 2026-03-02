@@ -83,4 +83,27 @@ public class FeedbackServiceImpl implements FeedbackService {
     public void deleteFeedback(Long id) {
         feedbackRepository.deleteById(id);
     }
+
+    @Override
+    public FeedbackResponseDto updateFeedback(Long id, FeedbackRequestDto request) {
+
+        Feedback feedback = feedbackRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Feedback not found"));
+
+        if (request.getRating() < 1 || request.getRating() > 5) {
+            throw new RuntimeException("Rating must be between 1-5");
+        }
+
+        feedback.setName(request.getName());
+        feedback.setMessage(request.getMessage());
+        feedback.setRating(request.getRating());
+
+        feedbackRepository.save(feedback);
+
+        return FeedbackResponseDto.builder()
+                .id(feedback.getId())
+                .message("Feedback updated successfully")
+                .createdAt(feedback.getCreatedAt())
+                .build();
+    }
 }
