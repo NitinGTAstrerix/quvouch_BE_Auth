@@ -76,8 +76,9 @@ public class QrCodeServiceImpl implements QrCodeService {
         qrCode.setId(qrId);
         qrCode.setQrLink(qrLink);
         qrCode.setBusiness(business);
-        qrCode.setLocation(location.trim());   // ✅ IMPORTANT
+        qrCode.setLocation(location.trim());
         qrCode.setQrImage(qrImageBytes);
+        qrCode.setStatus(QrCode.QrStatus.ACTIVE);
 
         qrCodeRepository.save(qrCode);
 

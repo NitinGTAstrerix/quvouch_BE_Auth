@@ -30,4 +30,6 @@ public interface SalesClientService {
     void deleteClient(Integer id);
 
     List<ClientResponseDto> getMyRegisteredClients();
+
+    void deleteBusiness(Integer businessId);
 }

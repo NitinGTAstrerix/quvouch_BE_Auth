@@ -147,4 +147,12 @@ public class SalesClientController {
                 salesClientService.getMyRegisteredClients()
         );
     }
+
+    @Operation(summary = "Delete Business using Business ID")
+    @PreAuthorize("hasAnyAuthority('SALE_REPRESENTATIVE','ADMIN')")
+    @DeleteMapping("/business/{id}")
+    public ResponseEntity<?> deleteBusiness(@PathVariable Integer id) {
+        salesClientService.deleteBusiness(id);
+        return ResponseEntity.ok("Business deleted successfully");
+    }
 }

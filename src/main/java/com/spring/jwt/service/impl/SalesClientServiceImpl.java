@@ -284,5 +284,60 @@ public class SalesClientServiceImpl implements SalesClientService {
                 .map(userMapper::toClientResponseDto)
                 .toList();
     }
+
+    @Override
+    @Transactional
+    public void deleteBusiness(Integer businessId) {
+
+        User loggedUser = getCurrentUser();
+
+        boolean isAdmin = loggedUser.getRoles().stream()
+                .anyMatch(role -> role.getName().equals("ADMIN"));
+
+        boolean isSaleRep = loggedUser.getRoles().stream()
+                .anyMatch(role -> role.getName().equals("SALE_REPRESENTATIVE"));
+
+        Business business;
+
+        // ✅ ADMIN → can delete any business
+        if (isAdmin) {
+
+            business = businessRepository.findById(businessId)
+                    .orElseThrow(() ->
+                            new ResponseStatusException(
+                                    HttpStatus.NOT_FOUND,
+                                    "Business not found"
+                            )
+                    );
+        }
+
+        // ✅ SALE_REP → only delete assigned client businesses
+        else if (isSaleRep) {
+
+            business = businessRepository
+                    .findAssignedBusiness(businessId, loggedUser.getId())
+                    .orElseThrow(() ->
+                            new ResponseStatusException(
+                                    HttpStatus.NOT_FOUND,
+                                    "Business not found or not assigned to you"
+                            )
+                    );
+        }
+
+        // ✅ CLIENT → only delete own business
+        else {
+
+            business = businessRepository
+                    .findByBusinessIdAndUser(businessId, loggedUser)
+                    .orElseThrow(() ->
+                            new ResponseStatusException(
+                                    HttpStatus.NOT_FOUND,
+                                    "Business not found"
+                            )
+                    );
+        }
+
+        businessRepository.delete(business);
+    }
 }
 

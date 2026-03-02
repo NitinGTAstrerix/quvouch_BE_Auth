@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 public class QrCode {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
     private String qrLink;
