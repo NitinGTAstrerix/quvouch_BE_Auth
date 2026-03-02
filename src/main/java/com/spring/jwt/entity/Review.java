@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -24,6 +25,12 @@ public class Review {
 
     @Column(name = "qr_code_id", nullable = false)
     private UUID qrCodeId;
+
+    @OneToMany(mappedBy = "business", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<QrCode> qrCode;
+
+    @OneToMany(mappedBy = "business", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Review> reviews;
 
     @Column(nullable = false)
     private Integer rating; // 1-5

@@ -150,7 +150,7 @@ public class SalesClientController {
 
     @Operation(summary = "Delete Business using Business ID")
     @PreAuthorize("hasAnyAuthority('SALE_REPRESENTATIVE','ADMIN')")
-    @DeleteMapping("/business/{id}")
+    @DeleteMapping("/business/{businessId}")
     public ResponseEntity<?> deleteBusiness(@PathVariable Integer id) {
         salesClientService.deleteBusiness(id);
         return ResponseEntity.ok("Business deleted successfully");
