@@ -51,4 +51,6 @@ ORDER BY q.createdAt DESC
     boolean existsByBusinessAndLocationIgnoreCase(Business business, String location);
 
     List<QrCode> findByAssignedBy(User assignedBy);
+
+    void deleteByBusiness_BusinessId(Integer businessId);
 }

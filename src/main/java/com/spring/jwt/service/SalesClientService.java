@@ -31,5 +31,5 @@ public interface SalesClientService {
 
     List<ClientResponseDto> getMyRegisteredClients();
 
-    void deleteBusiness(Integer businessId);
+    String deleteBusiness(Integer businessId);
 }

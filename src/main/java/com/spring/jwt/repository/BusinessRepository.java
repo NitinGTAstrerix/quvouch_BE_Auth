@@ -87,4 +87,8 @@ GROUP BY b.businessId
             @Param("saleRepId") Integer saleRepId
     );
 
+    Optional<Business> findByBusinessIdAndUser_SaleRepresentative_Id(
+            Integer businessId,
+            Long salesRepId
+    );
 }

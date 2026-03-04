@@ -25,6 +25,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import com.spring.jwt.service.BusinessService;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.UrlResource;
@@ -369,11 +370,49 @@ public class BusinessServiceImpl implements BusinessService {
                         .reviewId(review.getId())
                         .customerName(review.getCustomerName())
                         .rating(review.getRating())
-                        .comment(review.getFeedbackText())   // ✅ correct field
-                        .location(review.getBusiness().getBusinessName()) // ✅ using business
+                        .comment(review.getFeedbackText())
+                        .location(review.getBusiness().getBusinessName())
                         .createdAt(review.getCreatedAt())
                         .build()
                 )
                 .toList();
+    }
+
+    @Override
+    @Transactional
+    public String deleteBusiness(Integer businessId) {
+
+        try {
+
+            Authentication authentication = SecurityContextHolder
+                    .getContext()
+                    .getAuthentication();
+
+            System.out.println("Auth User: " + authentication);
+
+            String email = authentication.getName();
+            System.out.println("Email: " + email);
+
+            User loggedUser = userRepository.findByEmail(email);
+            System.out.println("Logged User: " + loggedUser);
+
+            Business business = businessRepository.findById(businessId)
+                    .orElse(null);
+
+            System.out.println("Business: " + business);
+
+            User client = business.getUser();
+            System.out.println("Client: " + client);
+
+            System.out.println("Sale Rep: " + client.getSaleRepresentative());
+
+            businessRepository.delete(business);
+
+            return "Business Deleted Successfully";
+
+        } catch (Exception e) {
+            e.printStackTrace();   // 🔥 THIS WILL SHOW REAL ERROR
+            throw e;
+        }
     }
 }

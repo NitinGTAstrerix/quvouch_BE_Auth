@@ -39,4 +39,5 @@ public interface BusinessService {
 
     List<ReviewResponseDto> getMyBusinessReviews(Integer rating, String keyword);
 
+    String deleteBusiness(Integer businessId);
 }

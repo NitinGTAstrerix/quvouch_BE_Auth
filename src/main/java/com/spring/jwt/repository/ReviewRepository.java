@@ -71,4 +71,6 @@ public interface ReviewRepository extends JpaRepository<Review, UUID> {
     boolean existsByCustomerEmail(String email);
 
     Optional<Review> findByCustomerEmail(String email);
+
+    void deleteByBusiness_BusinessId(Integer businessId);
 }

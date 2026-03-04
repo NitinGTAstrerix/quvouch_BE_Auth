@@ -8,10 +8,10 @@ import com.spring.jwt.exception.BaseException;
 import com.spring.jwt.mapper.UserMapper;
 import com.spring.jwt.repository.BusinessRepository;
 import com.spring.jwt.repository.QrCodeRepository;
+import com.spring.jwt.repository.ReviewRepository;
 import com.spring.jwt.repository.UserRepository;
 import com.spring.jwt.service.SalesClientService;
 import com.spring.jwt.service.UserService;
-import com.spring.jwt.service.security.UserDetailsCustom;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -21,8 +21,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -31,6 +29,7 @@ public class SalesClientServiceImpl implements SalesClientService {
 
     private final BusinessRepository businessRepository;
     private final QrCodeRepository qrCodeRepository;
+    private final ReviewRepository reviewRepository;
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
     private final UserService userService;
@@ -62,11 +61,63 @@ public class SalesClientServiceImpl implements SalesClientService {
     @Override
     public BusinessResponseDto createClient(BusinessRequestDto dto) {
 
-        User user = getCurrentUser();
+        User loggedUser = getCurrentUser();
 
+        boolean isAdmin = loggedUser.getRoles().stream()
+                .anyMatch(role -> role.getName().equals("ADMIN"));
+
+        boolean isSaleRep = loggedUser.getRoles().stream()
+                .anyMatch(role -> role.getName().equals("SALE_REPRESENTATIVE"));
+
+        if (!isAdmin && !isSaleRep) {
+            throw new ResponseStatusException(
+                    HttpStatus.FORBIDDEN,
+                    "Only ADMIN or SALE_REPRESENTATIVE can create business"
+            );
+        }
+
+        if (dto.getClientId() == null) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Client ID is required"
+            );
+        }
+
+        // 🔥 Fetch CLIENT user
+        User client = userRepository.findById(dto.getClientId())
+                .orElseThrow(() ->
+                        new ResponseStatusException(
+                                HttpStatus.NOT_FOUND,
+                                "Client not found"
+                        )
+                );
+
+        // 🔒 Ensure the user is actually CLIENT role
+        boolean isClientRole = client.getRoles().stream()
+                .anyMatch(role -> role.getName().equals("CLIENT"));
+
+        if (!isClientRole) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "User is not a CLIENT"
+            );
+        }
+
+        // 🔒 Ensure client belongs to this sales rep (unless ADMIN)
+        if (isSaleRep) {
+            if (client.getSaleRepresentative() == null ||
+                    !client.getSaleRepresentative().getId().equals(loggedUser.getId())) {
+
+                throw new ResponseStatusException(
+                        HttpStatus.FORBIDDEN,
+                        "Client is not assigned to you"
+                );
+            }
+        }
+
+        // ✅ Create business properly
         Business business = modelMapper.map(dto, Business.class);
-        business.setUser(user);
-        business.setStatus(Business.BusinessStatus.PENDING);
+        business.setUser(client);   // 🔥 CRITICAL FIX
 
         Business saved = businessRepository.save(business);
 
@@ -153,9 +204,9 @@ public class SalesClientServiceImpl implements SalesClientService {
                                     "Business not found"
                             )
                     );
-
         }
-        // ✅ SALE_REPRESENTATIVE → only businesses of their assigned clients
+
+        // ✅ SALE_REPRESENTATIVE → only assigned businesses
         else if (isSaleRep) {
 
             business = businessRepository
@@ -166,9 +217,9 @@ public class SalesClientServiceImpl implements SalesClientService {
                                     "Business not found or not assigned to you"
                             )
                     );
-
         }
-        // ✅ CLIENT → only their own businesses
+
+        // ✅ CLIENT → only their own business
         else {
 
             business = businessRepository
@@ -181,13 +232,13 @@ public class SalesClientServiceImpl implements SalesClientService {
                     );
         }
 
-        // 🔄 Toggle Logic
-        Business.BusinessStatus currentStatus =
-                business.getStatus() == null
-                        ? Business.BusinessStatus.PENDING
-                        : business.getStatus();
+        // 🔄 Simple ACTIVE ↔ INACTIVE toggle
+        Business.BusinessStatus currentStatus = business.getStatus();
 
-        Business.BusinessStatus newStatus = currentStatus.next();
+        Business.BusinessStatus newStatus =
+                (currentStatus == Business.BusinessStatus.ACTIVE)
+                        ? Business.BusinessStatus.INACTIVE
+                        : Business.BusinessStatus.ACTIVE;
 
         business.setStatus(newStatus);
         businessRepository.save(business);
@@ -205,9 +256,6 @@ public class SalesClientServiceImpl implements SalesClientService {
         long active = businessRepository
                 .countByUserAndStatus(user, Business.BusinessStatus.ACTIVE);
 
-        long pending = businessRepository
-                .countByUserAndStatus(user, Business.BusinessStatus.PENDING);
-
         long inactive = businessRepository
                 .countByUserAndStatus(user, Business.BusinessStatus.INACTIVE);
 
@@ -220,7 +268,6 @@ public class SalesClientServiceImpl implements SalesClientService {
         return SalesDashboardDto.builder()
                 .totalClients(total)
                 .activeClients(active)
-                .pendingClients(pending)
                 .inactiveClients(inactive)
                 .activeQrCodes(activeQr)
                 .build();
@@ -287,57 +334,44 @@ public class SalesClientServiceImpl implements SalesClientService {
 
     @Override
     @Transactional
-    public void deleteBusiness(Integer businessId) {
+    public String deleteBusiness(Integer businessId) {
 
-        User loggedUser = getCurrentUser();
+        reviewRepository.deleteByBusiness_BusinessId(businessId);
+        qrCodeRepository.deleteByBusiness_BusinessId(businessId);
 
-        boolean isAdmin = loggedUser.getRoles().stream()
-                .anyMatch(role -> role.getName().equals("ADMIN"));
+        businessRepository.deleteById(businessId);
 
-        boolean isSaleRep = loggedUser.getRoles().stream()
-                .anyMatch(role -> role.getName().equals("SALE_REPRESENTATIVE"));
+        try {
 
-        Business business;
+            Authentication authentication = SecurityContextHolder
+                    .getContext()
+                    .getAuthentication();
 
-        // ✅ ADMIN → can delete any business
-        if (isAdmin) {
+            System.out.println("Auth User: " + authentication);
 
-            business = businessRepository.findById(businessId)
-                    .orElseThrow(() ->
-                            new ResponseStatusException(
-                                    HttpStatus.NOT_FOUND,
-                                    "Business not found"
-                            )
-                    );
+            String email = authentication.getName();
+            System.out.println("Email: " + email);
+
+            User loggedUser = userRepository.findByEmail(email);
+            System.out.println("Logged User: " + loggedUser);
+
+            Business business = businessRepository.findById(businessId)
+                    .orElse(null);
+
+            System.out.println("Business: " + business);
+
+            User client = business.getUser();
+            System.out.println("Client: " + client);
+
+            System.out.println("Sale Rep: " + client.getSaleRepresentative());
+
+            businessRepository.delete(business);
+
+            return "Business Deleted Successfully";
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
         }
-
-        // ✅ SALE_REP → only delete assigned client businesses
-        else if (isSaleRep) {
-
-            business = businessRepository
-                    .findAssignedBusiness(businessId, loggedUser.getId())
-                    .orElseThrow(() ->
-                            new ResponseStatusException(
-                                    HttpStatus.NOT_FOUND,
-                                    "Business not found or not assigned to you"
-                            )
-                    );
-        }
-
-        // ✅ CLIENT → only delete own business
-        else {
-
-            business = businessRepository
-                    .findByBusinessIdAndUser(businessId, loggedUser)
-                    .orElseThrow(() ->
-                            new ResponseStatusException(
-                                    HttpStatus.NOT_FOUND,
-                                    "Business not found"
-                            )
-                    );
-        }
-
-        businessRepository.delete(business);
     }
 }
-

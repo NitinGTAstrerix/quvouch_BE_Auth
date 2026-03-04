@@ -6,6 +6,7 @@ import com.spring.jwt.entity.QrCode;
 import com.spring.jwt.entity.User;
 import com.spring.jwt.repository.QrCodeRepository;
 import com.spring.jwt.repository.UserRepository;
+import com.spring.jwt.service.BusinessService;
 import com.spring.jwt.service.QrCodeService;
 import com.spring.jwt.service.SalesClientService;
 import com.spring.jwt.service.UserService;
@@ -34,6 +35,7 @@ public class SalesClientController {
 
     private final SalesClientService salesClientService;
     private final UserService userService;
+    private final BusinessService businessService;
     private final QrCodeRepository qrCodeRepository;
     private final UserRepository  userRepository;
 
@@ -86,7 +88,7 @@ public class SalesClientController {
         return ResponseEntity.ok(salesClientService.updateClient(id, dto));
     }
 
-    @Operation(summary = "Toggle business status: PENDING → ACTIVE → INACTIVE")
+    @Operation(summary = "Toggle business status: ACTIVE → INACTIVE")
     @PreAuthorize("hasAnyAuthority('SALE_REPRESENTATIVE', 'ADMIN')")
     @PatchMapping("/business/{id}/status/toggle")
     public ResponseEntity<?> toggleBusinessStatus(@PathVariable Integer id) {
@@ -167,11 +169,13 @@ public class SalesClientController {
         );
     }
 
-    @Operation(summary = "Delete Business using Business ID")
-    @PreAuthorize("hasAnyAuthority('SALE_REPRESENTATIVE','ADMIN')")
-    @DeleteMapping("/business/{id}")
-    public ResponseEntity<?> deleteBusiness(@PathVariable Integer id) {
-        salesClientService.deleteBusiness(id);
-        return ResponseEntity.ok("Business deleted successfully");
+
+    @DeleteMapping("/business/{businessId}")
+    public ResponseEntity<String> deleteBusiness(
+            @PathVariable Integer businessId) {
+
+        String response = businessService.deleteBusiness(businessId);
+
+        return ResponseEntity.ok(response);
     }
 }

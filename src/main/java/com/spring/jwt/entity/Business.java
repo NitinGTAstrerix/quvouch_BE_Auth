@@ -43,6 +43,9 @@ public class Business {
     @OneToMany(mappedBy = "business", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<QrCode> qrCode;
 
+    @OneToMany(mappedBy = "business", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Review> reviews;
+
     @PrePersist
     private void onCreate()
     {
@@ -64,26 +67,7 @@ public class Business {
     public enum BusinessStatus {
 
         ACTIVE,
-        INACTIVE,
-        PENDING;
+        INACTIVE;
 
-        public BusinessStatus next() {
-
-            switch (this) {
-                case PENDING:
-                    return ACTIVE;
-
-                case ACTIVE:
-                    return INACTIVE;
-
-                case INACTIVE:
-                    return ACTIVE;
-
-                default:
-                    throw new IllegalStateException("Invalid status");
-            }
-        }
     }
-
-
 }
