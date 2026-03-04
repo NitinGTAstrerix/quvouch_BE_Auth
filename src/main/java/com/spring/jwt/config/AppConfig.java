@@ -224,6 +224,11 @@ public class AppConfig {
                 config.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "X-Requested-With", "Accept"));
                 config.setExposedHeaders(Arrays.asList("Authorization"));
                 config.setMaxAge(3600L);
+
+                org.springframework.web.cors.UrlBasedCorsConfigurationSource source =
+                        new org.springframework.web.cors.UrlBasedCorsConfigurationSource();
+                source.registerCorsConfiguration("/**", config);
+
                 return config;
             }
         };
@@ -236,6 +241,4 @@ public class AppConfig {
                 .passwordEncoder(passwordEncoder());
         return builder.build();
     }
-
-
 }

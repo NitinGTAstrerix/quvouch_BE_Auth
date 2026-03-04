@@ -14,10 +14,6 @@ import java.util.Optional;
 
 public interface QrCodeRepository extends JpaRepository<QrCode, String> {
 
-    long countByBusiness_UserAndStatus(User user, QrStatus status);
-
-    List<QrCode> findByBusiness_UserAndStatus(User user, QrStatus status);
-
     @Query("""
         SELECT COALESCE(SUM(q.scanCount),0)
         FROM QrCode q
@@ -53,4 +49,8 @@ ORDER BY q.createdAt DESC
     List<QrCode> findByAssignedBy(User assignedBy);
 
     void deleteByBusiness_BusinessId(Integer businessId);
+
+    long countByBusinessInAndStatus(List<Business> businesses, QrCode.QrStatus status);
+
+    List<QrCode> findByBusinessInAndStatus(List<Business> businesses, QrCode.QrStatus status);
 }

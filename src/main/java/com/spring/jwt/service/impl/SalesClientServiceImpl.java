@@ -219,21 +219,22 @@ public class SalesClientServiceImpl implements SalesClientService {
     @Override
     public SalesDashboardDto getDashboardData() {
 
-        User user = getCurrentUser();
+        User loggedUser = getCurrentUser();
 
-        long total = businessRepository.countByUser(user);
+        List<Business> businesses = businessRepository.findByUser(loggedUser);
 
-        long active = businessRepository
-                .countByUserAndStatus(user, Business.BusinessStatus.ACTIVE);
+        long total = businesses.size();
+        long active = businesses.stream()
+                .filter(b -> b.getStatus() == Business.BusinessStatus.ACTIVE)
+                .count();
+        long inactive = total - active;
 
-        long inactive = businessRepository
-                .countByUserAndStatus(user, Business.BusinessStatus.INACTIVE);
+        List<QrCode> activeQrCodes = qrCodeRepository.findByBusinessInAndStatus(
+                businesses,
+                QrCode.QrStatus.ACTIVE
+        );
 
-        long activeQr = qrCodeRepository
-                .countByBusiness_UserAndStatus(
-                        user,
-                        QrCode.QrStatus.ACTIVE
-                );
+        long activeQr = activeQrCodes.size();
 
         return SalesDashboardDto.builder()
                 .totalClients(total)
@@ -259,14 +260,18 @@ public class SalesClientServiceImpl implements SalesClientService {
     @Override
     public List<QrCodeResponse> getActiveQrCodes() {
 
-        User user = getCurrentUser();
+        User loggedUser = getCurrentUser();
 
-        return qrCodeRepository
-                .findByBusiness_UserAndStatus(
-                        user,
-                        QrCode.QrStatus.ACTIVE
-                )
-                .stream()
+        List<Business> businesses = businessRepository.findByUser(loggedUser);
+
+        if (businesses.isEmpty()) return List.of();
+
+        List<QrCode> qrCodes = qrCodeRepository.findByBusinessInAndStatus(
+                businesses,
+                QrCode.QrStatus.ACTIVE
+        );
+
+        return qrCodes.stream()
                 .map(qr -> QrCodeResponse.builder()
                         .id(qr.getId())
                         .qrLink(qr.getQrLink())
@@ -278,6 +283,7 @@ public class SalesClientServiceImpl implements SalesClientService {
                 )
                 .toList();
     }
+
 
     @Override
     public void deleteClient(Integer id) {
