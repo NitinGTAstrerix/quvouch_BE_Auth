@@ -61,11 +61,11 @@ public class SalesClientServiceImpl implements SalesClientService {
     @Override
     public BusinessResponseDto createClient(BusinessRequestDto dto) {
 
+        // 1️⃣ Get logged-in Sales Representative
         User loggedUser = getCurrentUser();
 
         boolean isAdmin = loggedUser.getRoles().stream()
                 .anyMatch(role -> role.getName().equals("ADMIN"));
-
         boolean isSaleRep = loggedUser.getRoles().stream()
                 .anyMatch(role -> role.getName().equals("SALE_REPRESENTATIVE"));
 
@@ -76,51 +76,21 @@ public class SalesClientServiceImpl implements SalesClientService {
             );
         }
 
-        if (dto.getClientId() == null) {
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST,
-                    "Client ID is required"
-            );
-        }
+        // 2️⃣ Map DTO → Entity
+        Business business = Business.builder()
+                .businessName(dto.getBusinessName())
+                .businessEmail(dto.getBusinessEmail())
+                .businessType(dto.getBusinessType())
+                .address(dto.getAddress())
+                .phoneNumber(dto.getPhoneNumber())
+                .status(Business.BusinessStatus.ACTIVE)
+                .user(loggedUser) // ✅ Attach logged-in sales rep
+                .build();
 
-        // 🔥 Fetch CLIENT user
-        User client = userRepository.findById(dto.getClientId())
-                .orElseThrow(() ->
-                        new ResponseStatusException(
-                                HttpStatus.NOT_FOUND,
-                                "Client not found"
-                        )
-                );
-
-        // 🔒 Ensure the user is actually CLIENT role
-        boolean isClientRole = client.getRoles().stream()
-                .anyMatch(role -> role.getName().equals("CLIENT"));
-
-        if (!isClientRole) {
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST,
-                    "User is not a CLIENT"
-            );
-        }
-
-        // 🔒 Ensure client belongs to this sales rep (unless ADMIN)
-        if (isSaleRep) {
-            if (client.getSaleRepresentative() == null ||
-                    !client.getSaleRepresentative().getId().equals(loggedUser.getId())) {
-
-                throw new ResponseStatusException(
-                        HttpStatus.FORBIDDEN,
-                        "Client is not assigned to you"
-                );
-            }
-        }
-
-        // ✅ Create business properly
-        Business business = modelMapper.map(dto, Business.class);
-        business.setUser(client);   // 🔥 CRITICAL FIX
-
+        // 3️⃣ Save to DB
         Business saved = businessRepository.save(business);
 
+        // 4️⃣ Map to Response DTO
         return modelMapper.map(saved, BusinessResponseDto.class);
     }
 
