@@ -65,6 +65,7 @@ public class SecurityHeadersConfig {
             "style-src 'self' 'nonce-%s' https://fonts.googleapis.com https://cdn.jsdelivr.net; " +
             "img-src 'self' data:; " +
             "font-src 'self' https://fonts.gstatic.com; " +
+                    "connect-src 'self' http://localhost:8080 ws://localhost:8080; " +
             "connect-src 'self'; " +
             "frame-src 'none'; " +
             "object-src 'none'; " +
