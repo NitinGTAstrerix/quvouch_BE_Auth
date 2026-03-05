@@ -14,7 +14,7 @@ import java.util.Optional;
 
 public interface BusinessRepository extends JpaRepository<Business, Integer> {
 
-    Optional<Business> findByUser_Id(Integer Id);
+    List<Business> findByUser_Id(Integer Id);
 
     List<Business> findByUser(User user);
 
@@ -79,4 +79,6 @@ GROUP BY b.businessId
             @Param("businessId") Integer businessId,
             @Param("saleRepId") Integer saleRepId
     );
+
+
 }

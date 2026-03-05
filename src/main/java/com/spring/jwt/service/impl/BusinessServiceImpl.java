@@ -37,6 +37,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 
 @AllArgsConstructor
@@ -132,10 +133,13 @@ public class BusinessServiceImpl implements BusinessService {
     @Override
     public BusinessResponseDto getBusinessByOwn() {
         Integer id = getCurrentUserProfile().getId();
-        Business business = businessRepository.findByUser_Id(id).orElseThrow(() -> new BusinessNotFound("Business not found"));
-        return mapper.toBusiness(business);
+        List<Business> businesses = businessRepository.findByUser_Id(id);
+        if (businesses.isEmpty()) {
+            throw new BusinessNotFound("No business found for this user");
+        }
+        // return first business
+        return mapper.toBusiness(businesses.get(0));
     }
-
     @Override
     public List<BusinessResponseDto> getAllBusiness() {
         List<Business> allBusiness = businessRepository.findAll();
@@ -382,37 +386,14 @@ public class BusinessServiceImpl implements BusinessService {
     @Transactional
     public String deleteBusiness(Integer businessId) {
 
-        try {
+        Business business = businessRepository.findById(businessId)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Business not found"));
 
-            Authentication authentication = SecurityContextHolder
-                    .getContext()
-                    .getAuthentication();
+        reviewRepository.deleteByBusiness_BusinessId(businessId);
+        qrCodeRepository.deleteByBusiness_BusinessId(businessId);
+        businessRepository.delete(business);
 
-            System.out.println("Auth User: " + authentication);
-
-            String email = authentication.getName();
-            System.out.println("Email: " + email);
-
-            User loggedUser = userRepository.findByEmail(email);
-            System.out.println("Logged User: " + loggedUser);
-
-            Business business = businessRepository.findById(businessId)
-                    .orElse(null);
-
-            System.out.println("Business: " + business);
-
-            User client = business.getUser();
-            System.out.println("Client: " + client);
-
-            System.out.println("Sale Rep: " + client.getSaleRepresentative());
-
-            businessRepository.delete(business);
-
-            return "Business Deleted Successfully";
-
-        } catch (Exception e) {
-            e.printStackTrace();   // 🔥 THIS WILL SHOW REAL ERROR
-            throw e;
-        }
+        return "Business Deleted Successfully";
     }
 }

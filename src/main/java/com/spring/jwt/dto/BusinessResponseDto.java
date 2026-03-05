@@ -21,4 +21,5 @@ public class BusinessResponseDto {
     private Instant createdAt;
     private Instant updatedAt;
     private Integer ClientId;
+    private Integer qrCodeCount;
 }

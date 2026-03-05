@@ -1,6 +1,7 @@
 package com.spring.jwt.service;
 
 import com.spring.jwt.dto.*;
+import com.spring.jwt.entity.Business;
 import com.spring.jwt.entity.User;
 import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;

@@ -101,7 +101,11 @@ public class SalesClientServiceImpl implements SalesClientService {
 
         return businessRepository.findByUser(user)
                 .stream()
-                .map(b -> modelMapper.map(b, BusinessResponseDto.class))
+                .map(b -> {
+                    BusinessResponseDto dto = modelMapper.map(b, BusinessResponseDto.class);
+                    dto.setQrCodeCount(b.getQrCode() != null ? b.getQrCode().size() : 0);
+                    return dto;
+                })
                 .toList();
     }
 
@@ -112,10 +116,11 @@ public class SalesClientServiceImpl implements SalesClientService {
 
         Business business = businessRepository
                 .findByBusinessIdAndUser(id, user)
-                .orElseThrow(() ->
-                        new RuntimeException("Client not found"));
+                .orElseThrow(() -> new RuntimeException("Client not found"));
 
-        return modelMapper.map(business, BusinessResponseDto.class);
+        BusinessResponseDto dto = modelMapper.map(business, BusinessResponseDto.class);
+        dto.setQrCodeCount(business.getQrCode() != null ? business.getQrCode().size() : 0);
+        return dto;
     }
 
     @Override
