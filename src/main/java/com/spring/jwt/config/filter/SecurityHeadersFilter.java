@@ -21,20 +21,16 @@ public class SecurityHeadersFilter implements Filter, Ordered {
 
         httpResponse.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
 
-        httpResponse.setHeader("Content-Security-Policy", 
-            "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; " +
-            "style-src 'self' 'unsafe-inline'; img-src 'self' data:; " +
-            "font-src 'self'; connect-src 'self'; frame-src 'self'; " +
-            "object-src 'none'; base-uri 'self'");
+        httpResponse.setHeader("Content-Security-Policy",
+                "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; " +
+                        "style-src 'self' 'unsafe-inline'; img-src 'self' data:; " +
+                        "font-src 'self'; connect-src 'self' http://localhost:8080 ws://localhost:8080; " +  // ✅ fixed
+                        "frame-src 'self'; object-src 'none'; base-uri 'self'");
 
         httpResponse.setHeader("X-Content-Type-Options", "nosniff");
-
         httpResponse.setHeader("X-Frame-Options", "DENY");
-
         httpResponse.setHeader("X-XSS-Protection", "1; mode=block");
-
         httpResponse.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
-
         httpResponse.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
         httpResponse.setHeader("Pragma", "no-cache");
 
