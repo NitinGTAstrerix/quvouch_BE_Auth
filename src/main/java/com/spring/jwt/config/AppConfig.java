@@ -215,17 +215,16 @@ public class AppConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(allowedOrigins);
+        config.setAllowedOriginPatterns(List.of("*"));  // ✅ allow ALL origins temporarily
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         config.setAllowCredentials(true);
-        config.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "X-Requested-With", "Accept"));
+        config.setAllowedHeaders(List.of("*"));  // ✅ allow ALL headers temporarily
         config.setExposedHeaders(Arrays.asList("Authorization"));
         config.setMaxAge(3600L);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
-
-        return source;  // ✅ return source directly
+        return source;
     }
 
     @Bean
