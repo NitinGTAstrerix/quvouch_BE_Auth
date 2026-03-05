@@ -134,10 +134,11 @@ public class BusinessServiceImpl implements BusinessService {
     public BusinessResponseDto getBusinessByOwn() {
         Integer id = getCurrentUserProfile().getId();
         List<Business> businesses = businessRepository.findByUser_Id(id);
+
         if (businesses.isEmpty()) {
-            throw new BusinessNotFound("No business found for this user");
+            return null;  // ✅ return null instead of throwing exception
         }
-        // return first business
+
         return mapper.toBusiness(businesses.get(0));
     }
     @Override
