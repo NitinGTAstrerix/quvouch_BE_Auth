@@ -24,11 +24,6 @@ public interface BusinessRepository extends JpaRepository<Business, Integer> {
             User user,
             String keyword
     );
-
-    long countByUser(User user);
-
-    long countByUserAndStatus(User user, Business.BusinessStatus status);
-
     List<Business> findByUserAndStatus(User user, Business.BusinessStatus status);
 
     @Query("""
@@ -74,8 +69,6 @@ GROUP BY b.businessId
 """)
     ClientDetailsDTO getClientDetails(@Param("businessId") Integer businessId);
 
-    Optional<Business> findByBusinessIdAndUser_SaleRepresentative(Integer id, User saleRep);
-
     @Query("""
     SELECT b
     FROM Business b
@@ -85,10 +78,5 @@ GROUP BY b.businessId
     Optional<Business> findAssignedBusiness(
             @Param("businessId") Integer businessId,
             @Param("saleRepId") Integer saleRepId
-    );
-
-    Optional<Business> findByBusinessIdAndUser_SaleRepresentative_Id(
-            Integer businessId,
-            Long salesRepId
     );
 }

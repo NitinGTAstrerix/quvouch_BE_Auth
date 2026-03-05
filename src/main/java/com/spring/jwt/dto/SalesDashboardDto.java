@@ -13,8 +13,6 @@ public class SalesDashboardDto {
 
     private long activeClients;
 
-    private long pendingClients;
-
     private long inactiveClients;
 
     private long activeQrCodes;

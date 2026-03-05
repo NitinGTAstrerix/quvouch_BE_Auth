@@ -30,6 +30,7 @@ import org.springframework.security.web.header.writers.XXssProtectionHeaderWrite
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.ForwardedHeaderFilter;
 
 import java.util.Arrays;
@@ -138,6 +139,7 @@ public class AppConfig {
 
         log.debug("Configuring URL-based security rules");
         http.authorizeHttpRequests(authorize -> authorize
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers("/api/feedback/**").permitAll()
                 .requestMatchers("/api/v1/users/register").permitAll()
@@ -214,24 +216,18 @@ public class AppConfig {
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
-        return new CorsConfigurationSource() {
-            @Override
-            public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
-                CorsConfiguration config = new CorsConfiguration();
-                config.setAllowedOrigins(allowedOrigins);
-                config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-                config.setAllowCredentials(true);
-                config.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "X-Requested-With", "Accept"));
-                config.setExposedHeaders(Arrays.asList("Authorization"));
-                config.setMaxAge(3600L);
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowedOrigins(allowedOrigins);
+        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
+        config.setAllowCredentials(true);
+        config.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "X-Requested-With", "Accept"));
+        config.setExposedHeaders(Arrays.asList("Authorization"));
+        config.setMaxAge(3600L);
 
-                org.springframework.web.cors.UrlBasedCorsConfigurationSource source =
-                        new org.springframework.web.cors.UrlBasedCorsConfigurationSource();
-                source.registerCorsConfiguration("/**", config);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
 
-                return config;
-            }
-        };
+        return source;  // ✅ return source directly
     }
 
     @Bean
