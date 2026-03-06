@@ -178,13 +178,13 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
 
                     SecurityContextHolder.getContext().setAuthentication(auth);
                     // If token is not the current session, fail fast with specific message
-                    try {
-                        String tokenId = claims.getId();
-                        if (!activeSessionService.isCurrentAccessToken(username, tokenId)) {
-                            log.warn("Token not current for user: {}", username);
-                            return false;
-                        }
-                    } catch (Exception ignored) {}
+//                    try {
+//                        String tokenId = claims.getId();
+//                        if (!activeSessionService.isCurrentAccessToken(username, tokenId)) {
+//                            log.warn("Token not current for user: {}", username);
+//                            return false;
+//                        }
+//                    } catch (Exception ignored) {}
                     log.debug("Authentication set in security context for user: {}", username);
                     return true;
                 } else {

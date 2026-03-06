@@ -302,15 +302,15 @@ public class JwtServiceImpl implements JwtService {
             }
             
             // Enforce single active session: token must be the current active token for this user
-            try {
-                String tokenId = claims.getId();
-                if (StringUtils.hasText(tokenId) && !activeSessionService.isCurrentAccessToken(username, tokenId)) {
-                    log.warn("Access token is not current for user: {}", username);
-                    return false;
-                }
-            } catch (Exception e) {
-                log.warn("Could not verify active session: {}", e.getMessage());
-            }
+//            try {
+//                String tokenId = claims.getId();
+//                if (StringUtils.hasText(tokenId) && !activeSessionService.isCurrentAccessToken(username, tokenId)) {
+//                    log.warn("Access token is not current for user: {}", username);
+//                    return false;
+//                }
+//            } catch (Exception e) {
+//                log.warn("Could not verify active session: {}", e.getMessage());
+//            }
 
             log.debug("Token validation successful for user: {}", username);
             return true;

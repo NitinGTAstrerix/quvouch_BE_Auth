@@ -233,12 +233,7 @@ public class SalesClientServiceImpl implements SalesClientService {
                 .count();
         long inactive = total - active;
 
-        List<QrCode> activeQrCodes = qrCodeRepository.findByBusinessInAndStatus(
-                businesses,
-                QrCode.QrStatus.ACTIVE
-        );
-
-        long activeQr = activeQrCodes.size();
+        long activeQr = qrCodeRepository.findByBusinessIn(businesses).size();
 
         return SalesDashboardDto.builder()
                 .totalClients(total)

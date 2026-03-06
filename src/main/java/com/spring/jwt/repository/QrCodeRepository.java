@@ -50,7 +50,7 @@ ORDER BY q.createdAt DESC
 
     void deleteByBusiness_BusinessId(Integer businessId);
 
-    long countByBusinessInAndStatus(List<Business> businesses, QrCode.QrStatus status);
-
     List<QrCode> findByBusinessInAndStatus(List<Business> businesses, QrCode.QrStatus status);
+
+    List<QrCode> findByBusinessIn(List<Business> businesses);
 }

@@ -19,6 +19,7 @@ public class BusinessMapper {
                 .createdAt(business.getCreatedAt())
                 .updatedAt(business.getUpdatedAt())
                 .ClientId(business.getUser().getId())
+                .qrCodeCount(business.getQrCode() != null ? business.getQrCode().size() : 0)
                 .build();
     }
 
