@@ -15,5 +15,4 @@ public class BaseException extends RuntimeException{
 
     private String message;
 
-
 }

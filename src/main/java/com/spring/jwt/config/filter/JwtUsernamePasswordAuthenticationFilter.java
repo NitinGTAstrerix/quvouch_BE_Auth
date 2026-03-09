@@ -124,7 +124,7 @@ public class JwtUsernamePasswordAuthenticationFilter extends AbstractAuthenticat
 
             Cookie accessTokenCookie = new Cookie("access_token", accessToken);
             accessTokenCookie.setHttpOnly(false);
-            accessTokenCookie.setSecure(true);
+            accessTokenCookie.setSecure(false);
             accessTokenCookie.setPath("/");
             accessTokenCookie.setMaxAge(jwtConfig.getExpiration());
             response.addCookie(accessTokenCookie);
@@ -152,7 +152,7 @@ public class JwtUsernamePasswordAuthenticationFilter extends AbstractAuthenticat
     private Cookie createRefreshTokenCookie(String refreshToken) {
         Cookie cookie = new Cookie(REFRESH_TOKEN_COOKIE_NAME, refreshToken);
         cookie.setHttpOnly(true);
-        cookie.setSecure(true);
+        cookie.setSecure(false);
         cookie.setPath("/");
 
         cookie.setMaxAge(jwtConfig.getRefreshExpiration());
