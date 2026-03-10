@@ -7,8 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -18,10 +17,12 @@ public class SettingsProfileDTO {
     private Integer id;
 
     @Schema(description = "User first name", example = "Rahul")
+    @NotBlank(message = "First name is required")
     @Pattern(regexp = "^[A-Za-z]{2,50}$", message = "First name must contain only letters and be 2-50 characters long")
     private String firstName;
 
     @Schema(description = "User last name", example = "Patil")
+    @NotBlank(message = "Last name is required")
     @Pattern(regexp = "^[A-Za-z]{2,50}$", message = "Last name must contain only letters and be 2-50 characters long")
     private String lastName;
 
@@ -30,6 +31,7 @@ public class SettingsProfileDTO {
     private String email;
 
     @Schema(description = "User mobile number", example = "9988776655")
+    @NotBlank(message = "Mobile number is required")
     @Pattern(regexp = "^[6-9]\\d{9}$", message = "Phone number must be a valid 10-digit Indian mobile number")
     private String mobileNumber;
 
