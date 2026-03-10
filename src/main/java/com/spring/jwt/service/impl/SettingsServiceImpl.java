@@ -25,10 +25,17 @@ public class SettingsServiceImpl implements SettingsService {
         Authentication authentication =
                 SecurityContextHolder.getContext().getAuthentication();
 
-        UserDetailsCustom userDetails =
-                (UserDetailsCustom) authentication.getPrincipal();
+        Object principal = authentication.getPrincipal();
 
-        User user = userRepository.findByEmail(userDetails.getUsername());
+        String email;
+
+        if (principal instanceof UserDetailsCustom) {
+            email = ((UserDetailsCustom) principal).getUsername();
+        } else {
+            email = principal.toString();
+        }
+
+        User user = userRepository.findByEmail(email);
 
         if (user == null) {
             throw new RuntimeException("User not found");
@@ -36,7 +43,6 @@ public class SettingsServiceImpl implements SettingsService {
 
         return user;
     }
-
     @Override
     public SettingsProfileDTO getProfile() {
 
