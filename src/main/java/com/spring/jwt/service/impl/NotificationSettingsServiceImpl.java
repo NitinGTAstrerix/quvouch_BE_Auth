@@ -25,22 +25,37 @@ public class NotificationSettingsServiceImpl implements NotificationSettingsServ
         Authentication authentication =
                 SecurityContextHolder.getContext().getAuthentication();
 
-        UserDetailsCustom userDetails =
-                (UserDetailsCustom) authentication.getPrincipal();
+        Object principal = authentication.getPrincipal();
 
-        return userRepository.findByEmail(userDetails.getUsername());
+        String email;
+
+        if (principal instanceof UserDetailsCustom) {
+            email = ((UserDetailsCustom) principal).getUsername();
+        } else {
+            email = principal.toString();
+        }
+
+        return userRepository.findByEmail(email);
     }
 
     @Override
     public NotificationSettingsDTO getSettings() {
 
         User user = getCurrentUser();
-
         Long userId = user.getId().longValue();
 
-        NotificationSettings settings =
-                repository.findByUserId(userId)
-                        .orElse(new NotificationSettings());
+        NotificationSettings settings = repository
+                .findByUserId(userId)
+                .orElseGet(() -> {
+                    NotificationSettings defaultSettings = new NotificationSettings();
+                    defaultSettings.setUserId(userId);
+                    defaultSettings.setEmailNotifications(true);
+                    defaultSettings.setSmsNotifications(false);
+                    defaultSettings.setClientAssigned(true);
+                    defaultSettings.setDealUpdates(true);
+                    defaultSettings.setSystemAlerts(true);
+                    return repository.save(defaultSettings);
+                });
 
         NotificationSettingsDTO dto = new NotificationSettingsDTO();
 
@@ -57,14 +72,16 @@ public class NotificationSettingsServiceImpl implements NotificationSettingsServ
     public void updateSettings(NotificationSettingsDTO request) {
 
         User user = getCurrentUser();
-
         Long userId = user.getId().longValue();
 
-        NotificationSettings settings =
-                repository.findByUserId(userId)
-                        .orElse(new NotificationSettings());
+        NotificationSettings settings = repository
+                .findByUserId(userId)
+                .orElseGet(() -> {
+                    NotificationSettings newSettings = new NotificationSettings();
+                    newSettings.setUserId(userId);
+                    return newSettings;
+                });
 
-        settings.setUserId(userId);
         settings.setEmailNotifications(request.getEmailNotifications());
         settings.setSmsNotifications(request.getSmsNotifications());
         settings.setClientAssigned(request.getClientAssigned());
