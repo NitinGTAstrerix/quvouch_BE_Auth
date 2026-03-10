@@ -19,7 +19,7 @@ public class UpdateProfileDTO {
     private String lastName;
 
     @NotBlank(message = "Mobile number is required")
-    @Pattern(regexp = "^[0-9]{10}$", message = "Mobile number must be 10 digits")
+    @Pattern(regexp = "^[6-9]\\d{9}$", message = "Mobile number must be 10 digits")
     private String mobileNumber;
 
     @Schema(description = "User address", example = "Hinjewadi Phase 1, Pune")
