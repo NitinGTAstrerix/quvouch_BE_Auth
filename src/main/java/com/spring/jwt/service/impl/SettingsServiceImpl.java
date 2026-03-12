@@ -4,6 +4,7 @@ import com.spring.jwt.dto.SettingsProfileDTO;
 import com.spring.jwt.dto.UpdateProfileDTO;
 import com.spring.jwt.dto.ChangePasswordDTO;
 import com.spring.jwt.entity.User;
+import com.spring.jwt.repository.BusinessRepository;
 import com.spring.jwt.repository.UserRepository;
 import com.spring.jwt.service.SettingsService;
 import com.spring.jwt.service.security.UserDetailsCustom;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 public class SettingsServiceImpl implements SettingsService {
 
     private final UserRepository userRepository;
+    private final BusinessRepository businessRepository;
     private final PasswordEncoder passwordEncoder;
 
     private User getCurrentUser() {
@@ -93,4 +95,5 @@ public class SettingsServiceImpl implements SettingsService {
 
         userRepository.save(user);
     }
+
 }
