@@ -63,8 +63,7 @@ public class ReviewController {
             @PathVariable UUID qrCodeId) {
 
         return ResponseEntity.ok(
-                reviewService.getReviewsByQrCode(qrCodeId)
-        );
+                reviewService.getReviewsByQrCode(qrCodeId));
     }
 
     @Operation(summary = "Update Review by Email", description = "Allows a customer to update their review using their email. One email = one review.")
