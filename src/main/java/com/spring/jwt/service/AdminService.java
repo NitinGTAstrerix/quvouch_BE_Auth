@@ -22,4 +22,6 @@ public interface AdminService {
     byte[] downloadQrCode(String id);
 
     String getQrCodeLink(String id);
+
+    AdminDashboardDTO getDashboardStats();
 }

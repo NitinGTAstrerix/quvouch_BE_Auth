@@ -171,4 +171,22 @@ public class AdminServiceImpl implements AdminService {
 
         return qrCode.getQrLink();
     }
+
+    @Override
+    public AdminDashboardDTO getDashboardStats() {
+
+        long totalSalesReps = userRepository.countByRoles_Name("SALE_REPRESENTATIVE");
+        long totalClients = businessRepository.count();
+        long totalReviews = reviewRepository.count();
+
+        double platformRevenue = 125000;
+
+        return new AdminDashboardDTO(
+                totalSalesReps,
+                totalClients,
+                totalReviews,
+                platformRevenue
+        );
+    }
+
 }

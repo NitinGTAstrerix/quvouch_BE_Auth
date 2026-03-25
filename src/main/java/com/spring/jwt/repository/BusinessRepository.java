@@ -80,5 +80,4 @@ GROUP BY b.businessId
             @Param("saleRepId") Integer saleRepId
     );
 
-
 }
