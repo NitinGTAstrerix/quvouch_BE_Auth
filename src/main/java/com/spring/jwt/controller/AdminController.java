@@ -37,8 +37,7 @@ public class AdminController {
     public ResponseEntity<UserDTO> getSaleRepById(@PathVariable Long id) {
 
         return ResponseEntity.ok(
-                adminService.getSaleRepresentativeById(id)
-        );
+                adminService.getSaleRepresentativeById(id));
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -47,8 +46,7 @@ public class AdminController {
             @PathVariable Integer saleRepId) {
 
         return ResponseEntity.ok(
-                reviewService.getReviewsBySaleRep(saleRepId)
-        );
+                reviewService.getReviewsBySaleRep(saleRepId));
     }
 
 
@@ -66,8 +64,7 @@ public class AdminController {
             @PathVariable Integer businessId) {
 
         return ResponseEntity.ok(
-                adminService.getClientDetails(businessId)
-        );
+                adminService.getClientDetails(businessId));
     }
 
     @Operation(summary = "Get all QR Codes", description = "Details of all QR Codes of All Business")
@@ -76,8 +73,7 @@ public class AdminController {
     public ResponseEntity<List<AdminQrCodeDTO>> getAllQrCodes() {
 
         return ResponseEntity.ok(
-                adminService.getAllQrCodes()
-        );
+                adminService.getAllQrCodes());
     }
 
     @Operation(summary = "Get Recent Reviews", description = "Details All Recent Reviews for all Business")
