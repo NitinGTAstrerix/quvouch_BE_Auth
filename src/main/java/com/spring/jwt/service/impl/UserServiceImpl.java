@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
-    private final JavaMailSender mailSender;
+//    private final JavaMailSender mailSender;
 
     private final UserProfileRepository userProfileRepository;
 
@@ -84,7 +84,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional
-    private User insertUser(UserDTO userDTO) {
+    protected User insertUser(UserDTO userDTO) {
         Optional<EmailVerification> emailVerificationOpt = emailVerificationRepo.findByEmail(userDTO.getEmail());
 
 //        if (emailVerificationOpt.isEmpty() ||

@@ -1,6 +1,8 @@
 package com.spring.jwt.config;
 
 import com.spring.jwt.config.filter.*;
+import com.spring.jwt.exception.CustomAccessDeniedHandler;
+import com.spring.jwt.exception.CustomAuthenticationEntryPoint;
 import com.spring.jwt.jwt.JwtConfig;
 import com.spring.jwt.jwt.JwtService;
 import com.spring.jwt.repository.UserRepository;
@@ -75,6 +77,9 @@ public class AppConfig {
     @Autowired
     private com.spring.jwt.jwt.ActiveSessionService activeSessionService;
 
+    @Autowired
+    private CustomAuthenticationEntryPoint authenticationEntryPoint;
+
     @Value("${app.url.frontend:http://localhost:5173}")
     private String frontendUrl;
 
@@ -124,6 +129,11 @@ public class AppConfig {
         http.cors(cors -> cors.configurationSource(corsConfigurationSource()));
 
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
+        http.exceptionHandling(exception -> exception
+                .authenticationEntryPoint(authenticationEntryPoint)
+                .accessDeniedHandler(new CustomAccessDeniedHandler())
+        );
 
         http.headers(headers -> headers
                 .xssProtection(xss -> xss

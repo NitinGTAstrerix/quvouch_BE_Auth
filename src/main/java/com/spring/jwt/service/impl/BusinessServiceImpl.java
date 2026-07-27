@@ -203,6 +203,9 @@ public class BusinessServiceImpl implements BusinessService {
         Business business = businessRepository.findById(businessId)
                 .orElseThrow(() -> new RuntimeException("Business not found"));
 
+        System.out.println("Dashboard Business ID = " + business.getBusinessId());
+        System.out.println("Dashboard Business Name = " + business.getBusinessName());
+
         // 2️⃣ Review Stats
         ReviewStatsDTO stats =
                 reviewRepository.getReviewStatistics(businessId);
@@ -220,6 +223,21 @@ public class BusinessServiceImpl implements BusinessService {
         if (totalScans == null) {
             totalScans = 0L;
         }
+
+        List<QrCode> qrs = qrCodeRepository.findAll();
+
+        System.out.println("------------- ALL QR CODES -------------");
+
+        for (QrCode qr : qrs) {
+            System.out.println(
+                    "QR = " + qr.getId() +
+                            ", Business = " +
+                            (qr.getBusiness() == null ? "NULL" : qr.getBusiness().getBusinessId()) +
+                            ", Active = " + qr.isActive()
+            );
+        }
+
+        System.out.println("----------------------------------------");
 
         // 4️⃣ Active QR Codes (using your existing method)
         Long activeQrCodes =
