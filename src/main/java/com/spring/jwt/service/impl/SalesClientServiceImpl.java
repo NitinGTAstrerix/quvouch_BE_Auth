@@ -261,13 +261,29 @@ public class SalesClientServiceImpl implements SalesClientService {
 
         User loggedUser = getCurrentUser();
 
+        System.out.println("Logged User : " + loggedUser.getEmail());
+
         List<Business> businesses = businessRepository.findByUser(loggedUser);
 
-        if (businesses.isEmpty()) return List.of();
+        System.out.println("Businesses Count : " + businesses.size());
+
+        businesses.forEach(b ->
+                System.out.println("Business ID : " + b.getBusinessId())
+        );
 
         List<QrCode> qrCodes = qrCodeRepository.findByBusinessInAndStatus(
                 businesses,
                 QrCode.QrStatus.ACTIVE
+        );
+
+        System.out.println("Active QR Count : " + qrCodes.size());
+
+        qrCodes.forEach(q ->
+                System.out.println(
+                        q.getId() + " Status=" + q.getStatus() +
+                                " Active=" + q.isActive() +
+                                " Business=" + q.getBusiness().getBusinessId()
+                )
         );
 
         return qrCodes.stream()
@@ -276,10 +292,9 @@ public class SalesClientServiceImpl implements SalesClientService {
                         .qrLink(qr.getQrLink())
                         .location(qr.getLocation())
                         .scanCount(qr.getScanCount())
-                        .active(true)
+                        .active(qr.isActive())
                         .businessId(qr.getBusiness().getBusinessId())
-                        .build()
-                )
+                        .build())
                 .toList();
     }
 
@@ -311,14 +326,38 @@ public class SalesClientServiceImpl implements SalesClientService {
     @Transactional
     public String deleteBusiness(Integer businessId) {
 
+        System.out.println("Delete API called");
+        System.out.println("Business ID: " + businessId);
+
         Business business = businessRepository.findById(businessId)
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND, "Business not found"));
+                .orElseThrow(() ->
+                        new ResponseStatusException(
+                                HttpStatus.NOT_FOUND,
+                                "Business not found"));
 
-        reviewRepository.deleteByBusiness_BusinessId(businessId);
-        qrCodeRepository.deleteByBusiness_BusinessId(businessId);
-        businessRepository.delete(business);
+        try {
 
-        return "Business Deleted Successfully";
+            // Delete all reviews of this business
+            reviewRepository.deleteByBusiness_BusinessId(businessId);
+
+            // Delete all QR codes of this business
+            qrCodeRepository.deleteByBusiness_BusinessId(businessId);
+
+            // Delete business
+            businessRepository.delete(business);
+
+            System.out.println("Business deleted successfully.");
+
+            return "Business Deleted Successfully";
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            throw new ResponseStatusException(
+                    HttpStatus.INTERNAL_SERVER_ERROR,
+                    "Unable to delete business: " + e.getMessage()
+            );
+        }
     }
 }

@@ -5,6 +5,7 @@ import com.spring.jwt.dto.ReviewStatsDTO;
 import com.spring.jwt.entity.Review;
 import com.spring.jwt.entity.Review.ReviewStatus;
 import com.spring.jwt.entity.User;
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -72,5 +73,6 @@ public interface ReviewRepository extends JpaRepository<Review, UUID> {
 
     Optional<Review> findByCustomerEmail(String email);
 
+    @Transactional
     void deleteByBusiness_BusinessId(Integer businessId);
 }

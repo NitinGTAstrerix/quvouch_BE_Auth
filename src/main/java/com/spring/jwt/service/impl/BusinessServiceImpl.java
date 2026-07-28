@@ -240,8 +240,12 @@ public class BusinessServiceImpl implements BusinessService {
         System.out.println("----------------------------------------");
 
         // 4️⃣ Active QR Codes (using your existing method)
+        Long totalQrCodes = qrCodeRepository.countByBusiness(business);
         Long activeQrCodes =
-                qrCodeRepository.countByBusinessAndActiveTrue(business);
+                qrCodeRepository.countActiveQr(businessId);
+
+        System.out.println("Total QR = " + totalQrCodes);
+        System.out.println("Active QR Count = " + activeQrCodes);
 
         if (activeQrCodes == null) {
             activeQrCodes = 0L;

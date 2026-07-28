@@ -171,11 +171,12 @@ public class SalesClientController {
 
 
     @DeleteMapping("/business/{businessId}")
+    @PreAuthorize("hasAnyAuthority('SALE_REPRESENTATIVE','ADMIN')")
     public ResponseEntity<String> deleteBusiness(
             @PathVariable Integer businessId) {
 
-        String response = businessService.deleteBusiness(businessId);
-
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(
+                salesClientService.deleteBusiness(businessId)
+        );
     }
 }

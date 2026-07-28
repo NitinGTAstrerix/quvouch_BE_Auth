@@ -5,6 +5,7 @@ import com.spring.jwt.entity.Business;
 import com.spring.jwt.entity.QrCode;
 import com.spring.jwt.entity.User;
 import com.spring.jwt.entity.QrCode.QrStatus;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -22,6 +23,8 @@ public interface QrCodeRepository extends JpaRepository<QrCode, String> {
     Long getTotalScans(@Param("business") Business business);
 
     Long countByBusinessAndActiveTrue(Business business);
+
+    Long countByBusiness(Business business);
 
     Optional<QrCode> findByBusiness_BusinessId(Integer business);
 
@@ -48,9 +51,18 @@ ORDER BY q.createdAt DESC
 
     List<QrCode> findByAssignedBy(User assignedBy);
 
-    void deleteByBusiness_BusinessId(Integer businessId);
-
     List<QrCode> findByBusinessInAndStatus(List<Business> businesses, QrCode.QrStatus status);
 
     List<QrCode> findByBusinessIn(List<Business> businesses);
+
+    @Query("""
+SELECT COUNT(q)
+FROM QrCode q
+WHERE q.business.businessId = :businessId
+AND q.active = true
+""")
+    Long countActiveQr(@Param("businessId") Integer businessId);
+
+    @Transactional
+    void deleteByBusiness_BusinessId(Integer businessId);
 }
