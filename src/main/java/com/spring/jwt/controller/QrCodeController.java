@@ -44,7 +44,7 @@ public class QrCodeController {
     }
     @Operation(summary = "Get all QR Codes", description = "Fetches all QR codes in the system. " + "This API is accessible only by ADMIN users.")
     @SecurityRequirement(name = "bearerAuth")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','SALE_REPRESENTATIVE')")
     @GetMapping
     public ResponseEntity<List<QrCodeResponse>> getAllQrcodes() {
         List<QrCodeResponse> allQr = qrCodeService.getAllQr();
@@ -80,5 +80,25 @@ public class QrCodeController {
                         "attachment; filename=\"qr-code-" + qrId + ".png\"")
                 .contentLength(qrImage.length)
                 .body(qrImage);
+    }
+
+    @Operation(summary = "Get Total Active QR Count", description = "Returns the total number of active QR codes in the system. Accessible only by ADMIN and SALE_REPRESENTATIVE.")
+    @SecurityRequirement(name = "bearerAuth")
+    @PreAuthorize("hasAnyAuthority('ADMIN','SALE_REPRESENTATIVE')")
+    @GetMapping("/active/count")
+    public ResponseEntity<Long> getAllActiveQrCount() {
+
+        return ResponseEntity.ok(qrCodeService.getAllActiveQrCount());
+    }
+
+    @Operation(summary = "Get Active QR Count By Business", description = "Returns the number of active QR codes for the specified business. Accessible only by ADMIN and SALE_REPRESENTATIVE.")
+    @SecurityRequirement(name = "bearerAuth")
+    @PreAuthorize("hasAnyAuthority('ADMIN','SALE_REPRESENTATIVE')")
+    @GetMapping("/active/count/{businessId}")
+    public ResponseEntity<Long> getActiveQrCountByBusiness(
+            @PathVariable Integer businessId) {
+
+        return ResponseEntity.ok(qrCodeService.getActiveQrCountByBusiness(businessId)
+        );
     }
 }

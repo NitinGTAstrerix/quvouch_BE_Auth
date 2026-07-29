@@ -124,4 +124,14 @@ public class QrCodeServiceImpl implements QrCodeService {
 
         return qrCode.getQrImage();
     }
+
+    @Override
+    public Long getAllActiveQrCount() {
+        return qrCodeRepository.countAllActiveQr();
+    }
+
+    @Override
+    public Long getActiveQrCountByBusiness(Integer businessId) {
+        return qrCodeRepository.countActiveQrByBusiness(businessId);
+    }
 }

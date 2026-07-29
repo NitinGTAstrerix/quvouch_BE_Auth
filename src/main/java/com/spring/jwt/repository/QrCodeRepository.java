@@ -65,4 +65,19 @@ AND q.active = true
 
     @Transactional
     void deleteByBusiness_BusinessId(Integer businessId);
+
+    @Query("""
+    SELECT COUNT(q)
+    FROM QrCode q
+    WHERE q.active = true
+""")
+    Long countAllActiveQr();
+
+    @Query("""
+    SELECT COUNT(q)
+    FROM QrCode q
+    WHERE q.business.businessId = :businessId
+    AND q.active = true
+""")
+    Long countActiveQrByBusiness(@Param("businessId") Integer businessId);
 }

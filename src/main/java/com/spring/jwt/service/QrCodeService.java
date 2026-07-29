@@ -18,4 +18,8 @@ public interface QrCodeService {
     String DisableQrCode( String qrId);
 
     byte[] downloadQrCode(String qrId);
+
+    Long getAllActiveQrCount();
+
+    Long getActiveQrCountByBusiness(Integer businessId);
 }
