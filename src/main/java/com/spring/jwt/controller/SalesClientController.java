@@ -12,12 +12,15 @@ import com.spring.jwt.service.SalesClientService;
 import com.spring.jwt.service.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -170,13 +173,43 @@ public class SalesClientController {
     }
 
 
-    @DeleteMapping("/business/{businessId}")
+//    @DeleteMapping("/business/{businessId}")
+//    @PreAuthorize("hasAnyAuthority('SALE_REPRESENTATIVE','ADMIN')")
+//    public ResponseEntity<String> deleteBusiness(
+//            @PathVariable Integer businessId) {
+//
+//        return ResponseEntity.ok(
+//                salesClientService.deleteBusiness(businessId)
+//        );
+//    }
+
+    @CrossOrigin(origins = "http://localhost:5173")
+    @Operation(summary = "Delete Business", description = "Deletes a business and its associated QR codes and reviews.")
+    @SecurityRequirement(name = "bearerAuth")
     @PreAuthorize("hasAnyAuthority('SALE_REPRESENTATIVE','ADMIN')")
+    @DeleteMapping("/business/{businessId}")
     public ResponseEntity<String> deleteBusiness(
             @PathVariable Integer businessId) {
 
-        return ResponseEntity.ok(
-                salesClientService.deleteBusiness(businessId)
-        );
+        String response = salesClientService.deleteBusiness(businessId);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @Operation(summary = "Generate Sales Dashboard Report", description = "Generates a PDF report containing sales representative dashboard statistics and client details.")
+    @SecurityRequirement(name = "bearerAuth")
+    @PreAuthorize("hasAnyAuthority('SALE_REPRESENTATIVE','ADMIN')")
+    @GetMapping("/dashboard/report")
+    public ResponseEntity<byte[]> generateReport() {
+
+        byte[] report = salesClientService.generateReport();
+
+        return ResponseEntity.ok()
+                .header(
+                        HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=\"sales-dashboard-report.pdf\""
+                )
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(report);
     }
 }

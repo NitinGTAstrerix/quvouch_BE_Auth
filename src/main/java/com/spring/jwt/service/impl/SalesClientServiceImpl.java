@@ -22,6 +22,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Table;
+
+import java.io.ByteArrayOutputStream;
 
 @Service
 @RequiredArgsConstructor
@@ -233,7 +240,12 @@ public class SalesClientServiceImpl implements SalesClientService {
                 .count();
         long inactive = total - active;
 
-        long activeQr = qrCodeRepository.findByBusinessIn(businesses).size();
+        long activeQr = qrCodeRepository
+                .findByBusinessInAndStatus(
+                        businesses,
+                        QrCode.QrStatus.ACTIVE
+                )
+                .size();
 
         return SalesDashboardDto.builder()
                 .totalClients(total)
@@ -357,6 +369,160 @@ public class SalesClientServiceImpl implements SalesClientService {
             throw new ResponseStatusException(
                     HttpStatus.INTERNAL_SERVER_ERROR,
                     "Unable to delete business: " + e.getMessage()
+            );
+        }
+    }
+
+    @Override
+    public byte[] generateReport() {
+
+        User loggedUser = getCurrentUser();
+
+        List<Business> businesses =
+                businessRepository.findByUser(loggedUser);
+
+        long totalClients = businesses.size();
+
+        long activeClients = businesses.stream()
+                .filter(b -> b.getStatus() == Business.BusinessStatus.ACTIVE)
+                .count();
+
+        long inactiveClients = businesses.stream()
+                .filter(b -> b.getStatus() == Business.BusinessStatus.INACTIVE)
+                .count();
+
+        long totalQrCodes =
+                qrCodeRepository.findByBusinessIn(businesses).size();
+
+        long activeQrCodes =
+                qrCodeRepository.findByBusinessInAndStatus(
+                        businesses,
+                        QrCode.QrStatus.ACTIVE
+                ).size();
+
+        long totalReviews = businesses.stream()
+                .mapToLong(b ->
+                        reviewRepository
+                                .findByBusiness_BusinessId(b.getBusinessId())
+                                .size()
+                )
+                .sum();
+
+        try (ByteArrayOutputStream outputStream =
+                     new ByteArrayOutputStream()) {
+
+            PdfWriter writer = new PdfWriter(outputStream);
+            PdfDocument pdf = new PdfDocument(writer);
+            Document document = new Document(pdf);
+
+            // Title
+            document.add(
+                    new Paragraph("Sales Representative Report")
+                            .setBold()
+                            .setFontSize(20)
+            );
+
+            document.add(
+                    new Paragraph(
+                            "Sales Representative: " +
+                                    loggedUser.getEmail()
+                    )
+            );
+
+            document.add(new Paragraph(" "));
+
+            // Dashboard Summary
+            document.add(
+                    new Paragraph("Dashboard Summary")
+                            .setBold()
+                            .setFontSize(14)
+            );
+
+            Table summaryTable = new Table(2);
+
+            summaryTable.addCell("Total Clients");
+            summaryTable.addCell(String.valueOf(totalClients));
+
+            summaryTable.addCell("Active Clients");
+            summaryTable.addCell(String.valueOf(activeClients));
+
+            summaryTable.addCell("Inactive Clients");
+            summaryTable.addCell(String.valueOf(inactiveClients));
+
+            summaryTable.addCell("Total QR Codes");
+            summaryTable.addCell(String.valueOf(totalQrCodes));
+
+            summaryTable.addCell("Active QR Codes");
+            summaryTable.addCell(String.valueOf(activeQrCodes));
+
+            summaryTable.addCell("Total Reviews");
+            summaryTable.addCell(String.valueOf(totalReviews));
+
+            document.add(summaryTable);
+
+            document.add(new Paragraph(" "));
+
+            // Client Details
+            document.add(
+                    new Paragraph("Client Details")
+                            .setBold()
+                            .setFontSize(14)
+            );
+
+            Table clientTable = new Table(5);
+
+            clientTable.addHeaderCell("Business ID");
+            clientTable.addHeaderCell("Business Name");
+            clientTable.addHeaderCell("Status");
+            clientTable.addHeaderCell("QR Codes");
+            clientTable.addHeaderCell("Reviews");
+
+            for (Business business : businesses) {
+
+                long qrCount =
+                        qrCodeRepository
+                                .findByBusinessIn(List.of(business))
+                                .size();
+
+                long reviewCount =
+                        reviewRepository
+                                .findByBusiness_BusinessId(
+                                        business.getBusinessId()
+                                )
+                                .size();
+
+                clientTable.addCell(
+                        String.valueOf(business.getBusinessId())
+                );
+
+                clientTable.addCell(
+                        business.getBusinessName()
+                );
+
+                clientTable.addCell(
+                        business.getStatus().name()
+                );
+
+                clientTable.addCell(
+                        String.valueOf(qrCount)
+                );
+
+                clientTable.addCell(
+                        String.valueOf(reviewCount)
+                );
+            }
+
+            document.add(clientTable);
+
+            document.close();
+
+            return outputStream.toByteArray();
+
+        } catch (Exception e) {
+
+            throw new RuntimeException(
+                    "Failed to generate sales report",
+                    e
             );
         }
     }
