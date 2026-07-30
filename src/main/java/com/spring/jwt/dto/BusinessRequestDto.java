@@ -1,6 +1,5 @@
 package com.spring.jwt.dto;
 
-import com.spring.jwt.entity.User;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
@@ -12,7 +11,11 @@ import lombok.*;
 public class BusinessRequestDto {
 
     @NotNull(message = "Business Name is required")
-    @Size(max = 100, min = 3, message = "Business must be greater then 3 and less than 100")
+    @Size(
+            max = 100,
+            min = 3,
+            message = "Business must be greater than 3 and less than 100"
+    )
     private String businessName;
 
     @NotNull(message = "Business Type is required")
@@ -32,5 +35,6 @@ public class BusinessRequestDto {
     @Email(message = "Invalid email format")
     private String businessEmail;
 
+    @NotNull(message = "Client ID is required")
     private Long clientId;
 }

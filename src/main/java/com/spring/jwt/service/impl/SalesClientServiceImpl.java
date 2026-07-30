@@ -6,14 +6,11 @@ import com.spring.jwt.entity.QrCode;
 import com.spring.jwt.entity.User;
 import com.spring.jwt.exception.BaseException;
 import com.spring.jwt.mapper.UserMapper;
-import com.spring.jwt.repository.BusinessRepository;
-import com.spring.jwt.repository.QrCodeRepository;
-import com.spring.jwt.repository.ReviewRepository;
-import com.spring.jwt.repository.UserRepository;
+import com.spring.jwt.repository.*;
 import com.spring.jwt.service.SalesClientService;
-import com.spring.jwt.service.UserService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -32,6 +29,7 @@ import java.io.ByteArrayOutputStream;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class SalesClientServiceImpl implements SalesClientService {
 
     private final BusinessRepository businessRepository;
@@ -39,7 +37,6 @@ public class SalesClientServiceImpl implements SalesClientService {
     private final ReviewRepository reviewRepository;
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
-    private final UserService userService;
     private final UserMapper userMapper;
 
     private User getCurrentUser() {
@@ -66,13 +63,16 @@ public class SalesClientServiceImpl implements SalesClientService {
     }
 
     @Override
+    @Transactional
     public BusinessResponseDto createClient(BusinessRequestDto dto) {
 
-        // 1️⃣ Get logged-in Sales Representative
+        // 1. Get logged-in user
         User loggedUser = getCurrentUser();
 
+        // 2. Check role
         boolean isAdmin = loggedUser.getRoles().stream()
                 .anyMatch(role -> role.getName().equals("ADMIN"));
+
         boolean isSaleRep = loggedUser.getRoles().stream()
                 .anyMatch(role -> role.getName().equals("SALE_REPRESENTATIVE"));
 
@@ -83,7 +83,42 @@ public class SalesClientServiceImpl implements SalesClientService {
             );
         }
 
-        // 2️⃣ Map DTO → Entity
+        // 3. Find CLIENT using clientId
+        User client = userRepository.findById(dto.getClientId())
+                .orElseThrow(() ->
+                        new ResponseStatusException(
+                                HttpStatus.NOT_FOUND,
+                                "Client not found with ID: " + dto.getClientId()
+                        )
+                );
+
+        // 4. Verify selected user has CLIENT role
+        boolean isClient = client.getRoles().stream()
+                .anyMatch(role -> role.getName().equals("CLIENT"));
+
+        if (!isClient) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Selected user is not a CLIENT"
+            );
+        }
+
+        // 5. Verify client belongs to logged-in Sales Representative
+        if (isSaleRep) {
+
+            if (client.getSaleRepresentative() == null ||
+                    !client.getSaleRepresentative()
+                            .getId()
+                            .equals(loggedUser.getId())) {
+
+                throw new ResponseStatusException(
+                        HttpStatus.FORBIDDEN,
+                        "Client is not assigned to this Sales Representative"
+                );
+            }
+        }
+
+        // 6. Create Business
         Business business = Business.builder()
                 .businessName(dto.getBusinessName())
                 .businessEmail(dto.getBusinessEmail())
@@ -91,13 +126,19 @@ public class SalesClientServiceImpl implements SalesClientService {
                 .address(dto.getAddress())
                 .phoneNumber(dto.getPhoneNumber())
                 .status(Business.BusinessStatus.ACTIVE)
-                .user(loggedUser) // ✅ Attach logged-in sales rep
+
+                // Sales Representative
+                .user(loggedUser)
+
+                // Client
+                .client(client)
+
                 .build();
 
-        // 3️⃣ Save to DB
+        // 7. Save Business
         Business saved = businessRepository.save(business);
 
-        // 4️⃣ Map to Response DTO
+        // 8. Return response
         return modelMapper.map(saved, BusinessResponseDto.class);
     }
 
@@ -338,41 +379,70 @@ public class SalesClientServiceImpl implements SalesClientService {
     @Transactional
     public String deleteBusiness(Integer businessId) {
 
-        System.out.println("Delete API called");
-        System.out.println("Business ID: " + businessId);
+        User loggedUser = getCurrentUser();
 
-        Business business = businessRepository.findById(businessId)
+        Business business = businessRepository
+                .findById(businessId)
                 .orElseThrow(() ->
                         new ResponseStatusException(
                                 HttpStatus.NOT_FOUND,
                                 "Business not found"));
 
-        try {
+        boolean isAdmin = loggedUser.getRoles().stream()
+                .anyMatch(role -> role.getName().equals("ADMIN"));
 
-            // Delete all reviews of this business
-            reviewRepository.deleteByBusiness_BusinessId(businessId);
+        boolean isSalesRep = loggedUser.getRoles().stream()
+                .anyMatch(role -> role.getName().equals("SALE_REPRESENTATIVE"));
 
-            // Delete all QR codes of this business
-            qrCodeRepository.deleteByBusiness_BusinessId(businessId);
+        boolean isClient = loggedUser.getRoles().stream()
+                .anyMatch(role -> role.getName().equals("CLIENT"));
 
-            // Delete business
-            businessRepository.delete(business);
+        // ADMIN can delete
+        if (isAdmin) {
+            // allowed
+        }
 
-            System.out.println("Business deleted successfully.");
+        // SALES_REP can delete businesses created/assigned to them
+        else if (isSalesRep) {
 
-            return "Business Deleted Successfully";
+            if (business.getUser() == null ||
+                    !business.getUser().getId().equals(loggedUser.getId())) {
 
-        } catch (Exception e) {
+                throw new ResponseStatusException(
+                        HttpStatus.FORBIDDEN,
+                        "You are not authorized to delete this business"
+                );
+            }
+        }
 
-            e.printStackTrace();
+        // CLIENT can delete their own business
+        else if (isClient) {
 
+            if (business.getClient() == null ||
+                    !business.getClient().getId().equals(loggedUser.getId())) {
+
+                throw new ResponseStatusException(
+                        HttpStatus.FORBIDDEN,
+                        "You are not authorized to delete this business"
+                );
+            }
+        }
+
+        else {
             throw new ResponseStatusException(
-                    HttpStatus.INTERNAL_SERVER_ERROR,
-                    "Unable to delete business: " + e.getMessage()
+                    HttpStatus.FORBIDDEN,
+                    "You are not authorized to delete this business"
             );
         }
-    }
 
+        reviewRepository.deleteByBusiness_BusinessId(businessId);
+
+        qrCodeRepository.deleteByBusiness_BusinessId(businessId);
+
+        businessRepository.delete(business);
+
+        return "Business Deleted Successfully";
+    }
     @Override
     public byte[] generateReport() {
 

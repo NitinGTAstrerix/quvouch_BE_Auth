@@ -33,6 +33,73 @@ public class EmailService {
         }
     }
 
+    public void sendClientCredentialsEmail(
+            String to,
+            String clientName,
+            String email,
+            String temporaryPassword) {
+
+        String subject = "Your Client Dashboard Credentials";
+
+        String emailContent =
+                "<html>" +
+                        "<body style='font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px;'>" +
+
+                        "<div style='max-width: 600px; margin: auto; " +
+                        "background-color: white; padding: 30px; border-radius: 10px;'>" +
+
+                        "<h2 style='color: #333;'>Welcome to Client Dashboard</h2>" +
+
+                        "<p>Dear " + clientName + ",</p>" +
+
+                        "<p>Your client account has been created successfully.</p>" +
+
+                        "<h3>Login Credentials</h3>" +
+
+                        "<p><strong>Email:</strong> " + email + "</p>" +
+
+                        "<p><strong>Temporary Password:</strong> " +
+                        temporaryPassword + "</p>" +
+
+                        "<p>Please login using these credentials and change your password after logging in.</p>" +
+
+                        "<p>Regards,<br>CarTechIndia.com</p>" +
+
+                        "</div>" +
+                        "</body>" +
+                        "</html>";
+
+        try {
+            Session session = createEmailSession();
+
+            MimeMessage message = new MimeMessage(session);
+
+            message.setFrom(new InternetAddress(FROM_EMAIL));
+
+            message.addRecipient(
+                    Message.RecipientType.TO,
+                    new InternetAddress(to)
+            );
+
+            message.setSubject(subject);
+
+            message.setContent(
+                    emailContent,
+                    "text/html; charset=utf-8"
+            );
+
+            Transport.send(message);
+
+        } catch (MessagingException e) {
+            throw new RuntimeException(
+                    "Error sending client credentials email",
+                    e
+            );
+        }
+    }
+
+
+
     private String generateEmailContent(String resetLink) {
         return "<html>" +
                 "<body style='font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4;'>" +

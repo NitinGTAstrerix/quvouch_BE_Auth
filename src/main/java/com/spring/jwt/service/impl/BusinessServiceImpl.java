@@ -132,15 +132,41 @@ public class BusinessServiceImpl implements BusinessService {
 
     @Override
     public BusinessResponseDto getBusinessByOwn() {
+
         Integer id = getCurrentUserProfile().getId();
-        List<Business> businesses = businessRepository.findByUser_Id(id);
+
+        List<Business> businesses =
+                businessRepository.findByClient_Id(id);
 
         if (businesses.isEmpty()) {
-            return null;  // ✅ return null instead of throwing exception
+            return null;
         }
 
         return mapper.toBusiness(businesses.get(0));
     }
+
+//    @Override
+//    public BusinessResponseDto getBusinessByOwn() {
+//
+//        Integer id = getCurrentUserProfile().getId();
+//
+//        System.out.println("========== BUSINESS OWN API CALLED ==========");
+//        System.out.println("Logged User ID: " + id);
+//
+//        List<Business> businesses = businessRepository.findByUser_Id(id);
+//
+//        System.out.println("Business count: " + businesses.size());
+//
+//        if (businesses.isEmpty()) {
+//            System.out.println("========== NO BUSINESS FOUND ==========");
+//            return null;
+//        }
+//
+//        System.out.println("Business ID: " + businesses.get(0).getBusinessId());
+//
+//        return mapper.toBusiness(businesses.get(0));
+//    }
+
     @Override
     public List<BusinessResponseDto> getAllBusiness() {
         List<Business> allBusiness = businessRepository.findAll();

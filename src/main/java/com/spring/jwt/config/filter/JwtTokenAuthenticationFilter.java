@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -52,7 +53,15 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
         String path = request.getRequestURI();
+
+        if (HttpMethod.OPTIONS.matches(request.getMethod())) {
+            log.debug("Skipping JWT authentication for OPTIONS request: {}", path);
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         log.debug("JWT Filter processing request for path: {}", path);
+
 
         if (path.contains("/api/jwtUnAuthorize/block") || path.contains("/api/jwtUnAuthorize/Exclude")) {
             filterChain.doFilter(request, response);
@@ -71,9 +80,18 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
         }
         
         String token = getJwtFromRequest(request);
-        
+
         if (token == null) {
-            log.warn("No JWT token found for protected path: {}", path);
+            log.error("========== JWT DEBUG ==========");
+            log.error("Request Path: {}", path);
+            log.error("Authorization Header: {}", request.getHeader(jwtConfig.getHeader()));
+            log.error("Access Token Cookie Present: {}",
+                    request.getCookies() != null &&
+                            Arrays.stream(request.getCookies())
+                                    .anyMatch(c -> ACCESS_TOKEN_COOKIE_NAME.equals(c.getName())));
+            log.error("No JWT access token found");
+            log.error("================================");
+
             handleAccessDenied(response);
             return;
         }

@@ -80,4 +80,5 @@ GROUP BY b.businessId
             @Param("saleRepId") Integer saleRepId
     );
 
+    List<Business> findByClient_Id(Integer id);
 }

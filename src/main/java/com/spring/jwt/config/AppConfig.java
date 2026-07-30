@@ -150,39 +150,47 @@ public class AppConfig {
 
         log.debug("Configuring URL-based security rules");
         http.authorizeHttpRequests(authorize -> authorize
+
+                // CORS preflight
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+
+                // Public APIs
                 .requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers("/api/feedback/**").permitAll()
                 .requestMatchers("/api/v1/users/register").permitAll()
                 .requestMatchers("/api/v1/users/password/**").permitAll()
                 .requestMatchers("/api/v1/exam/**").permitAll()
-                .requestMatchers("/api/v1/**").permitAll()
                 .requestMatchers("/scan/qr/**").permitAll()
-                .requestMatchers(jwtConfig.getUrl()).permitAll()
-                .requestMatchers(jwtConfig.getRefreshUrl()).permitAll()
+                .requestMatchers("/api/public/**").permitAll()
+                .requestMatchers("/user/**").permitAll()
 
-                .requestMatchers("/api/v1/admin/**").hasAuthority("ADMIN")
-
+                // Swagger
                 .requestMatchers(
-                        "/v2/api-docs",
-                        "/v3/api-docs",
-                        "/v*/a*-docs/**",
-                        "/swagger-resources",
+                        "/v2/api-docs/**",
+                        "/v3/api-docs/**",
                         "/swagger-resources/**",
-                        "/configuration/ui",
-                        "/configuration/security",
                         "/swagger-ui/**",
                         "/webjars/**",
                         "/swagger-ui.html"
                 ).permitAll()
-                .requestMatchers("/api/v1/qr/reviews").hasAuthority("ADMIN")
-                .requestMatchers(HttpMethod.POST, "/api/v1/qr/*/rate").permitAll()
-                .requestMatchers("/api/public/**").permitAll()
-                .requestMatchers("/user/**").permitAll()
-                .requestMatchers("/api/v1/qr/reviews/business/**").hasAnyAuthority("ADMIN", "SALE_REPRESENTATIVE", "CLIENT")
 
-                .anyRequest().authenticated());
+                // Admin
+                .requestMatchers("/api/v1/admin/**")
+                .hasAuthority("ADMIN")
 
+                // Review APIs
+                .requestMatchers("/api/v1/qr/reviews")
+                .hasAuthority("ADMIN")
+
+                .requestMatchers("/api/v1/qr/reviews/business/**")
+                .hasAnyAuthority("ADMIN", "SALE_REPRESENTATIVE", "CLIENT")
+
+                .requestMatchers(HttpMethod.POST, "/api/v1/qr/*/rate")
+                .permitAll()
+
+                // Everything else requires login
+                .anyRequest().authenticated()
+        );
         // Create a request matcher for public URLs
         org.springframework.security.web.util.matcher.RequestMatcher publicUrls =
             new org.springframework.security.web.util.matcher.OrRequestMatcher(
@@ -229,6 +237,8 @@ public class AppConfig {
     public CorsConfigurationSource corsConfigurationSource() {
 
         CorsConfiguration configuration = new CorsConfiguration();
+
+        configuration.setAllowedOrigins(allowedOrigins);
 
         configuration.setAllowedOrigins(List.of(
                 "http://localhost:5173"
