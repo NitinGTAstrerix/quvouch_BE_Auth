@@ -25,6 +25,13 @@ public class ActiveSessionService {
 		return previous;
 	}
 
+	public void removeSession(String username) {
+		if (username != null) {
+			usernameToSession.remove(username);
+			log.info("Removed active session for {}", username);
+		}
+	}
+
 	public boolean isCurrentAccessToken(String username, String tokenId) {
 		SessionInfo info = usernameToSession.get(username);
 		return info != null && tokenId != null && tokenId.equals(info.getAccessTokenId());
