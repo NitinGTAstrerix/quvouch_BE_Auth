@@ -38,26 +38,36 @@ public class AuthController {
     private static final String REFRESH_TOKEN_COOKIE_NAME = "refresh_token";
 
     @PostMapping("/logout")
-    public ResponseEntity<BaseResponseDTO> logout(HttpServletRequest request,
-                                                  HttpServletResponse response) {
+    public ResponseEntity<BaseResponseDTO> logout(
+            HttpServletRequest request,
+            HttpServletResponse response) {
 
         log.info("Processing logout request");
 
         try {
-
-            // ============================
-            // Blacklist Access Token
-            // ============================
             String accessToken = null;
 
+            // ==========================================
+            // 1. Get access token from Authorization header
+            // ==========================================
             String authHeader = request.getHeader(jwtConfig.getHeader());
 
-            if (authHeader != null && authHeader.startsWith(jwtConfig.getPrefix() + " ")) {
-                accessToken = authHeader.substring((jwtConfig.getPrefix() + " ").length());
+            if (authHeader != null &&
+                    authHeader.startsWith(jwtConfig.getPrefix() + " ")) {
+
+                accessToken = authHeader.substring(
+                        (jwtConfig.getPrefix() + " ").length()
+                );
             }
 
+            // ==========================================
+            // 2. If header doesn't contain token,
+            //    check access_token cookie
+            // ==========================================
             if (accessToken == null && request.getCookies() != null) {
+
                 for (Cookie cookie : request.getCookies()) {
+
                     if (ACCESS_TOKEN_COOKIE_NAME.equals(cookie.getName())) {
                         accessToken = cookie.getValue();
                         break;
@@ -65,48 +75,85 @@ public class AuthController {
                 }
             }
 
-            if (accessToken != null) {
+            // ==========================================
+            // 3. Blacklist access token + remove session
+            // ==========================================
+            if (accessToken != null && !accessToken.isBlank()) {
+
                 try {
-                    jwtService.blacklistToken(accessToken);
 
                     Claims claims = jwtService.extractClaims(accessToken);
 
                     String username = claims.getSubject();
 
-                    activeSessionService.removeSession(username);
+                    // Blacklist token
+                    jwtService.blacklistToken(accessToken);
 
-                    log.info("User session removed : {}", username);
+                    // Remove active session
+                    if (username != null && !username.isBlank()) {
+                        activeSessionService.removeSession(username);
+
+                        log.info(
+                                "Active session removed for user: {}",
+                                username
+                        );
+                    }
 
                 } catch (Exception e) {
-                    log.warn("Unable to blacklist token : {}", e.getMessage());
+
+                    // Logout should still continue even if
+                    // token is already expired/invalid.
+                    log.warn(
+                            "Unable to invalidate access token during logout: {}",
+                            e.getMessage()
+                    );
                 }
             }
 
-            // ============================
-            // Delete Access Token Cookie
-            // ============================
-            Cookie accessCookie = new Cookie(ACCESS_TOKEN_COOKIE_NAME, "");
+            // ==========================================
+            // 4. Delete access_token cookie
+            // ==========================================
+            Cookie accessCookie =
+                    new Cookie(ACCESS_TOKEN_COOKIE_NAME, "");
+
             accessCookie.setHttpOnly(false);
-            accessCookie.setSecure(false);       // Change to true in production HTTPS
+            accessCookie.setSecure(false); // localhost HTTP
             accessCookie.setPath("/");
             accessCookie.setMaxAge(0);
+
             response.addCookie(accessCookie);
 
-            // ============================
-            // Delete Refresh Token Cookie
-            // ============================
-            Cookie refreshCookie = new Cookie(REFRESH_TOKEN_COOKIE_NAME, "");
+            // ==========================================
+            // 5. Delete refresh_token cookie
+            // ==========================================
+            Cookie refreshCookie =
+                    new Cookie(REFRESH_TOKEN_COOKIE_NAME, "");
+
             refreshCookie.setHttpOnly(true);
-            refreshCookie.setSecure(false);      // Change to true in production HTTPS
+            refreshCookie.setSecure(false); // localhost HTTP
             refreshCookie.setPath("/");
             refreshCookie.setMaxAge(0);
+            refreshCookie.setAttribute("SameSite", "Strict");
+
             response.addCookie(refreshCookie);
 
+            // ==========================================
+            // 6. Clear Spring Security context
+            // ==========================================
             SecurityContextHolder.clearContext();
 
+            // ==========================================
+            // 7. Response
+            // ==========================================
             BaseResponseDTO responseDTO = new BaseResponseDTO();
-            responseDTO.setCode(String.valueOf(HttpStatus.OK.value()));
+
+            responseDTO.setCode(
+                    String.valueOf(HttpStatus.OK.value())
+            );
+
             responseDTO.setMessage("Logout successful");
+
+            log.info("Logout successful");
 
             return ResponseEntity.ok(responseDTO);
 
@@ -115,14 +162,18 @@ public class AuthController {
             log.error("Logout failed", e);
 
             BaseResponseDTO responseDTO = new BaseResponseDTO();
-            responseDTO.setCode(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()));
+
+            responseDTO.setCode(
+                    String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value())
+            );
+
             responseDTO.setMessage("Logout failed");
 
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(responseDTO);
         }
     }
-
     @GetMapping("/check-cookies")
     public ResponseEntity<Map<String, Object>> checkCookies(HttpServletRequest request) {
 

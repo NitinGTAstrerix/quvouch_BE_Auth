@@ -26,9 +26,22 @@ public class ActiveSessionService {
 	}
 
 	public void removeSession(String username) {
-		if (username != null) {
-			usernameToSession.remove(username);
-			log.info("Removed active session for {}", username);
+		if (username == null) {
+			return;
+		}
+
+		SessionInfo removed = usernameToSession.remove(username);
+
+		if (removed != null) {
+			log.debug(
+					"Active session removed for user: {}",
+					username
+			);
+		} else {
+			log.debug(
+					"No active session found for user: {}",
+					username
+			);
 		}
 	}
 

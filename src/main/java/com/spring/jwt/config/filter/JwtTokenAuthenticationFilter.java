@@ -124,7 +124,11 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
     private boolean isPublic(HttpServletRequest request) {
         String path = request.getRequestURI();
         // Minimal allowlist to avoid interfering with public endpoints
-        if (path.equals(jwtConfig.getUrl()) || path.equals(jwtConfig.getRefreshUrl())) return true;
+        if (path.equals(jwtConfig.getUrl())
+                || path.equals(jwtConfig.getRefreshUrl())
+                || path.equals("/jwt/logout")) {
+            return true;
+        }
         if (path.startsWith("/api/auth/")) return true;
         if (path.startsWith("/api/public/")) return true;
         if (path.startsWith("/v2/api-docs") || path.startsWith("/v3/api-docs")) return true;

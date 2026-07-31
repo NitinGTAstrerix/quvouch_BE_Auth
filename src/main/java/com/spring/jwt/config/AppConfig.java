@@ -166,7 +166,6 @@ public class AppConfig {
                 .requestMatchers("/scan/qr/**").permitAll()
                 .requestMatchers("/api/public/**").permitAll()
                 .requestMatchers("/user/**").permitAll()
-                .requestMatchers("/jwt/logout").permitAll()
 
                 // Swagger
                 .requestMatchers(
@@ -191,6 +190,8 @@ public class AppConfig {
 
                 .requestMatchers(HttpMethod.POST, "/api/v1/qr/*/rate")
                 .permitAll()
+
+                .requestMatchers("/jwt/logout").permitAll()
 
                 // Everything else requires login
                 .anyRequest().authenticated()
