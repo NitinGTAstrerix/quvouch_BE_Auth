@@ -151,9 +151,9 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
             }
             String username = claims.getSubject();
             String tokenId = claims.getId();
-            if (StringUtils.hasText(username) && StringUtils.hasText(tokenId) && !activeSessionService.isCurrentAccessToken(username, tokenId)) {
-                return "You are logged in on another device. Please logout from the other device to continue";
-            }
+//            if (StringUtils.hasText(username) && StringUtils.hasText(tokenId) && !activeSessionService.isCurrentAccessToken(username, tokenId)) {
+//                return "You are logged in on another device. Please logout from the other device to continue";
+//            }
             return "Invalid or expired token";
         } catch (ExpiredJwtException e) {
             return "Expired token";
@@ -196,13 +196,13 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
 
                     SecurityContextHolder.getContext().setAuthentication(auth);
 //                     If token is not the current session, fail fast with specific message
-                    try {
-                        String tokenId = claims.getId();
-                        if (!activeSessionService.isCurrentAccessToken(username, tokenId)) {
-                            log.warn("Token not current for user: {}", username);
-                            return false;
-                        }
-                    } catch (Exception ignored) {}
+//                    try {
+//                        String tokenId = claims.getId();
+//                        if (!activeSessionService.isCurrentAccessToken(username, tokenId)) {
+//                            log.warn("Token not current for user: {}", username);
+//                            return false;
+//                        }
+//                    } catch (Exception ignored) {}
                     log.debug("Authentication set in security context for user: {}", username);
                     return true;
                 } else {

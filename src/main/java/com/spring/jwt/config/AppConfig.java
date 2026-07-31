@@ -124,7 +124,10 @@ public class AppConfig {
                 "/user/**",
 
                 jwtConfig.getUrl(),
-                jwtConfig.getRefreshUrl()
+                jwtConfig.getRefreshUrl(),
+                    "/jwt/login",
+                    "/jwt/refresh",
+                    "/jwt/logout"
             )
 
         );
@@ -163,6 +166,7 @@ public class AppConfig {
                 .requestMatchers("/scan/qr/**").permitAll()
                 .requestMatchers("/api/public/**").permitAll()
                 .requestMatchers("/user/**").permitAll()
+                .requestMatchers("/jwt/logout").permitAll()
 
                 // Swagger
                 .requestMatchers(
@@ -210,6 +214,7 @@ public class AppConfig {
                 new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/webjars/**"),
                 new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/swagger-ui.html"),
                 new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/user/**"),
+                    new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/jwt/logout"),
                 new org.springframework.security.web.util.matcher.AntPathRequestMatcher(jwtConfig.getUrl()),
                 new org.springframework.security.web.util.matcher.AntPathRequestMatcher(jwtConfig.getRefreshUrl())
             );
