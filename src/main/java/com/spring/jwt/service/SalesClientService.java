@@ -31,7 +31,8 @@ public interface SalesClientService {
 
     List<ClientResponseDto> getMyRegisteredClients();
 
+    byte[] generateReport();
+
     String deleteBusiness(Integer businessId);
 
-    byte[] generateReport();
 }

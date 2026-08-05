@@ -127,7 +127,7 @@ public class AppConfig {
                 jwtConfig.getRefreshUrl(),
                     "/jwt/login",
                     "/jwt/refresh",
-                    "/jwt/logout"
+                    "/api/v1/auth/logout"
             )
 
         );
@@ -191,7 +191,7 @@ public class AppConfig {
                 .requestMatchers(HttpMethod.POST, "/api/v1/qr/*/rate")
                 .permitAll()
 
-                .requestMatchers("/jwt/logout").permitAll()
+                .requestMatchers("/api/v1/auth/logout").permitAll()
 
                 // Everything else requires login
                 .anyRequest().authenticated()
@@ -215,7 +215,7 @@ public class AppConfig {
                 new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/webjars/**"),
                 new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/swagger-ui.html"),
                 new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/user/**"),
-                    new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/jwt/logout"),
+                    new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/v1/auth/logout"),
                 new org.springframework.security.web.util.matcher.AntPathRequestMatcher(jwtConfig.getUrl()),
                 new org.springframework.security.web.util.matcher.AntPathRequestMatcher(jwtConfig.getRefreshUrl())
             );
@@ -244,7 +244,7 @@ public class AppConfig {
 
         CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.setAllowedOrigins(allowedOrigins);
+      //  configuration.setAllowedOrigins(allowedOrigins);
 
         configuration.setAllowedOrigins(List.of(
                 "http://localhost:5173"

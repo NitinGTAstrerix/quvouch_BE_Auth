@@ -191,9 +191,9 @@ public class SalesClientController {
     public ResponseEntity<String> deleteBusiness(
             @PathVariable Integer businessId) {
 
-        String response = salesClientService.deleteBusiness(businessId);
-
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(
+                salesClientService.deleteBusiness(businessId)
+        );
     }
 
     @Operation(summary = "Generate Sales Dashboard Report", description = "Generates a PDF report containing sales representative dashboard statistics and client details.")

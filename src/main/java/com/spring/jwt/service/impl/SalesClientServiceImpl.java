@@ -376,74 +376,6 @@ public class SalesClientServiceImpl implements SalesClientService {
     }
 
     @Override
-    @Transactional
-    public String deleteBusiness(Integer businessId) {
-
-        User loggedUser = getCurrentUser();
-
-        Business business = businessRepository
-                .findById(businessId)
-                .orElseThrow(() ->
-                        new ResponseStatusException(
-                                HttpStatus.NOT_FOUND,
-                                "Business not found"));
-
-        boolean isAdmin = loggedUser.getRoles().stream()
-                .anyMatch(role -> role.getName().equals("ADMIN"));
-
-        boolean isSalesRep = loggedUser.getRoles().stream()
-                .anyMatch(role -> role.getName().equals("SALE_REPRESENTATIVE"));
-
-        boolean isClient = loggedUser.getRoles().stream()
-                .anyMatch(role -> role.getName().equals("CLIENT"));
-
-        // ADMIN can delete
-        if (isAdmin) {
-            // allowed
-        }
-
-        // SALES_REP can delete businesses created/assigned to them
-        else if (isSalesRep) {
-
-            if (business.getUser() == null ||
-                    !business.getUser().getId().equals(loggedUser.getId())) {
-
-                throw new ResponseStatusException(
-                        HttpStatus.FORBIDDEN,
-                        "You are not authorized to delete this business"
-                );
-            }
-        }
-
-        // CLIENT can delete their own business
-        else if (isClient) {
-
-            if (business.getClient() == null ||
-                    !business.getClient().getId().equals(loggedUser.getId())) {
-
-                throw new ResponseStatusException(
-                        HttpStatus.FORBIDDEN,
-                        "You are not authorized to delete this business"
-                );
-            }
-        }
-
-        else {
-            throw new ResponseStatusException(
-                    HttpStatus.FORBIDDEN,
-                    "You are not authorized to delete this business"
-            );
-        }
-
-        reviewRepository.deleteByBusiness_BusinessId(businessId);
-
-        qrCodeRepository.deleteByBusiness_BusinessId(businessId);
-
-        businessRepository.delete(business);
-
-        return "Business Deleted Successfully";
-    }
-    @Override
     public byte[] generateReport() {
 
         User loggedUser = getCurrentUser();
@@ -595,5 +527,49 @@ public class SalesClientServiceImpl implements SalesClientService {
                     e
             );
         }
+    }
+
+    @Override
+    @Transactional
+    public String deleteBusiness(Integer businessId) {
+
+        Authentication authentication =
+                SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null || !authentication.isAuthenticated()) {
+            throw new RuntimeException("User not authenticated.");
+        }
+
+        String email = authentication.getName();
+
+        User salesRepresentative = userRepository.findByEmail(email);
+
+        if (salesRepresentative == null) {
+            throw new RuntimeException("Sales Representative not found.");
+        }
+
+        Business business = businessRepository.findById(businessId)
+                .orElseThrow(() ->
+                        new RuntimeException("Business not found."));
+
+        //User client = business.getUser();
+        User client = business.getClient();
+
+        if (client == null ||
+                client.getSaleRepresentative() == null ||
+                !client.getSaleRepresentative().getId()
+                        .equals(salesRepresentative.getId())) {
+
+            throw new RuntimeException(
+                    "You are not authorized to delete this business.");
+        }
+
+        reviewRepository.deleteByBusiness_BusinessId(businessId);
+
+        qrCodeRepository.deleteByBusiness_BusinessId(businessId);
+
+        businessRepository.delete(business);
+
+        return "Business deleted successfully.";
     }
 }

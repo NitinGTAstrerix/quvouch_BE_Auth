@@ -49,19 +49,6 @@ public class BusinessController {
         return ResponseEntity.ok(business);
     }
 
-    @Operation(summary = "own business apis", description = "get own the business ")
-    @SecurityRequirement(name = "bearerAuth")
-    @GetMapping("/own")
-    public ResponseEntity<BusinessResponseDto> getBusinessOwn() {
-        BusinessResponseDto business = businessService.getBusinessByOwn();
-
-        if (business == null) {
-            return ResponseEntity.noContent().build();  // ✅ return 204 instead of 404
-        }
-
-        return ResponseEntity.ok(business);
-    }
-
     @Operation(summary = "all  businesses ", description = "admin get all business")
     @SecurityRequirement(name = "bearerAuth")
     @PreAuthorize("hasAnyAuthority('ADMIN','SALE_REPRESENTATIVE')")
@@ -170,6 +157,17 @@ public class BusinessController {
 
         return ResponseEntity.ok(
                 businessService.getMyBusinessReviews(rating, keyword)
+        );
+    }
+
+    @Operation(summary = "Get Logged In User Business")
+    @SecurityRequirement(name = "bearerAuth")
+    @PreAuthorize("hasAuthority('CLIENT')")
+    @GetMapping("/my-businesses")
+    public ResponseEntity<List<BusinessResponseDto>> getMyBusinesses() {
+
+        return ResponseEntity.ok(
+                businessService.getMyBusinesses()
         );
     }
 }

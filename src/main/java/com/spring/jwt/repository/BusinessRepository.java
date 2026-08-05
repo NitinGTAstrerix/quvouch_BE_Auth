@@ -81,4 +81,6 @@ GROUP BY b.businessId
     );
 
     List<Business> findByClient_Id(Integer id);
+
+    Optional<Business> findByBusinessId(Integer businessId);
 }

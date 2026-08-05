@@ -16,8 +16,6 @@ public interface BusinessService {
 
     BusinessResponseDto getBusinessById(Integer businessId);
 
-    BusinessResponseDto getBusinessByOwn();
-
     List<BusinessResponseDto> getAllBusiness();
 
     Page<BusinessResponseDto> getAllBusinessByPageNumber(int pageNo, int pageSize);
@@ -41,4 +39,6 @@ public interface BusinessService {
     List<ReviewResponseDto> getMyBusinessReviews(Integer rating, String keyword);
 
     String deleteBusiness(Integer businessId);
+
+    List<BusinessResponseDto> getMyBusinesses();
 }

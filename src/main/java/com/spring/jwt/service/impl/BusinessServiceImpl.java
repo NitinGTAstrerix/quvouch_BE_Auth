@@ -118,6 +118,7 @@ public class BusinessServiceImpl implements BusinessService {
         business.setStatus(Business.BusinessStatus.ACTIVE);
 
         business.setUser(client);
+        business.setClient(client);
 
         Business saved = businessRepository.save(business);
 
@@ -129,43 +130,6 @@ public class BusinessServiceImpl implements BusinessService {
         Business business = businessRepository.findById(businessId).orElseThrow(() -> new UsernameNotFoundException("Business is Not Found"));
         return mapper.toBusiness(business);
     }
-
-    @Override
-    public BusinessResponseDto getBusinessByOwn() {
-
-        Integer id = getCurrentUserProfile().getId();
-
-        List<Business> businesses =
-                businessRepository.findByClient_Id(id);
-
-        if (businesses.isEmpty()) {
-            return null;
-        }
-
-        return mapper.toBusiness(businesses.get(0));
-    }
-
-//    @Override
-//    public BusinessResponseDto getBusinessByOwn() {
-//
-//        Integer id = getCurrentUserProfile().getId();
-//
-//        System.out.println("========== BUSINESS OWN API CALLED ==========");
-//        System.out.println("Logged User ID: " + id);
-//
-//        List<Business> businesses = businessRepository.findByUser_Id(id);
-//
-//        System.out.println("Business count: " + businesses.size());
-//
-//        if (businesses.isEmpty()) {
-//            System.out.println("========== NO BUSINESS FOUND ==========");
-//            return null;
-//        }
-//
-//        System.out.println("Business ID: " + businesses.get(0).getBusinessId());
-//
-//        return mapper.toBusiness(businesses.get(0));
-//    }
 
     @Override
     public List<BusinessResponseDto> getAllBusiness() {
@@ -444,5 +408,16 @@ public class BusinessServiceImpl implements BusinessService {
         businessRepository.delete(business);
 
         return "Business Deleted Successfully";
+    }
+
+    @Override
+    public List<BusinessResponseDto> getMyBusinesses() {
+
+        User loggedUser = getCurrentUserProfile();
+
+        return businessRepository.findByUser_Id(loggedUser.getId())
+                .stream()
+                .map(mapper::toBusiness)
+                .toList();
     }
 }
